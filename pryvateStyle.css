@@ -24,6 +24,11 @@ form {
     margin-left: 75px;
 }
 
+input[type=submit] {
+    font-size: x-large;
+    margin-left: 75px;
+}
+
 #addClientBtn {
     font-size: 30px;
     padding-left: 10px;
