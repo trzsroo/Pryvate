@@ -6,6 +6,7 @@
     </head>
     <body>
         <h1>Add New Private Lesson</h1>
+        <div class="lessonInfo">
         <h2>General Lesson Information</h2>
         <form id="lessonInfo" method="GET" autocomplete="true">
             <label class="boldLabel">Type of Lesson: </label>
@@ -35,11 +36,14 @@
             <label class="boldLabel">Notes: </label>
             <input type="text" name="lessonNotes" id="lessonNotes" width="50">
         </form>
+        </div>
+        <div class="popUp">
         <!--Popup to add student(s)-->
         <h2>Student(s)</h2>
         <label class="boldLabel" id="addPersonLabel">Add Person</label>
         <button id="addClientBtn">+</button>
         <br/><br>
         <input type="submit" value="Add Lesson">
+        </div>
     </body>
 </html>
