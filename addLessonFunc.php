@@ -6,11 +6,13 @@ $minDate = date("Y-m-d", strtotime("-1 days"));
 
 
 function getLessonType() {
-    echo $_POST['lessonType'];
+    if (isset($_POST['lessonType'])) {
+        echo $_POST['lessonType'];
+    }
 }
 
 function lessonTypeChecked(String $lessonType) {
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_POST['lessonType'])) {
         if ($_POST['lessonType'] == $lessonType) {
             echo 'checked="checked"';
         } else {
@@ -24,7 +26,9 @@ function clearLessonType() {
 }
 
 function getDateOfLesson() {
+    if (isset($_POST['dateOfLesson'])) {
         echo $_POST['dateOfLesson'];
+    }
 }
 
 function clearDateOfLesson(){
@@ -32,7 +36,9 @@ function clearDateOfLesson(){
 }
 
 function getTimeOfLesson() {
-    echo $_POST['timeOfLesson'];
+    if (isset($_POST['timeOfLesson'])) {
+        echo $_POST['timeOfLesson'];
+    }
 }
 
 function clearTimeOfLesson() {
@@ -40,7 +46,9 @@ function clearTimeOfLesson() {
 }
 
 function getLenOfLesson() {
-    echo $_POST['lenOfLesson'];
+    if (isset($_POST['lenOfLesson'])) {
+        echo $_POST['lenOfLesson'];
+    }
 }
 
 function clearLenOfLesson() {
@@ -48,7 +56,9 @@ function clearLenOfLesson() {
 }
 
 function getLessonLvl() {
-    echo $_POST['lessonLvl'];
+    if (isset($_POST['lessonLvl'])) {
+        echo $_POST['lessonLvl'];
+    }
 }
 
 function clearLessonLvl() {
@@ -56,7 +66,9 @@ function clearLessonLvl() {
 }
 
 function getInstructor() {
-    echo $_POST['instructor'];
+    if (isset($_POST['instructor'])) {
+        echo $_POST['instructor'];
+    }
 }
 
 function clearInstructor() {
@@ -64,8 +76,10 @@ function clearInstructor() {
 }
 
 function getRequested() {
-    if ($_POST['requested'] != '') {
-        echo 'checked="check"';
+    if (isset($_POST['requested'])) {
+        if ($_POST['requested'] == 'requested') {
+            echo 'checked=True';
+        }
     }
 }
 
@@ -74,11 +88,23 @@ function clearRequested() {
 }
 
 function getLessonNotes() {
-    echo $_POST['lessonNotes'];
+    if (isset($_POST['lessonNotes'])) {
+        echo $_POST['lessonNotes'];
+    }
 }
 
 function clearLessonNotes() {
     $_POST['lessonNotes'] = '';
+}
+
+function getClerkName() {
+    if (isset($_POST['clerkName'])) {
+        echo $_POST['clerkName'];
+    }
+}
+
+function clearClerkName() {
+    $_POST['clerkName'] = '';
 }
 
 function resetFields() {

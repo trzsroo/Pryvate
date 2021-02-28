@@ -35,11 +35,14 @@
             <label class="boldLabel">Instructor: </label>
             <input type="text" name="instructor" id="instructor" value=<?php getInstructor(); ?>>
             <label class="boldLabel">&nbsp;Requested? </label>
-            <input type="checkbox" name="requested" id="requested" value=<?php getRequested(); ?>>
+            <input type="checkbox" name="requested" id="requested" value="requested" <?php getRequested(); ?>>
             <br/><br/>
             <label class="boldLabel">Notes: </label>
             <input type="text" name="lessonNotes" id="lessonNotes" width="50" value=<?php getLessonNotes(); ?>>
             <br/><br>
+            <label class="boldLabel">Clerk: </label>
+            <input type="text" name="clerkName" id="clerkName" maxlength="3" value=<?php getClerkName(); ?>>
+            <br /><br />
             <input type="submit" value="Add Lesson">
         </form>
         </div>
