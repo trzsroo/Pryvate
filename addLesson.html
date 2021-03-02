@@ -3,6 +3,8 @@
     <head>
         <link rel="stylesheet" href="pryvateStyle.css">
         <title>Add Private Lesson</title>
+
+        <script src="https://code.jquery.com/jquery.js"></script>
     </head>
     <body>
         <h1>Add New Private Lesson</h1>
@@ -37,13 +39,36 @@
             <input type="text" name="lessonNotes" id="lessonNotes" width="50">
         </form>
         </div>
-        <div class="popUp">
-        <!--Popup to add student(s)-->
-        <h2>Student(s)</h2>
-        <label class="boldLabel" id="addPersonLabel">Add Person</label>
-        <button id="addClientBtn">+</button>
-        <br/><br>
-        <input type="submit" value="Add Lesson">
+        <div id="students" class="popUp">
+            <!--Popup to add student(s)-->
+            <h2>Student(s)</h2>
+            <div>
+                <label class="boldLabel" id="addPersonLabel">Add Person</label>
+                <button id="addClientBtn">+</button>
+                <br>
+            </div>
         </div>
+        <br>
+        <input type="button" id="addPersonSlot" value="+ Student"/>
+        <br><br>
+        
+        <input type="submit" value="Add Lesson">
+        
+
+
+        <script type="text/javascript">
+            var numPersons = 1;
+            const maxPersons = 3;
+
+            const personSlot = '<div><label class="boldLabel" id="addPersonLabel">Add Person</label> <button id="addClientBtn">+</button><br></div>';
+
+            $(document).on("click", "#addPersonSlot", function() {
+                if (numPersons < maxPersons) {
+                    $("#students").append(personSlot);
+
+                    numPersons++;
+                }
+            });
+        </script>
     </body>
 </html>
