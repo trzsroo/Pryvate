@@ -4,10 +4,10 @@
         <title>Add Private Lesson</title>
     </head>
     <body>
-        <?php 
+        <?php
             require_once('config.php');
             include 'addLessonFunc.php';
-            
+
         ?>
         <h1>Add New Private Lesson</h1>
         <div class="lessonInfo">
@@ -46,11 +46,48 @@
             <input type="submit" value="Add Lesson">
         </form>
         </div>
-        <div class="popUp">
-        <!--Popup to add student(s)-->
+
+
         <h2>Student(s)</h2>
         <label class="boldLabel" id="addPersonLabel">Add Person</label>
-        <button id="addClientBtn">+</button>
+
+        <button id="addClientBtn" onclick="openForm()">+</button>
+        <div class="form-popup" id="myForm">
+          <!-- database integration -->
+          <form action="/action_page.php" class="form-container">
+            <h3>New Client</h3>
+
+            <label for="fname"><b>First Name:</b></label>
+            <input type="text" name="fname" required>
+
+            <label for="lname"><b>Last Name:</b></label>
+            <input type="text" name="lname" required>
+
+            <label for="age"><b>Age:</b></label>
+            <input type="text" name="age" required>
+
+            <label for="parent"><b>Parent:</b></label>
+            <input type="text" name="parent">
+
+            <label for="phone"><b>Phone:</b></label>
+            <input type="text" name="phone" required>
+
+            <label for="notes"><b>Notes:</b></label>
+            <input type="text" name="notes">
+
+            <button type="submit" class="btn">Add</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+          </form>
         </div>
+
+        <script>
+        function openForm() {
+          document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+          document.getElementById("myForm").style.display = "none";
+        }
+        </script>
     </body>
 </html>
