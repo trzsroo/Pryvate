@@ -1,13 +1,13 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvateStyle.css">
+        <link rel="stylesheet" href="pryvate.css">
         <title>Add Private Lesson</title>
     </head>
     <body>
-        <?php 
+        <?php
             require_once('config.php');
             include 'addLessonFunc.php';
-            
+
         ?>
         <h1>Add New Private Lesson</h1>
         <div class="lessonInfo">
@@ -46,11 +46,49 @@
             <input type="submit" value="Add Lesson">
         </form>
         </div>
-        <div class="popUp">
-        <!--Popup to add student(s)-->
+
+
         <h2>Student(s)</h2>
         <label class="boldLabel" id="addPersonLabel">Add Person</label>
-        <button id="addClientBtn">+</button>
+
+        <button id="addClientBtn" onclick="openForm()">+</button>
+        <div class="form-popup" id="myForm">
+          <!-- database integration -->
+          <form action="/action_page.php" class="form-container">
+            <h3>Add New Client</h3>
+
+            <label for="fname"><b>First Name:</b></label>
+            <input type="text" name="fname" required>
+
+            <label for="lname"><b>Last Name:</b></label>
+            <input type="text" name="lname" required>
+
+            <label for="age"><b>Age:</b></label>
+            <input type="text" name="age" required>
+
+            <label for="parent"><b>Parent:</b></label>
+            <input type="text" name="parent">
+
+            <label for="phone"><b>Phone:</b></label>
+            <input type="text" name="phone" required>
+
+            <label for="notes"><b>Notes:</b></label>
+            <input type="text" name="notes">
+                
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add">
+            <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm()" value="Close">
+          </form>
         </div>
+
+        <script>
+            window.onload = closeForm();
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+        </script>
     </body>
 </html>
