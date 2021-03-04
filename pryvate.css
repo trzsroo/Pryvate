@@ -27,7 +27,10 @@ form {
 
 input[type=submit], #addPersonBtn, #cancelBtn {
     font-size: x-large;
-    margin-left: 75px;
+}
+
+#cancelBtn {
+  margin-left: 20px;
 }
 
 #buttons {
@@ -56,7 +59,8 @@ input[type=submit], #addPersonBtn, #cancelBtn {
 .form-container {
   max-width: 300px;
   height: 100%;
-  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: #f1f1f1;
 }
 
