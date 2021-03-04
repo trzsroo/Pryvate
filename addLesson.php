@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvate.css">
+        <link rel="stylesheet" href="pryvateStyle.css">
         <title>Add Private Lesson</title>
     </head>
     <body>
@@ -52,7 +52,7 @@
         <label class="boldLabel" id="addPersonLabel">Add Person</label>
 
         <button id="addClientBtn" onclick="openForm()">+</button>
-        <div class="form-popup" id="myForm">
+        <div class="form-popup" id="clientInfo">
           <!-- database integration -->
           <form action="/action_page.php" class="form-container">
             <h3>Add New Client</h3>
@@ -74,8 +74,8 @@
 
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes">
-                
-            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add">
+
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm()" value="Close">
           </form>
         </div>
@@ -83,11 +83,11 @@
         <script>
             window.onload = closeForm();
             function openForm() {
-                document.getElementById("myForm").style.display = "block";
+                document.getElementById("clientInfo").style.display = "block";
             }
 
             function closeForm() {
-                document.getElementById("myForm").style.display = "none";
+                document.getElementById("clientInfo").style.display = "none";
             }
         </script>
     </body>
