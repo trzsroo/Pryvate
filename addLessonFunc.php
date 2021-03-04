@@ -1,5 +1,5 @@
 <?php 
-$added = False;
+
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
 //function to see if at least one person is added to either show or hid add lesson btn
@@ -131,6 +131,26 @@ function addLessonToDB() {
     //code to add lesson to datebase
 
     resetFields();
+}
+
+function addClientToDB() {
+    $stuFName = $_POST['fname'];
+    $stuLName = $_POST['lname'];
+    $stuAge = $_POST['age'];
+    $stuParent = $_POST['parent'];
+    $stuPhoneNum = $_POST['phone'];
+    $stuNotes = $_POST['notes'];
+
+    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    $db_table = "mydb.Client";
+
+    $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+
+    mysqli_query($link, $sql);
+
+    mysqli_close($link);
+
 }
 
 //USed to test some stuff
