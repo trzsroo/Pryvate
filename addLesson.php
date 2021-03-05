@@ -92,7 +92,7 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes">
 
-            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="addToStudentView();">
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="<?php addClientToDB(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm()" value="Close">
           </form>
         </div>
@@ -122,17 +122,13 @@
                 exists();
             }
 
-            // function addToStudentView() {
-            //     <?php addClientToDB(); ?>
-            //     $firstName = <?php if (isSet($_POST['fname'])) {echo $_POST['fname'];} else {echo "''";} ?>;
-            //     $lastName = <?php echo $_POST['lname']; ?>;
-            //     $phoneNum = <?php echo $_POST['phone']; ?>;
-            //     $id = <?php echo $GLOBALS['addedClientID']; ?>;
-            //     if ($firstName != '' && $lastName != '' && $phoneNum != '' && $id != '') {
-            //         str = $lastName & ", " & $firstName & " - " & $phoneNum;
-            //         addClientToStuView($is, $str);
-            //     }
-            // }
+            window.onload = function addToStudentView() {
+                $id = <?php if($addedClientID != '') {echo $addedClientID;} else { echo -1;} ?>;
+                if ($id != -1) {
+                    $str = <?php echo "client1Lbl.innerHTML = '".$_POST['lname'].", ".$_POST['fname']." - ".$_POST['phone']."';"; ?>;
+                    addClientToStuView($id, $str);
+                }
+            }
 
             function exists() {
                 if (fullNameDd.value == -1) {

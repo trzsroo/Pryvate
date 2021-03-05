@@ -156,6 +156,7 @@ function addClientToDB() {
     $stuParent = $_POST['parent'];
     $stuPhoneNum = $_POST['phone'];
     $stuNotes = $_POST['notes'];
+    global $addedClientID;
 
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
@@ -166,9 +167,8 @@ function addClientToDB() {
 
         if(mysqli_num_rows($sql_result) == 0) {
             $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
-            $result = mysqli_query($link, "SELECT id FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
-            $GLOBALS['addedClientID'] = mysqli_fetch_array($result);
             mysqli_query($link, $sql);
+            $addedClientID = $link->insert_id;
         } else {
             //clear fields
         $_POST['fname'] = '';
@@ -181,6 +181,11 @@ function addClientToDB() {
     } 
     mysqli_close($link);
 
+}
+
+function resetClientID() {
+    global $addedClientID;
+    $addedClientID = '';
 }
 
 function getClientInfo() {
