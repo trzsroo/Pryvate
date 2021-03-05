@@ -133,6 +133,21 @@ function addLessonToDB() {
     resetFields();
 }
 
+function getClientNames() {
+    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $db_table = "mydb.Client";
+                                
+    $sql = "SELECT * FROM ".$db_table." ORDER BY last_name;";
+                                            
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo "<option value='".$row['id']."'>".$row['last_name'].", ".$row['first_name']." - ".$row['phone_number']."</option>";
+        }
+
+        mysqli_close($link); 
+}
+
 function addClientToDB() {
     $stuFName = $_POST['fname'];
     $stuLName = $_POST['lname'];
@@ -145,9 +160,20 @@ function addClientToDB() {
 
     $db_table = "mydb.Client";
 
-    $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+    $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
 
-    mysqli_query($link, $sql);
+    if(is_resource($sql_result) && mysqli_num_rows($sql_result) <= 0) {
+        $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+        mysqli_query($link, $sql);
+    }
+
+    //clear fields
+    $_POST['fname'] = '';
+    $_POST['lname'] = '';
+    $_POST['age'] = '';
+    $_POST['parent'] = '';
+    $_POST['phone'] = '';
+    $_POST['notes'] = '';
 
     mysqli_close($link);
 
