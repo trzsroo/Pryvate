@@ -1,5 +1,5 @@
 <?php 
-
+$currentClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
 //function to see if at least one person is added to either show or hid add lesson btn
@@ -139,16 +139,17 @@ function getClientNames() {
                                 
     $sql = "SELECT * FROM ".$db_table." ORDER BY last_name;";
                                             
-        $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $sql);
 
-        while($row = mysqli_fetch_array($result) ) {
-            echo "<option value='".$row['id']."'>".$row['last_name'].", ".$row['first_name']." - ".$row['phone_number']."</option>";
-        }
+    while($row = mysqli_fetch_array($result) ) {
+        echo "<option value='".$row['id']."'>".$row['last_name'].", ".$row['first_name']." - ".$row['phone_number']."</option>";
+    }
 
-        mysqli_close($link); 
+    mysqli_close($link); 
 }
 
 function addClientToDB() {
+    $fullNameDd = $_POST['fullName'];
     $stuFName = $_POST['fname'];
     $stuLName = $_POST['lname'];
     $stuAge = $_POST['age'];
@@ -157,24 +158,25 @@ function addClientToDB() {
     $stuNotes = $_POST['notes'];
 
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-
+    
     $db_table = "mydb.Client";
 
-    $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
+    if ($fullNameDd == 0) {
+        $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
 
-    if(is_resource($sql_result) && mysqli_num_rows($sql_result) <= 0) {
-        $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
-        mysqli_query($link, $sql);
-    }
+        if(mysqli_num_rows($sql_result) == 0) {
+            $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+            mysqli_query($link, $sql);
+        }
 
-    //clear fields
-    $_POST['fname'] = '';
-    $_POST['lname'] = '';
-    $_POST['age'] = '';
-    $_POST['parent'] = '';
-    $_POST['phone'] = '';
-    $_POST['notes'] = '';
-
+        //clear fields
+        $_POST['fname'] = '';
+        $_POST['lname'] = '';
+        $_POST['age'] = '';
+        $_POST['parent'] = '';
+        $_POST['phone'] = '';
+        $_POST['notes'] = '';
+    } 
     mysqli_close($link);
 
 }
