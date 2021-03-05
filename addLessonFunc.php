@@ -1,5 +1,5 @@
 <?php 
-$currentClientID = '';
+$addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
 //function to see if at least one person is added to either show or hid add lesson btn
@@ -166,19 +166,25 @@ function addClientToDB() {
 
         if(mysqli_num_rows($sql_result) == 0) {
             $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+            $result = mysqli_query($link, "SELECT id FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
+            $GLOBALS['addedClientID'] = mysqli_fetch_array($result);
             mysqli_query($link, $sql);
-        }
-
-        //clear fields
+        } else {
+            //clear fields
         $_POST['fname'] = '';
         $_POST['lname'] = '';
         $_POST['age'] = '';
         $_POST['parent'] = '';
         $_POST['phone'] = '';
         $_POST['notes'] = '';
+        }
     } 
     mysqli_close($link);
 
+}
+
+function getClientInfo() {
+    echo $_POST['lname'].", ".$_POST['fname']." - ".$_POST['phone'];
 }
 
 //USed to test some stuff

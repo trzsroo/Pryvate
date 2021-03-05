@@ -49,19 +49,36 @@
 
 
         <h2>Student(s)</h2>
+        <label id="client1Lbl" class="clientLabel"></label>
+        <input type="hidden" id="client1Hid">
+        <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
+        <!-- <br/>
+        <label id="client2Lbl" class="clientLabel"></label>
+        <input type="hidden" id="client2Hid">
+        <button id="client2Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
+        <input type="hidden" id="totalNumOfClientsInThisLesson" /> -->
+        <br /><br />
         <label class="boldLabel" id="addPersonLabel">Add Client</label>
+        <button id="addClientBtn" onclick="openForm();">+</button>
 
-        <button id="addClientBtn" onclick="openForm()">+</button>
+
         <div class="form-popup" id="clientInfo">
           <!-- database integration -->
-          <form class="form-container" method="POST">
+          <form class="form-container" method="POST" id="clientForm">
             <h3>Add New Client</h3>
 
-            <label for="fname"><b>*First Name:</b></label>
-            <input type="text" name="fname" required>
+            <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
+            <select name="fullName" id="fullNamedd" onchange="exists();">
+                <option value="-1"> </option>
+                <?php getClientNames(); ?>
+                <option value="0">&lt;Add New Client&gt;</option>
+            </select>
 
-            <label for="lname"><b>*Last Name:</b></label>
-            <input type="text" name="lname" required>
+            <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
+            <input type="text" name="fname" id="fname">
+
+            <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
+            <input type="text" name="lname" id="lname">
 
             <label for="age"><b>*Age:</b></label>
             <input type="text" name="age" required>
@@ -75,19 +92,88 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes">
 
-            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="<?php addClientToDB(); ?>">
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="addToStudentView();">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm()" value="Close">
           </form>
         </div>
 
         <script>
+            var fullNameLbl = document.getElementById("fullNameLbl");
+            var fullNameDd = document.getElementById("fullNamedd");
+            var firstNameLbl = document.getElementById("firstNameLbl");
+            var firstNameBox = document.getElementById("fname");
+            var lastNameLbl = document.getElementById("lastNameLbl");
+            var lastNameBox = document.getElementById("lname");
+            var client1Lbl = document.getElementById("client1Lbl");
+            var client1Hid = document.getElementById("client1Hid");
+            var client1DelBtn = document.getElementById('client1Dlt');
+            client1DelBtn.style.display = "none";
+            var totNumOfClients = document.getElementById('totalNumOfClientsInThisLesson');
+    
             window.onload = closeForm();
+
             function openForm() {
                 document.getElementById("clientInfo").style.display = "block";
             }
 
             function closeForm() {
                 document.getElementById("clientInfo").style.display = "none";
+                fullNameDd.value = -1;
+                exists();
+            }
+
+            // function addToStudentView() {
+            //     <?php addClientToDB(); ?>
+            //     $firstName = <?php if (isSet($_POST['fname'])) {echo $_POST['fname'];} else {echo "''";} ?>;
+            //     $lastName = <?php echo $_POST['lname']; ?>;
+            //     $phoneNum = <?php echo $_POST['phone']; ?>;
+            //     $id = <?php echo $GLOBALS['addedClientID']; ?>;
+            //     if ($firstName != '' && $lastName != '' && $phoneNum != '' && $id != '') {
+            //         str = $lastName & ", " & $firstName & " - " & $phoneNum;
+            //         addClientToStuView($is, $str);
+            //     }
+            // }
+
+            function exists() {
+                if (fullNameDd.value == -1) {
+                    fullNameDd.style.display = "block";
+                    fullNameLbl.style.display = "block";
+                    firstNameLbl.style.display = "none";
+                    firstNameBox.style.display = "none";
+                    lastNameLbl.style.display = "none";
+                    lastNameBox.style.display = "none";
+                } 
+                else {
+                    fullNameDd.style.display = "none";
+                    fullNameLbl.style.display = "none";
+                    firstNameLbl.style.display = "block";
+                    firstNameBox.style.display = "block";
+                    lastNameLbl.style.display = "block";
+                    lastNameBox.style.display = "block";
+                    if (fullNameDd.value > 0) {
+                        var selVal = fullNameDd.value;
+                        closeForm();
+                        for (i = 0; i < fullNameDd.length; i++) {
+                            var currOpt = fullNameDd.options[i].value;
+                            if (selVal == currOpt) {
+                                addClientToStuView(currOpt, fullNameDd.options[i].text)
+                            }
+                        }
+                    }
+                }
+            }
+
+            function addClientToStuView(id, str) {
+                client1Lbl.innerHTML = str;
+                client1DelBtn.style.display = '';
+                client1Hid.value = id;
+            }
+
+            function delClientFromLesson(num) {
+                if (parseInt(num) == 1) {}
+                    client1Lbl.innerHTML = '';
+                    client1Hid.value = '';
+                    client1DelBtn.style.display = "none";
             }
         </script>
     </body>
