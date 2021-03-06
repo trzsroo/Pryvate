@@ -1,9 +1,16 @@
 <?php 
+session_start();
 $addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
 //function to see if at least one person is added to either show or hid add lesson btn
-
+function getTotNumInLesson() {
+    if (isset($_POST['totalNumOfClientsInThisLesson'])) {
+        echo $_POST['totalNumOfClientsInThisLesson'];
+    } else {
+        echo 0;
+    }
+}
 
 function getLessonType() {
     if (isset($_POST['lessonType'])) {
@@ -115,7 +122,9 @@ function resetFields() {
     clearLessonLvl();
     clearInstructor();
     clearRequested();
+    clearClerkName();
     clearLessonNotes();
+    clearClientIDs();
 }
 
 function addLessonToDB() {
@@ -156,7 +165,7 @@ function addClientToDB() {
     $stuParent = $_POST['parent'];
     $stuPhoneNum = $_POST['phone'];
     $stuNotes = $_POST['notes'];
-    global $addedClientID;
+    global $addedClientID, $numInLesson;
 
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
@@ -188,8 +197,34 @@ function resetClientID() {
     $addedClientID = '';
 }
 
-function getClientInfo() {
-    echo $_POST['lname'].", ".$_POST['fname']." - ".$_POST['phone'];
+function getClientIDInput($num) {
+    $clientIdHid = 'hidClient'.$num;
+    if (isset($_POST[$clientIdHid])) {
+        echo $_POST[$clientIdHid];
+    } else {
+        echo "";
+    }
+}
+
+function clearClientIDs() {
+    $_POST['hidClient1'] = '';
+    $_POST['hidClient2'] = '';
+}
+
+function getClientInfo($id) {
+    if ($id != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    
+        $db_table = "mydb.Client";
+        $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE id='".$id."';");
+
+        if(mysqli_num_rows($sql_result) > 0) {
+            $row = mysqli_fetch_array($sql_result);
+            echo '"'.$row['last_name'].", ".$row['first_name']." - ".$row['phone_number'].'"';
+        } 
+
+        mysqli_close($link);
+    }
 }
 
 //USed to test some stuff
