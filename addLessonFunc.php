@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_starst();
 $addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
@@ -10,6 +10,10 @@ function getTotNumInLesson() {
     } else {
         echo 0;
     }
+}
+
+function clearTotNumInLesson() {
+    $_POST['totalNumOfClientsInThisLesson'] = 0;
 }
 
 function getLessonType() {
@@ -125,6 +129,7 @@ function resetFields() {
     clearClerkName();
     clearLessonNotes();
     clearClientIDs();
+    clearTotNumInLesson();
 }
 
 function addLessonToDB() {

@@ -53,10 +53,10 @@
 
 
         <h2>Student(s)</h2>
-        <label id="client1Lbl" class="clientLabel"><?php $id = getClientIDInput(1); getClientInfo($id); ?></label>
+        <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
         <br/>
-        <label id="client2Lbl" class="clientLabel"><?php $id = getClientIDInput(2); getClientInfo($id);?></label>
+        <label id="client2Lbl" class="clientLabel"></label>
         <button id="client2Dlt" class="delBtn" onclick="delClientFromLesson(2);">Delete</button>
         <br /><br />
         <label class="boldLabel" id="addPersonLabel">Add Client</label>
@@ -93,7 +93,7 @@
             <input type="text" name="notes">
 
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="<?php addClientToDB(); ?>">
-            <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm()" value="Close">
+            <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm();" value="Close">
             <input type="hidden" id="hidClient1" name="hidClient1" >
             <input type="hidden" id="hidClient2" name="hidClient2" >
             <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson" value="<?php getTotNumInLesson(); ?>" >
