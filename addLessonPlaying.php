@@ -157,11 +157,11 @@
                         addClientToStuView(id1, str1, 1);
                     }
                     if (totNumOfClients.value == 3) {
-                        var id1 = <?php if($_SESSION['hidClient1'] != '') {echo $_SESSION['hidClient1'];} else { echo -1;} ?>;
-                        var str1 = "<?php getClientInfo($_SESSION['hidClient1']); ?>";
+                        var id1 = <?php if($_SESSION['hidClient2'] != '') {echo $_SESSION['hidClient2'];} else { echo -1;} ?>;
+                        var str1 = "<?php getClientInfo($_SESSION['hidClient2']); ?>";
                         addClientToStuView(id1, str1, 1);
-                        var id2 = <?php if($_SESSION['hidClient2'] != '') {echo $_SESSION['hidClient2'];} else { echo -1;} ?>;
-                        var str2 = "<?php getClientInfo($_SESSION['hidClient2']); ?>";
+                        var id2 = <?php if($_SESSION['hidClient3'] != '') {echo $_SESSION['hidClient3'];} else { echo -1;} ?>;
+                        var str2 = "<?php getClientInfo($_SESSION['hidClient3']); ?>";
                         addClientToStuView(id2, str2, 2);
                     }
                     <?php resetClientID(); ?>
