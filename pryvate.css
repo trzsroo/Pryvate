@@ -29,13 +29,10 @@ form, .clientLabel {
   font-size: large;
 }
 
-input[type=submit], #addPersonBtn, #cancelBtn {
+input[type=submit], #addPersonBtn, input[type=button] {
     font-size: x-large;
 }
 
-#cancelBtn {
-  margin-left: 20px;
-}
 
 #buttons {
   margin-left: auto;
@@ -48,6 +45,7 @@ input[type=submit], #addPersonBtn, #cancelBtn {
     padding-right: 10px;
     margin-left: 25px;
     border-radius: 100px;
+    padding-top: 20px;
 }
 
 /* The popup form - hidden by default */
