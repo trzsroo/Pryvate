@@ -200,7 +200,7 @@
                                 if (totNumOfClients.value < 3) {
                                     totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
                                     totNumOfClients2.value = totNumOfClients.value;
-                                    addLessonBtn.style.display = "none";
+                                    addLessonBtn.style.display = "";
                                     addClientToStuView(selVal, fullNameDd.options[i].text, totNumOfClients.value);
                                 }
                             }
