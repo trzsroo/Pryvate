@@ -270,6 +270,9 @@
                         movStudentView(client3HidGenLess.value, client3Lbl.innerHTML, 2);
                     }
                 }
+                if (parseInt(num) == 3) {
+                    clearClient(3);
+                }
                 totNumOfClients.value = parseInt(totNumOfClients.value) - 1;
                 totNumOfClients2.value = totNumOfClients.value;
                 if (totNumOfClients.value == 0) {
