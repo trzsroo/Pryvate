@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvateStyle.css">
+        <link rel="stylesheet" href="pryvate.css">
         <title>Add Private Lesson</title>
     </head>
     <body>
@@ -48,7 +48,7 @@
             <input type="hidden" id="client3Hid" name="hidClient3" value="<?php getClientIDInput('3'); ?>">
             <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" value="<?php getTotNumInLesson(); ?>" >
             <input type="submit" value="Add Lesson" id="addLessonBtn">
-        <button id="cancelAddingLesson" onclick="<?php resetFields(); ?>">Cancel</button>
+            <button id="cancelAddingLesson" onclick="<?php resetFields(); ?>">Cancel</button>
         </form>
         </div>
 
@@ -97,7 +97,7 @@
             <input type="text" name="notes">
 
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="<?php addClientToDB(); ?>">
-            <input type="button" id="cancelBtn" name="cancelBtn" class="btn cancel" onclick="closeForm();" value="Close">
+            <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
             <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" value="<?php getClientIDInput('1'); ?>">
             <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" value="<?php getClientIDInput('2'); ?>">
             <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" value="<?php getClientIDInput('3'); ?>">

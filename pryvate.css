@@ -29,7 +29,7 @@ form, .clientLabel {
   font-size: large;
 }
 
-input[type=submit], #addPersonBtn, input[type=button] {
+input[type=submit], #addPersonBtn, .cancelAddingLesson {
     font-size: x-large;
 }
 
@@ -45,7 +45,6 @@ input[type=submit], #addPersonBtn, input[type=button] {
     padding-right: 10px;
     margin-left: 25px;
     border-radius: 100px;
-    padding-top: 20px;
 }
 
 /* The popup form - hidden by default */
