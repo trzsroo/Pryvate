@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvate.css">
+        <link rel="stylesheet" href="pryvateStyle.css">
         <title>Add Private Lesson</title>
     </head>
     <body>

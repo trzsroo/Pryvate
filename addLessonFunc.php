@@ -240,7 +240,7 @@ function addClientToDB() {
     
     $db_table = "mydb.Client";
 
-    if ($fullNameDd == 0) {
+    if ($fullNameDd == 0 && isset($stuFName) && isset($stuLName) && isset($stuPhoneNum)) {
         $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
 
         if(mysqli_num_rows($sql_result) == 0) {
