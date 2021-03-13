@@ -8,6 +8,7 @@
             require_once('config.php');
             include 'addLessonFunc.php';
 
+//add new lesson info
         ?>
         <h1>Add New Private Lesson</h1>
         <div class="lessonInfo">
@@ -47,12 +48,13 @@
             <input type="hidden" id="client2Hid" name="hidClient2" value="<?php getClientIDInput('2');?>">
             <input type="hidden" id="client3Hid" name="hidClient3" value="<?php getClientIDInput('3'); ?>">
             <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" value="<?php getTotNumInLesson(); ?>" >
+            <!-- lesson buttons -->
             <input type="submit" value="Add Lesson" name="addLessonBtn" id="addLessonBtn" onclick="<?php addLessonToDB(); ?>">
             <button id="cancelAddingLesson" onclick="clearAllClientIDs();">Cancel</button>
         </form>
         </div>
 
-
+<!-- add and delete students from lesson buttons and label -->
         <h2>Student(s)</h2>
         <label id="client1Lbl" class="clientLabel"><?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']);} ?></label>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
@@ -63,10 +65,12 @@
         <label id="client3Lbl" class="clientLabel"><?php if (isset($_SESSION['hidClient3'])) { getClientInfo($_SESSION['hidClient3']);} ?></label>
         <button id="client3Dlt" class="delBtn" onclick="delClientFromLesson(3);">Delete</button>
         <br />
+
+<!-- add client button -->
         <label class="boldLabel" id="addPersonLabel">Add Client</label>
         <button id="addClientBtn" onclick="openForm();">+</button>
 
-
+<!-- add new client info -->
         <div class="form-popup" id="clientInfo">
           <!-- database integration -->
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
@@ -96,6 +100,8 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes">
 
+<!-- BUTTON THAT NEEDS FIXING -->
+<!-- hidden client info -->
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Client" onclick="<?php addClientToDB(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
             <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" value="<?php getClientIDInput('1'); ?>">
@@ -131,6 +137,7 @@
             var totNumOfClients = document.getElementById('totalNumOfClientsInThisLesson');
             var totNumOfClients2 = document.getElementById('totalNumOfClientsInThisLesson2');
 
+//open and close form
             function openForm() {
                 document.getElementById("clientInfo").style.display = "block";
             }
@@ -141,7 +148,7 @@
                 exists();
             }
 
-
+//add client to student view
             window.onload = function addToStudentView() {
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
@@ -213,7 +220,7 @@
                     focus(firstNameBox);
                     lastNameLbl.style.display = "none";
                     lastNameBox.style.display = "none";
-                } 
+                }
                 else {
                     fullNameDd.style.display = "none";
                     fullNameLbl.style.display = "none";
@@ -239,13 +246,14 @@
                 }
             }
 
+//add client to lesson list
             function addClientToStuView(id, str, num) {
                 if (parseInt(num) == 1) {
                     client1Lbl.innerHTML = str;
                     client1DelBtn.style.display = "";
                     client1HidGenLess.value = id;
                     client1HidClientForm.value = id;
-                } 
+                }
                 if (parseInt(num) == 2) {
                     client2Lbl.innerHTML = str;
                     client2DelBtn.style.display = "";
@@ -260,31 +268,34 @@
                 }
             }
 
+//clear client
             function clearClient(num) {
                 if (parseInt(num) == 1) {
                     client1Lbl.innerHTML = '';
                     client1HidGenLess.value = '';
                     client1HidClientForm.value = ""
                     client1DelBtn.style.display = "none";
-                } 
+                }
                 if (parseInt(num) == 2) {
                     client2Lbl.innerHTML = '';
                     client2HidGenLess.value = '';
                     client2HidClientForm.value = '';
                     client2DelBtn.style.display = "none";
-                } 
+                }
                 if (parseInt(num) == 3) {
                     client3Lbl.innerHTML = '';
                     client3HidGenLess.value = '';
                     client3HidClientForm.value = '';
                     client3DelBtn.style.display = "none";
-                } 
-            } 
+                }
+            }
 
+//clear all clients
             function clearAllClientIDs() {
                 <?php session_unset(); ?>
             }
 
+// delete single client from lesson
             function delClientFromLesson(num) {
                 if (parseInt(num) == 1) {
                     var numPeople = totNumOfClients.value;
