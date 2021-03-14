@@ -1,30 +1,41 @@
 <?php 
-// session_starst();
+session_start();
 $addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
 //function to see if at least one person is added to either show or hid add lesson btn
 function getTotNumInLesson() {
-    if (isset($_POST['totalNumOfClientsInThisLesson'])) {
-        echo $_POST['totalNumOfClientsInThisLesson'];
+    if (isset($_SESSION['totalNumOfClientsInThisLesson'])) {
+        echo $_SESSION['totalNumOfClientsInThisLesson'];
     } else {
         echo 0;
     }
 }
 
-function clearTotNumInLesson() {
-    $_POST['totalNumOfClientsInThisLesson'] = 0;
+function setTotNumInLesson() {
+    if (isset($_POST['totalNumOfClientsInThisLesson'])) {
+        $_SESSION['totalNumOfClientsInThisLesson'] = $_POST['totalNumOfClientsInThisLesson'];
+    } 
+    if (isset($_POST['totalNumOfClientsInThisLesson2'])) {
+        $_SESSION['totalNumOfClientsInThisLesson'] = $_POST['totalNumOfClientsInThisLesson2'];
+    }
 }
 
 function getLessonType() {
-    if (isset($_POST['lessonType'])) {
-        echo $_POST['lessonType'];
+    if (isset($_SESSION['lessonType'])) {
+        echo $_SESSION['lessonType'];
+    }
+}
+
+function setLessonType() {
+    if(isset($_POST['lessonType'])) {
+        $_SESSION['lessonType'] = $_POST['lessonType'];
     }
 }
 
 function lessonTypeChecked(String $lessonType) {
-    if (isset($_POST['lessonType'])) {
-        if ($_POST['lessonType'] == $lessonType) {
+    if (isset($_SESSION['lessonType'])) {
+        if ($_SESSION['lessonType'] == $lessonType) {
             echo 'checked="checked"';
         } else {
             echo '';
@@ -32,125 +43,181 @@ function lessonTypeChecked(String $lessonType) {
     }
 }
 
-function clearLessonType() {
-    $_POST['lessonType'] = '';
+function setDateOfLesson() {
+    if (isset($_POST['dateOfLesson'])) {
+        $_SESSION['dateOfLesson'] = $_POST['dateOfLesson'];
+    }
 }
 
 function getDateOfLesson() {
-    if (isset($_POST['dateOfLesson'])) {
-        echo $_POST['dateOfLesson'];
+    if (isset($_SESSION['dateOfLesson'])) {
+        echo $_SESSION['dateOfLesson'];
     }
 }
 
-function clearDateOfLesson(){
-    $_POST['dateOfLesson'] = '';
+function setTimeOfLesson() {
+    if (isset($_POST['timeOfLesson'])) {
+        $_SESSION['timeOfLesson'] = $_POST['timeOfLesson'];
+    }
 }
 
 function getTimeOfLesson() {
-    if (isset($_POST['timeOfLesson'])) {
-        echo $_POST['timeOfLesson'];
+    if (isset($_SESSION['timeOfLesson'])) {
+        echo $_SESSION['timeOfLesson'];
     }
 }
 
-function clearTimeOfLesson() {
-    $_POST['timeOfLesson'] = '';
+function setLenOfLesson() {
+    if (isset($_POST['lenOfLesson'])){
+        $_SESSION['lenOfLesson'] = $_POST['lenOfLesson'];      
+    }
 }
 
 function getLenOfLesson() {
-    if (isset($_POST['lenOfLesson'])) {
-        echo $_POST['lenOfLesson'];
+    if (isset($_SESSION['lenOfLesson'])) {
+        echo $_SESSION['lenOfLesson'];
     }
 }
 
-function clearLenOfLesson() {
-    $_POST['lenOfLesson'] = '';
+function setLessonLvl() {
+    if (isset($_POST['lessonLvl'])) {
+        $_SESSION['lessonLvl'] = $_POST['lessonLvl'];      
+    }
 }
 
 function getLessonLvl() {
-    if (isset($_POST['lessonLvl'])) {
-        echo $_POST['lessonLvl'];
+    if (isset($_SESSION['lessonLvl'])) {
+        echo $_SESSION['lessonLvl'];
     }
 }
 
-function clearLessonLvl() {
-    $_POST['lessonLvl'] = '';
+function setInstructor() {
+    if (isset($_POST['instructor'])) {
+        $_SESSION['instructor'] = $_POST['instructor'];
+    }
 }
 
 function getInstructor() {
-    if (isset($_POST['instructor'])) {
-        echo $_POST['instructor'];
+    if (isset($_SESSION['instructor'])) {
+        echo $_SESSION['instructor'];
     }
 }
 
-function clearInstructor() {
-    $_POST['instructor'] = '';
+function setRequested() {
+    if (isset($_POST['requested'])) {
+        $_SESSION['requested'] =  $_POST['requested'];
+    }
+    
 }
 
 function getRequested() {
-    if (isset($_POST['requested'])) {
-        if ($_POST['requested'] == 'requested') {
+    if (isset($_SESSION['requested'])) {
+        if ($_SESSION['requested'] == 'requested') {
+            // for radio button on addLesson.php
             echo 'checked=True';
         }
     }
 }
 
-function clearRequested() {
-    $_POST['requested'] = '';
+function setLessonNotes() {
+    if (isset($_POST['lessonNotes'])) {
+        $_SESSION['lessonNotes'] = $_POST['lessonNotes'];
+    }
 }
 
 function getLessonNotes() {
-    if (isset($_POST['lessonNotes'])) {
-        echo $_POST['lessonNotes'];
+    if (isset($_SESSION['lessonNotes'])) {
+        echo $_SESSION['lessonNotes'];
     }
 }
 
-function clearLessonNotes() {
-    $_POST['lessonNotes'] = '';
+function setClerkName() {
+    if (isset($_POST['clerkName']))
+    $_SESSION['clerkName'] = $_POST['clerkName'];
 }
 
 function getClerkName() {
-    if (isset($_POST['clerkName'])) {
-        echo $_POST['clerkName'];
+    if (isset($_SESSION['clerkName'])) {
+        echo $_SESSION['clerkName'];
     }
 }
 
-function clearClerkName() {
-    $_POST['clerkName'] = '';
-}
-
-function resetFields() {
-    clearLessonType();
-    clearDateOfLesson();
-    clearTimeOfLesson();
-    clearLenOfLesson();
-    clearLessonLvl();
-    clearInstructor();
-    clearRequested();
-    clearClerkName();
-    clearLessonNotes();
-    clearClientIDs();
-    clearTotNumInLesson();
+function setLessonFields() {
+    setLessonType();
+    setDateOfLesson();
+    setTimeOfLesson();
+    setLenOfLesson();
+    setLessonLvl();
+    setInstructor();
+    setRequested();
+    setClerkName();
+    setLessonNotes();
 }
 
 function addLessonToDB() {
-    $lessonType = getLessonType();
-    $dateOLesson = getDateOfLesson();
-    $timeOfLesson = getTimeOfLesson();
-    $lenOfLesson = getLenOfLesson();
-    $lessonLvl = getLessonLvl();
-    $instructor = getInstructor();
-    $req = getRequested();
-    $lessonNotes = getLessonNotes();
+    if (isset($_POST['addLessonBtn'])) {
+        setLessonFields();
+        setClientIDs();
+        setTotNumInLesson();
+        if (isset($_POST['Lessontype'])) {
+            $lessonType = $_POST['lessonType'];
+        } else  {
+            $lessonType = '';
+        }
+        
+        $lessonTypeInput = 0;
+        if ($lessonType = 'SB') {
+            $lessonTypeInput = 1;
+        }
+        $dateOfLesson = $_POST['dateOfLesson'];
+        $timeOfLesson = $_POST['timeOfLesson'];
+        $date_time = date('Y-m-d H:i:s', strtotime("$dateOfLesson $timeOfLesson"));
+        $client1ID = $_POST['hidClient1'];
+        $client2ID = $_POST['hidClient2'];
+        $client3ID = $_POST['hidClient3'];
+        $lenOfLesson = $_POST['lenOfLesson'];
+        $lessonLvl = $_POST['lessonLvl'];
+        $instructor = $_POST['instructor'];
+        if (isset($_POST['requested'])) {
+            $req = $_POST['requested'];
+        } else {
+            $req = '';
+        }
+        $reqInput = 0;
+        if ($req == 'requested') {
+            $reqInput = 1;
+        }
+        $lessonNotes = $_POST['lessonNotes'];
+        $clerkName = $_POST['clerkName'];
 
-    //code to add lesson to datebase
+        
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-    resetFields();
+        $db_table = "mydb.Lesson";
+        if ( $client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "") {
+            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE date_time_of_lesson='".$date_time."' AND".
+                " client1_id='".$client1ID."' AND client2_id='".$client2ID."' AND client3_id='".$client3ID."';");
+
+            if(mysqli_num_rows($sql_result) == 0) {
+                // inserts into DB if an instance doesn't exist
+                $sql = "INSERT INTO ".$db_table." (date_time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
+                    "level, clerk_name, length, instructor, desk_or_request, notes) ".
+                    "VALUES ('$date_time', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
+                mysqli_query($link, $sql);
+                closeSession();
+            } 
+            
+        }
+
+        mysqli_close($link);
+    } 
 }
 
 function getClientNames() {
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $db_table = "mydb.Client";
-                                
+    
+    // selects all clients in DB
     $sql = "SELECT * FROM ".$db_table." ORDER BY last_name;";
                                             
     $result = mysqli_query($link, $sql);
@@ -163,38 +230,41 @@ function getClientNames() {
 }
 
 function addClientToDB() {
-    $fullNameDd = $_POST['fullName'];
-    $stuFName = $_POST['fname'];
-    $stuLName = $_POST['lname'];
-    $stuAge = $_POST['age'];
-    $stuParent = $_POST['parent'];
-    $stuPhoneNum = $_POST['phone'];
-    $stuNotes = $_POST['notes'];
-    global $addedClientID, $numInLesson;
+    // to save client info in case page reload
+    if (isset($_POST['addPersonBtn'])) {
+        $fullNameDd = $_POST['fullName'];
+        $stuFName = $_POST['fname'];
+        $stuLName = $_POST['lname'];
+        $stuAge = $_POST['age'];
+        $stuParent = $_POST['parent'];
+        $stuPhoneNum = $_POST['phone'];
+        $stuNotes = $_POST['notes'];
+        global $addedClientID;
+        resetClientID();
 
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        setClientIDs();
+-
+        setTotNumInLesson();
+
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
-    $db_table = "mydb.Client";
+        $db_table = "mydb.Client";
+        // checks to make sure the first name, last name, and phone number are 
+        // set to check if an instance already exists
+        if ($fullNameDd == 0 && $stuFName != "" && $stuLName != "" && $stuPhoneNum != "") {
+            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
 
-    if ($fullNameDd == 0) {
-        $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
-
-        if(mysqli_num_rows($sql_result) == 0) {
-            $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
-            mysqli_query($link, $sql);
-            $addedClientID = $link->insert_id;
-        } else {
-            //clear fields
-        $_POST['fname'] = '';
-        $_POST['lname'] = '';
-        $_POST['age'] = '';
-        $_POST['parent'] = '';
-        $_POST['phone'] = '';
-        $_POST['notes'] = '';
+            if(mysqli_num_rows($sql_result) == 0) {
+                // inserts into DB if an instance doesn't exist
+                $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+                mysqli_query($link, $sql);
+            
+                //used to add new client in the front-end (addLesson.php)
+                $addedClientID = $link->insert_id;
+            } 
         }
-    } 
-    mysqli_close($link);
-
+        mysqli_close($link);
+    }
 }
 
 function resetClientID() {
@@ -202,56 +272,61 @@ function resetClientID() {
     $addedClientID = '';
 }
 
+function setClientIDs() {
+    if (isset($_POST['addPersonBtn'])) {
+        $_SESSION['hidClient1'] = $_POST['hidClient1AddClientForm'];
+        $_SESSION['hidClient2'] = $_POST['hidClient2AddClientForm'];
+        $_SESSION['hidClient3'] = $_POST['hidClient3AddClientForm'];
+    } 
+    if (isset($_POST['addLessonBtn'])) {
+        $_SESSION['hidClient1'] = $_POST['hidClient1'];
+        $_SESSION['hidClient2'] = $_POST['hidClient2'];
+        $_SESSION['hidClient3'] = $_POST['hidClient3'];
+    }
+        
+}
+
 function getClientIDInput($num) {
     $clientIdHid = 'hidClient'.$num;
-    if (isset($_POST[$clientIdHid])) {
-        echo $_POST[$clientIdHid];
+    if (isset($_SESSION[$clientIdHid])) {
+        echo $_SESSION[$clientIdHid];
     } else {
         echo "";
     }
 }
 
 function clearClientIDs() {
-    $_POST['hidClient1'] = '';
-    $_POST['hidClient2'] = '';
+    // clears hidden client id data
+    unset($_SESSION['hidClient1']);
+    unset($_SESSION['hidClient2']);
+    unset($_SESSION['hidClient3']);
 }
 
 function getClientInfo($id) {
+    // makes sure there is a client id sent
     if ($id != "") {
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
         $db_table = "mydb.Client";
         $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE id='".$id."';");
 
+        //if client instance exists
         if(mysqli_num_rows($sql_result) > 0) {
             $row = mysqli_fetch_array($sql_result);
-            echo '"'.$row['last_name'].", ".$row['first_name']." - ".$row['phone_number'].'"';
-        } 
+            echo $row['last_name'].", ".$row['first_name']." - ".$row['phone_number'];
+        } else {
+            echo "";
+        }
 
         mysqli_close($link);
+    } else {
+        echo "";
     }
 }
 
-//USed to test some stuff
-// if ($_SERVER["REQUEST_METHOD"] == "GET") {
-//     $db_table = "Lesson";
-
-//     $type = $_POST['lessonLvl'];
-//     echo $type;
-//     // $dateOfLesson = $_POST['dateOfLesson'];
-//     // $email = $_POST['email'];
-//     // $password = $_POST['password'];
-//     // $DOB = $_POST['dob'];
-//     // $Genre = $_POST['Genre'];
-
-//     // $sql = "INSERT INTO " .$db_table. " (name, user_name, user_email, dob, genre, user_password)
-//     //     VALUES ('$name','$username','$email','$DOB','$Genre','$password');";
-
-//     // mysqli_query($connection, $sql);
-
-//     // header("Location:{location of view private lesson}.php"); 
-
-//     // mysqli_close($connection);
-// }
+function closeSession(){
+    session_unset();
+    session_destroy();
+}
 
 ?>
