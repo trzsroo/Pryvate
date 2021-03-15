@@ -230,6 +230,8 @@ function getClientNames() {
 }
 
 function addClientToDB() {
+    setClientIDs();
+    
     // to save client info in case page reload
     if (isset($_POST['addPersonBtn'])) {
         $fullNameDd = $_POST['fullName'];
@@ -242,7 +244,6 @@ function addClientToDB() {
         global $addedClientID;
         resetClientID();
 
-        setClientIDs();
 -
         setTotNumInLesson();
 

@@ -148,13 +148,30 @@
                 exists();
             }
 
+            window.onload = function reloadExisitingData() {
+                addToStudentView();
+            }
+
 //add client to student view
-            window.onload = function addToStudentView() {
+            function addToStudentView() {
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
-                if (totNumOfClients.value > 0) {
-                    switch(totNumOfClients.value) {
+                showExistingClients(totNumOfClients.value);
+                if (id != "" && totNumOfClients.value < 3) {
+                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
+                    totNumOfClients2.value = totNumOfClients.value;
+                    str = "<?php getClientInfo($addedClientID); ?>";
+                    addClientToStuView(id, str, totNumOfClients.value);
+                    
+                    <?php if (isset($_POST['addLessonBtn'])) { resetClientID();} ?>
+                }
+                (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";
+            }
+
+            function showExistingClients(numInLesson) {
+                if (numInLesson > 0) {
+                    switch(numInLesson) {
                         case '1':
                             var id1 = "<?php if(isset($_SESSION['hidClient1'])) {echo $_SESSION['hidClient1'];} else { echo -1;} ?>";
                             var str1 = "<?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>";
@@ -183,27 +200,6 @@
                             //shouldn't go in here
                     }
                 }
-                if (id != "" && totNumOfClients.value < 3) {
-                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
-                    totNumOfClients2.value = totNumOfClients.value;
-                    str = "<?php getClientInfo($addedClientID); ?>";
-                    addClientToStuView(id, str, totNumOfClients.value);
-                    if (totNumOfClients.value == 2) {
-                        var id1 = "<?php if(isset($_SESSION['hidClient1'])) {echo $_SESSION['hidClient1'];} else { echo -1;} ?>";
-                        var str1 = "<?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>";
-                        addClientToStuView(id1, str1, 1);
-                    }
-                    if (totNumOfClients.value == 3) {
-                        var id1 = "<?php if(isset($_SESSION['hidClient1'])) {echo $_SESSION['hidClient1'];} else { echo -1;} ?>";
-                        var str1 = "<?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>";
-                        addClientToStuView(id1, str1, 1);
-                        var id2 = "<?php if(isset($_SESSION['hidClient2'])) {echo $_SESSION['hidClient2'];} else { echo -1;} ?>";
-                        var str2 = "<?php if (isset($_SESSION['hidClient2'])) { getClientInfo($_SESSION['hidClient2']);  }?>";
-                        addClientToStuView(id2, str2, 2);
-                    }
-                    <?php if (isset($_POST['addLessonBtn'])) { resetClientID();} ?>
-                }
-                (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";
             }
 
             function movStudentView(id, str, num) {
