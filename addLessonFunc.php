@@ -171,7 +171,6 @@ function addLessonToDB() {
         }
         $dateOfLesson = $_POST['dateOfLesson'];
         $timeOfLesson = $_POST['timeOfLesson'];
-        $date_time = date('Y-m-d H:i:s', strtotime("$dateOfLesson $timeOfLesson"));
         $client1ID = $_POST['hidClient1'];
         $client2ID = $_POST['hidClient2'];
         $client3ID = $_POST['hidClient3'];
@@ -195,14 +194,14 @@ function addLessonToDB() {
 
         $db_table = "mydb.Lesson";
         if ( $client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "") {
-            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE date_time_of_lesson='".$date_time."' AND".
+            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE date_of_lesson='".$dateOfLesson."' AND time_of_lesson='".$timeOfLesson."' AND".
                 " client1_id='".$client1ID."' AND client2_id='".$client2ID."' AND client3_id='".$client3ID."';");
 
             if(mysqli_num_rows($sql_result) == 0) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (date_time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
+                $sql = "INSERT INTO ".$db_table." (date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
                     "level, clerk_name, length, instructor, desk_or_request, notes) ".
-                    "VALUES ('$date_time', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
+                    "VALUES ('$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
                 mysqli_query($link, $sql);
                 closeSession();
             } 
