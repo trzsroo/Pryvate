@@ -204,6 +204,7 @@ function addLessonToDB() {
                     "VALUES ('$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
                 mysqli_query($link, $sql);
                 closeSession();
+                header('Location: viewLesson.php');
             } 
             
         }
