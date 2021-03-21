@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvate.css">
+        <link rel="stylesheet" href="pryvateSS.css">
         <title>Add Private Lesson</title>
     </head>
     <body>
@@ -12,46 +12,46 @@
         ?>
         <h1>Add New Private Lesson</h1>
         <div class="lessonInfo">
-        <h2>General Lesson Information</h2>
-        <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <label class="boldLabel">Type of Lesson: </label>
-            <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" <?php if(isset($_SESSION['lessonType'])) { if($_SESSION['lessonType'] == 'ski') { echo 'checked';}} ?>>
-            <label for="ski">Ski </label>
-            <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" <?php lessonTypeChecked('SB'); ?>>
-            <label for="SB">Snowboard </label>
-            <br/><br/>
-            <label class="boldLabel">Date of Lesson: </label>
-            <input type="date" name="dateOfLesson" id="dateOfLesson" min=<?php echo $minDate;?> value=<?php getDateOfLesson(); ?>>
-            <br/><br/>
-            <label class="boldLabel">Time of Lesson: </label>
-            <input type="time" name="timeOfLesson" id="timeOfLesson" min="07:00" max="21:00" value=<?php getTimeOfLesson(); ?>>
-            <br/><br/>
-            <label class="boldLabel">Length of Lesson: </label>
-            <input type="number" name="lenOfLesson" id="lenOfLesson" step="0.5" value=<?php getLenOfLesson(); ?>>
-            <label> hour(s)</label>
-            <br/><br/>
-            <label class="boldLabel">Lesson Level: </label>
-            <input type="text" name="lessonLvl" id="lessonLvl" size="3" maxlength="3" value=<?php getLessonLvl(); ?>>
-            <br/><br/>
-            <label class="boldLabel">Instructor: </label>
-            <input type="text" name="instructor" id="instructor" value=<?php getInstructor(); ?>>
-            <label class="boldLabel">&nbsp;Requested? </label>
-            <input type="checkbox" name="requested" id="requested" value="requested" <?php getRequested(); ?>>
-            <br/><br/>
-            <label class="boldLabel">Notes: </label>
-            <input type="text" name="lessonNotes" id="lessonNotes" width="50" value=<?php getLessonNotes(); ?>>
-            <br/><br>
-            <label class="boldLabel">Clerk: </label>
-            <input type="text" name="clerkName" id="clerkName" maxlength="3" value=<?php getClerkName(); ?>>
-            <br /><br />
-            <input type="hidden" id="client1Hid" name="hidClient1" value="<?php getClientIDInput('1');?>">
-            <input type="hidden" id="client2Hid" name="hidClient2" value="<?php getClientIDInput('2');?>">
-            <input type="hidden" id="client3Hid" name="hidClient3" value="<?php getClientIDInput('3'); ?>">
-            <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" value="<?php getTotNumInLesson(); ?>" >
-            <!-- lesson buttons -->
-            <input type="submit" value="Add Lesson" name="addLessonBtn" id="addLessonBtn" onclick="<?php addLessonToDB(); ?>">
-            <button id="cancelAddingLesson" onclick="clearAllClientIDs();">Cancel</button>
-        </form>
+            <button id="cancelAddingLesson" style="float: right;" title="Cancel adding lesson">x</button>
+            <h2>General Lesson Information</h2>
+            <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <label class="boldLabel">Type of Lesson: </label>
+                <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" <?php if(isset($_SESSION['lessonType'])) { if($_SESSION['lessonType'] == 'ski') { echo 'checked';}} ?>>
+                <label for="ski">Ski </label>
+                <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" <?php lessonTypeChecked('SB'); ?>>
+                <label for="SB">Snowboard </label>
+                <br/><br/>
+                <label class="boldLabel">Date of Lesson: </label>
+                <input type="date" name="dateOfLesson" id="dateOfLesson" min=<?php echo $minDate;?> value=<?php getDateOfLesson(); ?>>
+                <br/><br/>
+                <label class="boldLabel">Time of Lesson: </label>
+                <input type="time" name="timeOfLesson" id="timeOfLesson" min="07:00" max="21:00" value=<?php getTimeOfLesson(); ?>>
+                <br/><br/>
+                <label class="boldLabel">Length of Lesson: </label>
+                <input type="number" name="lenOfLesson" id="lenOfLesson" step="0.5" value=<?php getLenOfLesson(); ?>>
+                <label> hour(s)</label>
+                <br/><br/>
+                <label class="boldLabel">Lesson Level: </label>
+                <input type="text" name="lessonLvl" id="lessonLvl" size="3" maxlength="3" value=<?php getLessonLvl(); ?>>
+                <br/><br/>
+                <label class="boldLabel">Instructor: </label>
+                <input type="text" name="instructor" id="instructor" value=<?php getInstructor(); ?>>
+                <label class="boldLabel">&nbsp;Requested? </label>
+                <input type="checkbox" name="requested" id="requested" value="requested" <?php getRequested(); ?>>
+                <br/><br/>
+                <label class="boldLabel">Notes: </label>
+                <input type="text" name="lessonNotes" id="lessonNotes" width="50" value=<?php getLessonNotes(); ?>>
+                <br/><br>
+                <label class="boldLabel">Clerk: </label>
+                <input type="text" name="clerkName" id="clerkName" maxlength="3" value=<?php getClerkName(); ?>>
+                <br /><br />
+                <input type="hidden" id="client1Hid" name="hidClient1" value="<?php getClientIDInput('1');?>">
+                <input type="hidden" id="client2Hid" name="hidClient2" value="<?php getClientIDInput('2');?>">
+                <input type="hidden" id="client3Hid" name="hidClient3" value="<?php getClientIDInput('3'); ?>">
+                <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" value="<?php getTotNumInLesson(); ?>" >
+                <!-- lesson buttons -->
+                <input type="submit" value="Add Lesson" name="addLessonBtn" id="addLessonBtn" onclick="<?php addLessonToDB(); ?>">
+            </form>
         </div>
 
 <!-- add and delete students from lesson buttons and label -->
@@ -149,6 +149,7 @@
             }
 
             window.onload = function reloadExisitingData() {
+                // window.location.reload(true);
                 addToStudentView();
             }
 
@@ -157,14 +158,16 @@
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
-                showExistingClients(totNumOfClients.value);
-                if (id != "" && totNumOfClients.value < 3) {
-                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
-                    totNumOfClients2.value = totNumOfClients.value;
-                    str = "<?php getClientInfo($addedClientID); ?>";
-                    addClientToStuView(id, str, totNumOfClients.value);
-                    
-                    <?php if (isset($_POST['addLessonBtn'])) { resetClientID();} ?>
+                var ifAdded = parseInt(totNumOfClients.value) + 1;
+                if(ifAdded <= 3){
+                    showExistingClients(ifAdded);
+                } else {
+                    showExistingClients(totNumOfClients.value);
+
+                }
+                if (id != ""){
+                   getDdData();
+                    <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";
             }
@@ -287,8 +290,14 @@
             }
 
 //clear all clients
-            function clearAllClientIDs() {
-                <?php session_unset(); ?>
+            document.getElementById('cancelAddingLesson').onclick = function clearSession() {
+                <?php session_unset();
+                 $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
+                 $urlLink = str_replace("addLesson.php", "", $urlLink);
+                 $viewLessonURL = $urlLink."viewLesson.php";
+                 //cancelAddingLesson
+                ?>
+                location.href = "<?php echo $viewLessonURL?>"
             }
 
 // delete single client from lesson
