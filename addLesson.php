@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvateSS.css">
+        <link rel="stylesheet" href="pryvate.css">
         <title>Add Private Lesson</title>
     </head>
     <body>
@@ -149,7 +149,6 @@
             }
 
             window.onload = function reloadExisitingData() {
-                // window.location.reload(true);
                 addToStudentView();
             }
 
@@ -158,15 +157,15 @@
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
-                var ifAdded = parseInt(totNumOfClients.value) + 1;
-                if(ifAdded <= 3){
+                var ifAdded = (parseInt(totNumOfClients.value) + 1).toString();
+                if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
+                    totNumOfClients.value = ifAdded;
                 } else {
                     showExistingClients(totNumOfClients.value);
-
                 }
                 if (id != ""){
-                   getDdData();
+                    addLessonBtn.click();
                     <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";
@@ -207,7 +206,7 @@
 
             function movStudentView(id, str, num) {
                 addClientToStuView(id, str, num);
-                clearClient(totNumOfClients.value);
+                clearClient(num + 1);
             }
 
             function exists() {

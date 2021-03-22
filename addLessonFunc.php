@@ -262,6 +262,12 @@ function addClientToDB() {
             
                 //used to add new client in the front-end (addLesson.php)
                 $addedClientID = $link->insert_id;
+                $num = $_SESSION['totalNumOfClientsInThisLesson'] + 1;
+                if ($num <= 3) {
+                    $clientIdHid = 'hidClient'.$num;
+                    $_SESSION[$clientIdHid] = $addedClientID;
+                }
+                
             } 
         }
         mysqli_close($link);
