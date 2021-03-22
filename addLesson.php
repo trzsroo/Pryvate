@@ -137,6 +137,16 @@
             var totNumOfClients = document.getElementById('totalNumOfClientsInThisLesson');
             var totNumOfClients2 = document.getElementById('totalNumOfClientsInThisLesson2');
 
+            
+            var lDate = document.getElementById('dateOfLesson');
+            var lTime = document.getElementById('timeOfLesson');
+            var lLen = document.getElementById('lenOfLesson');
+            var lLevel = document.getElementById('lessonLvl');
+            var lInstr = document.getElementById('instructor');
+            var lRequ = document.getElementById('requested');
+            var lNotes = document.getElementById('lessonNotes');
+            var lClerk = document.getElementById('clerkName');
+
 //open and close form
             function openForm() {
                 document.getElementById("clientInfo").style.display = "block";
@@ -148,8 +158,39 @@
                 exists();
             }
 
-            window.onload = function reloadExisitingData() {
+            window.onload = function reloadExistingData() {
+                reloadFormInfo();
                 addToStudentView();
+            }
+
+            //reload form data
+            function reloadFormInfo() {
+                var dateR = "<?php  if (isset($_SESSION['dateOfLesson'])) {echo $_SESSION['dateOfLesson'];}?>";
+                lDate.value = dateR;
+
+                var timeR = "<?php  if (isset($_SESSION['timeOfLesson'])) {echo $_SESSION['timeOfLesson'];}?>";
+                lTime.value = timeR;
+
+                var lenR = "<?php  if (isset($_SESSION['lenOfLesson'])) {echo $_SESSION['lenOfLesson'];}?>";
+                lLen.value = lenR;
+
+                var levelR = "<?php  if (isset($_SESSION['lessonLvl'])) {echo $_SESSION['lessonLvl'];}?>";
+                lLevel.value = levelR;
+
+                var instructorR = "<?php  if (isset($_SESSION['instructor'])) {echo $_SESSION['instructor'];}?>";
+                lInstr.value = instructorR;
+
+                var requR = "<?php  if (isset($_SESSION['requested'])) {echo true;} else { echo false;}?>";
+                lRequ.checked = requR;
+
+                var notesR = "<?php  if (isset($_SESSION['lessonNotes'])) {
+                echo $_SESSION['lessonNotes'];}?>";
+                lNotes.value = notesR;
+
+                var clerkR = "<?php  if (isset($_SESSION['clerkName'])) {
+                echo $_SESSION['clerkName'];}?>";
+                lClerk.value = clerkR;
+
             }
 
 //add client to student view
