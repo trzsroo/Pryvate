@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="pryvateS.css">
+        <link rel="stylesheet" href="pryvate.css">
         <title>View Private Lessons</title>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -193,7 +193,7 @@
                 // var k = new Date(d2.value).getTime();
                 
                 // for (i; i <= k; i += one_day) {
-                const my_day = new Date(i);
+                const my_day = new Date(i + one_day);
                 const ye = new Intl.DateTimeFormat('default', { year: 'numeric' }).format(my_day);
                 const mo = new Intl.DateTimeFormat('default', { month: '2-digit' }).format(my_day);
                 const da = new Intl.DateTimeFormat('default', { day: '2-digit' }).format(my_day);

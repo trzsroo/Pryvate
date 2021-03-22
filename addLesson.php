@@ -67,7 +67,7 @@
         <br />
 
 <!-- add client button -->
-        <label class="boldLabel" id="addPersonLabel">Add Client</label>
+        <label class="boldLabel" id="addPersonLabel">Add Student</label>
         <button id="addClientBtn" onclick="openForm();">+</button>
 
 <!-- add new client info -->
@@ -79,7 +79,7 @@
             <select name="fullName" id="fullNamedd" onchange="exists();">
                 <option value="-1"> </option>
                 <?php getClientNames(); ?>
-                <option value="0">&lt;Add New Client&gt;</option>
+                <option value="0">&lt;Add New Student&gt;</option>
             </select>
 
             <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
