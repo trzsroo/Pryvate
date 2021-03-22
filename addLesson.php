@@ -15,16 +15,16 @@
             <button id="cancelAddingLesson" style="float: right;" title="Cancel adding lesson">x</button>
             <h2>General Lesson Information</h2>
             <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                <label class="boldLabel">Type of Lesson: </label>
+                <label class="boldLabel">*Type of Lesson: </label>
                 <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" <?php if(isset($_SESSION['lessonType'])) { if($_SESSION['lessonType'] == 'ski') { echo 'checked';}} ?>>
                 <label for="ski">Ski </label>
                 <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" <?php lessonTypeChecked('SB'); ?>>
                 <label for="SB">Snowboard </label>
                 <br/><br/>
-                <label class="boldLabel">Date of Lesson: </label>
+                <label class="boldLabel">*Date of Lesson: </label>
                 <input type="date" name="dateOfLesson" id="dateOfLesson" min=<?php echo $minDate;?> value=<?php getDateOfLesson(); ?>>
                 <br/><br/>
-                <label class="boldLabel">Time of Lesson: </label>
+                <label class="boldLabel">*Time of Lesson: </label>
                 <input type="time" name="timeOfLesson" id="timeOfLesson" min="07:00" max="21:00" value=<?php getTimeOfLesson(); ?>>
                 <br/><br/>
                 <label class="boldLabel">Length of Lesson: </label>
@@ -42,7 +42,7 @@
                 <label class="boldLabel">Notes: </label>
                 <input type="text" name="lessonNotes" id="lessonNotes" width="50" value=<?php getLessonNotes(); ?>>
                 <br/><br>
-                <label class="boldLabel">Clerk: </label>
+                <label class="boldLabel">*Clerk: </label>
                 <input type="text" name="clerkName" id="clerkName" maxlength="3" value=<?php getClerkName(); ?>>
                 <br /><br />
                 <input type="hidden" id="client1Hid" name="hidClient1" value="<?php getClientIDInput('1');?>">
@@ -55,7 +55,7 @@
         </div>
 
 <!-- add and delete students from lesson buttons and label -->
-        <h2>Student(s)</h2>
+        <h2 title="At least one student required to enter lesson">*Student(s)</h2>
         <label id="client1Lbl" class="clientLabel"><?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']);} ?></label>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
         <br/>
