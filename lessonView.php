@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="text-align: center">
                                     <label for="includes" title="Shows records that have these particular fields checked.">Are</label><input 
                                     type="radio" id="includes" name="method" onchange="changeColorIndicationCHECKS(this, 'honeydew')" title="Shows records that have these particular fields checked." checked/>
                                     <label for="excludes" title="Shows records that do not have these particular fields checked.">Are not</label><input 
@@ -69,12 +69,12 @@
                                 </td> -->
                                 <td id="checks">
                                     <div style="float: left; vertical-align: middle;">
-                                        <input type="checkbox" name="ticked_fields" id="r" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="r">R</label>
-                                        <input type="checkbox" name="ticked_fields" id="p" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="p">P</label>
-                                        <input type="checkbox" name="ticked_fields" id="ci" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="ci">CI</label>
-                                        <input type="checkbox" name="ticked_fields" id="f" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="f">F</label>
+                                        <input type="checkbox" name="ticked_fields" id="r"/><label for="r">Req.</label>
+                                        <input type="checkbox" name="ticked_fields" id="p"/><label for="p">Paid</label>
+                                        <input type="checkbox" name="ticked_fields" id="ci"/><label for="ci">Ch. In</label>
+                                        <input type="checkbox" name="ticked_fields" id="f"/><label for="f">Fin.</label>
                                         <input id="tfdel" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
-                                        onclick="uncheckAll(), this.blur(), changeColorIndicationCHECKS(this, 'initial');"/>
+                                        onclick="changeColorIndicationCHECKS(this, 'initial'), uncheckAll(), this.blur();"/>
                                     </div>
                                 </td>
                             </tr>
@@ -214,6 +214,8 @@
 
             function applyAllFilters(input_if_date) {
                 dateShift(input_if_date);
+
+                changeColorIndicationCHECKS(this, active_filter_color);
                 
                 const rad_all = document.getElementById("all");
                 const rad_ski = document.getElementById("ski");
