@@ -20,9 +20,9 @@
     <body>
         <?php
             require_once('config.php');
-            include 'addLessonFunc.php';
-
-//add new lesson info
+            $urlLink =(string) htmlspecialchars($_SERVER["PHP_SELF"]);
+            $urlLink = str_replace("viewLesson.php", "", $urlLink);
+            $addLessonURL = $urlLink."addLesson.php";
         ?>
         <h1>Scheduled Lessons</h1>
         <a style="float: right;" href="<?php echo $addLessonURL; ?>"><label class="boldLabel">Add Lesson</label><button id="addLessonPlusBtn">+</button></a>
