@@ -69,10 +69,10 @@
                                 </td> -->
                                 <td id="checks">
                                     <div style="float: left; vertical-align: middle;">
-                                        <input type="checkbox" name="ticked_fields" id="r"/><label for="r">Req.</label>
-                                        <input type="checkbox" name="ticked_fields" id="p"/><label for="p">Paid</label>
-                                        <input type="checkbox" name="ticked_fields" id="ci"/><label for="ci">Ch. In</label>
-                                        <input type="checkbox" name="ticked_fields" id="f"/><label for="f">Fin.</label>
+                                        <input type="checkbox" name="ticked_fields" id="r" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="r">Req.</label>
+                                        <input type="checkbox" name="ticked_fields" id="p" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="p">Paid</label>
+                                        <input type="checkbox" name="ticked_fields" id="ci" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="ci">Ch. In</label>
+                                        <input type="checkbox" name="ticked_fields" id="f" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="f">Fin.</label>
                                         <input id="tfdel" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
                                         onclick="changeColorIndicationCHECKS(this, 'initial'), uncheckAll(), this.blur();"/>
                                     </div>
@@ -214,8 +214,6 @@
 
             function applyAllFilters(input_if_date) {
                 dateShift(input_if_date);
-
-                changeColorIndicationCHECKS(this, active_filter_color);
                 
                 const rad_all = document.getElementById("all");
                 const rad_ski = document.getElementById("ski");
@@ -252,7 +250,10 @@
                                             .column(9).search(f.checked ? '✔' : '');
                     }
                     if (excl && !strict) {
-                        // ^.{0}$ looks for a field with exacty nothing
+                        // ^.{0}$ looks for a field with exacty nothing;
+                        // ^.{0}% looks for a field with any number of characters (up to 3; could have
+                        // been ^.{0,}$ but the 3 makes the difference more obvious, and works the same as long
+                        // as we are working with 1 character in the field at most, namely a checkmark or nothing)
                         $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
                                             .column(7).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
                                             .column(8).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
@@ -277,7 +278,7 @@
 
             // When a radio button from the "lesson type" filter is changed/clicked
             // or when a checkmark filter is changed/clicked
-            $(document).on("click", "input[name='type'], input[name='ticked_fields'], input[name='method']", {date_input: null}, applyAllFilters);
+            $(document).on("change", "input[name='type'], input[name='ticked_fields'], input[name='method']", {date_input: null}, applyAllFilters);
 
             function uncheckAll() {
                 document.getElementById("r").checked = false;
