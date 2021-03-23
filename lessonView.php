@@ -25,8 +25,8 @@
 //add new lesson info
         ?>
         <h1>Scheduled Lessons</h1>
-        <br>
-
+        <a style="float: right;" href="<?php echo $addLessonURL; ?>"><label class="boldLabel">Add Lesson</label><button id="addLessonPlusBtn">+</button></a>
+        <br/><br/><br/>
         <div style="text-align: center; border: 2px solid lightgrey;">
             <table style="margin: auto;">
                 <tr class="centered-data">
