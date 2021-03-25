@@ -33,16 +33,6 @@ function setLessonType() {
     }
 }
 
-function lessonTypeChecked(String $lessonType) {
-    if (isset($_SESSION['lessonType'])) {
-        if ($_SESSION['lessonType'] == $lessonType) {
-            echo 'checked="checked"';
-        } else {
-            echo '';
-        }
-    }
-}
-
 function setDateOfLesson() {
     if (isset($_POST['dateOfLesson'])) {
         $_SESSION['dateOfLesson'] = $_POST['dateOfLesson'];
