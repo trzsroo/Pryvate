@@ -200,6 +200,9 @@ function setLessonFields() {
     setRequested();
     setClerkName();
     setLessonNotes();
+    setPaid();
+    setCheckIn();
+    setFinalize();
 }
 
 function saveLessonToDB() {

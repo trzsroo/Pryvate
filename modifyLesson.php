@@ -1,3 +1,4 @@
+  
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
@@ -46,11 +47,11 @@
                 <input type="text" name="clerkName" id="clerkName" maxlength="3" >
                 <br /><br />
                 <label class="boldLabel">&nbsp;Paid? </label>
-                <input type="checkbox" name="paid" id="paid" value="paid" <?php getPaid(); ?>>
+                <input type="checkbox" name="paid" id="paid" value="paid">
                 <label class="boldLabel">&nbsp;Checked in? </label>
-                <input type="checkbox" name="checkIn" id="checkIn" value="checkIn" <?php getCheckIn(); ?>>
+                <input type="checkbox" name="checkIn" id="checkIn" value="checkIn" >
                 <label class="boldLabel">&nbsp;Finalized? </label>
-                <input type="checkbox" name="finalize" id="finalize" value="finalize" <?php getFinalize(); ?>>
+                <input type="checkbox" name="finalize" id="finalize" value="finalize" >
                 <br/><br/>
                 <input type="hidden" id="client1Hid" name="hidClient1" >
                 <input type="hidden" id="client2Hid" name="hidClient2" >
@@ -63,8 +64,6 @@
 
 <!-- add and delete students from lesson buttons and label -->
         <h2 title="At least one student required to enter lesson">*Student(s)</h2>
-        <label id="saveTool" style="size: 25px;">Please click save lesson before editing a student's information</label>
-        <br /> <br />
         <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Edit" class="editBtn" onclick="editClientInfo(1);">Edit</button>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
@@ -167,6 +166,9 @@
             var lRequ = document.getElementById('requested');
             var lNotes = document.getElementById('lessonNotes');
             var lClerk = document.getElementById('clerkName');
+            var lPaid = document.getElementById('paid');
+            var lChIn = document.getElementById('checkIn');
+            var lFin = document.getElementById('finalize');
 
             var clientFirstName = document.getElementById('fname');
             var clientLastName = document.getElementById('lname');
@@ -195,7 +197,6 @@
 
             window.onload = function reloadExistingData() {
                 reloadFormInfo();
-                // addClientToStuView(0, "<?php getClientInfo(2); ?>", 1);
                 addToStudentView();
             }
 
@@ -236,6 +237,15 @@
 
                 var clerkR = "<?php  if (isset($_SESSION['clerkName'])) {echo $_SESSION['clerkName'];}?>";
                 lClerk.value = clerkR;
+
+                var paidR = "<?php  if (isset($_SESSION['paid'])) {echo true;} else { echo false;}?>";
+                lPaid.checked = paidR;
+                
+                var chInR = "<?php  if (isset($_SESSION['checkIn'])) {echo true;} else { echo false;}?>";
+                lChIn.checked = chInR;
+
+                var finR = "<?php  if (isset($_SESSION['finalize'])) {echo true;} else { echo false;}?>";
+                lFin.checked = finR;
 
             }
 
@@ -378,6 +388,7 @@
                                     totNumOfClients2.value = totNumOfClients.value;
                                     saveLessonBtn.style.display = "";
                                     addClientToStuView(selVal, fullNameDd.options[i].text, totNumOfClients.value);
+                                    saveLessonBtn.click();
                                 }
                             }
                         }
