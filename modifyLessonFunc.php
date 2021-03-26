@@ -236,42 +236,42 @@ function addOrSaveClick() {
     if (isset($_POST['addPersonBtn'])) {
         switch($_POST['addPersonBtn']) {
             case "Add":
-            $fullNameDd = $_POST['fullName'];
-            $stuFName = $_POST['fname'];
-            $stuLName = $_POST['lname'];
-            $stuAge = $_POST['age'];
-            $stuParent = $_POST['parent'];
-            $stuPhoneNum = $_POST['phone'];
-            $stuNotes = $_POST['notes'];
-            global $addedClientID;
-            resetClientID();
+                $fullNameDd = $_POST['fullName'];
+                $stuFName = $_POST['fname'];
+                $stuLName = $_POST['lname'];
+                $stuAge = $_POST['age'];
+                $stuParent = $_POST['parent'];
+                $stuPhoneNum = $_POST['phone'];
+                $stuNotes = $_POST['notes'];
+                global $addedClientID;
+                resetClientID();
 
-            setTotNumInLesson();
+                setTotNumInLesson();
 
-            $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-        
-            $db_table = "mydb.Client";
-            // checks to make sure the first name, last name, and phone number are 
-            // set to check if an instance already exists
-            if ($fullNameDd == 0 && $stuFName != "" && $stuLName != "" && $stuPhoneNum != "") {
-                $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
+                $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            
+                $db_table = "mydb.Client";
+                // checks to make sure the first name, last name, and phone number are 
+                // set to check if an instance already exists
+                if ($fullNameDd == 0 && $stuFName != "" && $stuLName != "" && $stuPhoneNum != "") {
+                    $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE first_name='".$stuFName."' AND last_name='".$stuLName."' AND phone_number='".$stuPhoneNum."';");
 
-                if(mysqli_num_rows($sql_result) == 0) {
-                    // inserts into DB if an instance doesn't exist
-                    $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
-                    mysqli_query($link, $sql);
-                
-                    //used to add new client in the front-end (addLesson.php)
-                    $addedClientID = $link->insert_id;
-                    $num = $_SESSION['totalNumOfClientsInThisLesson'] + 1;
-                    if ($num <= 3) {
-                        $clientIdHid = 'hidClient'.$num;
-                        $_SESSION[$clientIdHid] = $addedClientID;
-                    }
+                    if(mysqli_num_rows($sql_result) == 0) {
+                        // inserts into DB if an instance doesn't exist
+                        $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+                        mysqli_query($link, $sql);
                     
-                } 
-            }
-            mysqli_close($link);
+                        //used to add new client in the front-end (addLesson.php)
+                        $addedClientID = $link->insert_id;
+                        $num = $_SESSION['totalNumOfClientsInThisLesson'] + 1;
+                        if ($num <= 3) {
+                            $clientIdHid = 'hidClient'.$num;
+                            $_SESSION[$clientIdHid] = $addedClientID;
+                        }
+                        
+                    } 
+                }
+                mysqli_close($link);
                 break;
             case "Save":
                 break;
@@ -282,99 +282,112 @@ function addOrSaveClick() {
 }
 
 function getClientFirstName($stuID) {
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT first_name FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT first_name FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['first_name'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['first_name'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
+    
 }
 
 function getClientLastName($stuID) {
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT last_name FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT last_name FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['last_name'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['last_name'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
 }
 
 function getClientAge($stuID) {
+    if ($stuID != "") {
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT age FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT age FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['age'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['age'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
 }
 
 function getClientParent($stuID) {
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT parent FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT parent FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['parent'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['parent'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
 }
 
 function getClientPhoneNum($stuID) {
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT phone_number FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT phone_number FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['phone_number'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['phone_number'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
 }
 
 function getClientNotes($stuID) {
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $db_table = "mydb.Client";
-    
-    // selects all clients in DB
-    $sql = "SELECT notes FROM ".$db_table." WHERE id=".$stuID.";";
-                                            
-    $result = mysqli_query($link, $sql);
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+        
+        // selects all clients in DB
+        $sql = "SELECT notes FROM ".$db_table." WHERE id=".$stuID.";";
+                                                
+        $result = mysqli_query($link, $sql);
 
-    while($row = mysqli_fetch_array($result) ) {
-        echo $row['notes'];
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['notes'];
+        }
+
+        mysqli_close($link); 
     }
-
-    mysqli_close($link); 
 }
 
 function resetClientID() {
@@ -388,7 +401,7 @@ function setClientIDs() {
         $_SESSION['hidClient2'] = $_POST['hidClient2AddClientForm'];
         $_SESSION['hidClient3'] = $_POST['hidClient3AddClientForm'];
     } 
-    if (isset($_POST['addLessonBtn'])) {
+    if (isset($_POST['saveLessonBtn'])) {
         $_SESSION['hidClient1'] = $_POST['hidClient1'];
         $_SESSION['hidClient2'] = $_POST['hidClient2'];
         $_SESSION['hidClient3'] = $_POST['hidClient3'];

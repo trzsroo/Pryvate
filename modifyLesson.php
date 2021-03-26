@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
-        <title>Add Private Lesson</title>
+        <title>Modify Private Lesson</title>
     </head>
     <body>
         <?php
@@ -10,7 +10,7 @@
 
 //add new lesson info
         ?>
-        <h1>Add New Private Lesson</h1>
+        <h1>Modify Private Lesson</h1>
         <div class="lessonInfo">
             <button id="cancelAddingLesson" style="float: right;" title="Cancel editing lesson">x</button>
             <h2>General Lesson Information</h2>
@@ -50,12 +50,14 @@
                 <input type="hidden" id="client3Hid" name="hidClient3" >
                 <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" >
                 <!-- lesson buttons -->
-                <input type="submit" value="Save" name="saveLessonBtn" id="saveLessonBtn" onclick="">
+                <input type="submit" value="Save Lesson" name="saveLessonBtn" id="saveLessonBtn" onclick="<?php saveLessonToDB(); ?>">
             </form>
         </div>
 
 <!-- add and delete students from lesson buttons and label -->
         <h2 title="At least one student required to enter lesson">*Student(s)</h2>
+        <label id="saveTool" style="size: 25px;">Please click save lesson before editing a student's information</label>
+        <br /> <br />
         <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Edit" class="editBtn" onclick="editClientInfo(1);">Edit</button>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
@@ -148,6 +150,8 @@
 
             var addOrSaveBtn = document.getElementById('addPersonBtn');
             
+            var lRadioSki = document.getElementById('lessonTypeSki');
+            var lRadioSB = document.getElementById('lessonTypeSB');
             var lDate = document.getElementById('dateOfLesson');
             var lTime = document.getElementById('timeOfLesson');
             var lLen = document.getElementById('lenOfLesson');
@@ -172,17 +176,36 @@
             function closeForm() {
                 document.getElementById("clientInfo").style.display = "none";
                 fullNameDd.value = -1;
+                clientFirstName.value = "";
+                clientLastName.value = "";
+                clientAge.value = "";
+                clientParent.value = "";
+                clientPhone.value = "";
+                clientNotes.value = "";
+                addOrSaveBtn.value = "Add"
                 exists();
             }
 
             window.onload = function reloadExistingData() {
                 reloadFormInfo();
-                addClientToStuView(0, "<?php getClientInfo(2); ?>", 1);
+                // addClientToStuView(0, "<?php getClientInfo(2); ?>", 1);
                 addToStudentView();
             }
 
             //reload form data
             function reloadFormInfo() {
+                var lessonTypeR = "<?php  if (isset($_SESSION['lessonType'])) {echo $_SESSION['lessonType'];}?>";
+                switch (lessonTypeR) {
+                    case "ski":
+                        lRadioSki.checked = true;
+                        break;
+                    case "SB":
+                        lRadioSB.checked = true;
+                        break;
+                    default:
+                        //do nothing
+                }
+                
                 var dateR = "<?php  if (isset($_SESSION['dateOfLesson'])) {echo $_SESSION['dateOfLesson'];}?>";
                 lDate.value = dateR;
 
@@ -264,7 +287,6 @@
             function editClientInfo(num) {
                 switch(num) {
                     case 1:
-                        // addClientToStuView(id1, str1, 1);
                         openForm();
                         fullNameDd.style.display = "none";
                         fullNameLbl.style.display = "none";
@@ -273,31 +295,44 @@
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
                         addOrSaveBtn.value = "Save"
-                        clientFirstName.value = "<?php getClientFirstName(2); ?>";
-                        clientLastName.value = "<?php getClientLastName(2); ?>";
-                        clientAge.value = "<?php getClientAge(2); ?>";
-                        clientParent.value = "<?php getClientParent(2); ?>";
-                        clientPhone.value = "<?php getClientPhoneNum(2); ?>";
-                        clientNotes.value = "<?php getClientNotes(2); ?>";
+                        clientFirstName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientFirstName($_SESSION['hidClient1']); } ?>";
+                        clientLastName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientLastName($_SESSION['hidClient1']); }?>";
+                        clientAge.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientAge($_SESSION['hidClient1']); } ?>";
+                        clientParent.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientParent($_SESSION['hidClient1']); } ?>";
+                        clientPhone.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientPhoneNum($_SESSION['hidClient1']); } ?>";
+                        clientNotes.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientNotes($_SESSION['hidClient1']); } ?>";
                         break;
                     case 2:
-                        // var id1 = "<?php if(isset($_SESSION['hidClient1'])) {echo $_SESSION['hidClient1'];} else { echo -1;} ?>";
-                        // var str1 = "<?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>";
-                        // addClientToStuView(id1, str1, 1);
-                        // var id2 = "<?php if(isset($_SESSION['hidClient2'])) {echo $_SESSION['hidClient2'];} else { echo -1;} ?>";
-                        // var str2 = "<?php if (isset($_SESSION['hidClient2'])) { getClientInfo($_SESSION['hidClient2']);  }?>";
-                        // addClientToStuView(id2, str2, 2);
+                        openForm();
+                        fullNameDd.style.display = "none";
+                        fullNameLbl.style.display = "none";
+                        firstNameLbl.style.display = "block";
+                        firstNameBox.style.display = "block";
+                        lastNameLbl.style.display = "block";
+                        lastNameBox.style.display = "block";
+                        addOrSaveBtn.value = "Save"
+                        clientFirstName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientFirstName($_SESSION['hidClient2']); } ?>";
+                        clientLastName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientLastName($_SESSION['hidClient2']); }?>";
+                        clientAge.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientAge($_SESSION['hidClient2']); } ?>";
+                        clientParent.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientParent($_SESSION['hidClient2']); } ?>";
+                        clientPhone.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientPhoneNum($_SESSION['hidClient2']); } ?>";
+                        clientNotes.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientNotes($_SESSION['hidClient2']); } ?>";
                         break;
                     case 3:
-                        // var id1 = "<?php if(isset($_SESSION['hidClient1'])) {echo $_SESSION['hidClient1'];} else { echo -1;} ?>";
-                        // var str1 = "<?php if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>";
-                        // addClientToStuView(id1, str1, 1);
-                        // var id2 = "<?php if(isset($_SESSION['hidClient2'])) {echo $_SESSION['hidClient2'];} else { echo -1;} ?>";
-                        // var str2 = "<?php if (isset($_SESSION['hidClient2'])) { getClientInfo($_SESSION['hidClient2']);  }?>";
-                        // addClientToStuView(id2, str2, 2);
-                        // var id3 = "<?php if(isset($_SESSION['hidClient3'])) {echo $_SESSION['hidClient3'];} else { echo -1;} ?>";
-                        // var str3 = "<?php if (isset($_SESSION['hidClient3'])) { getClientInfo($_SESSION['hidClient3']);  }?>";
-                        // addClientToStuView(id3, str3, 3);
+                        openForm();
+                        fullNameDd.style.display = "none";
+                        fullNameLbl.style.display = "none";
+                        firstNameLbl.style.display = "block";
+                        firstNameBox.style.display = "block";
+                        lastNameLbl.style.display = "block";
+                        lastNameBox.style.display = "block";
+                        addOrSaveBtn.value = "Save"
+                        clientFirstName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientFirstName($_SESSION['hidClient3']); } ?>";
+                        clientLastName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientLastName($_SESSION['hidClient3']); }?>";
+                        clientAge.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientAge($_SESSION['hidClient3']); } ?>";
+                        clientParent.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientParent($_SESSION['hidClient3']); } ?>";
+                        clientPhone.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientPhoneNum($_SESSION['hidClient3']); } ?>";
+                        clientNotes.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientNotes($_SESSION['hidClient3']); } ?>";
                         break;
                     default:
                         //shouldn't go in here
