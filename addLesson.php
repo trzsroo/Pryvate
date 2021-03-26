@@ -100,7 +100,6 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes">
 
-<!-- BUTTON THAT NEEDS FIXING -->
 <!-- hidden client info -->
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Student" onclick="<?php addClientToDB(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
