@@ -45,6 +45,13 @@
                 <label class="boldLabel">*Clerk: </label>
                 <input type="text" name="clerkName" id="clerkName" maxlength="3" >
                 <br /><br />
+                <label class="boldLabel">&nbsp;Paid? </label>
+                <input type="checkbox" name="paid" id="paid" value="paid" <?php getPaid(); ?>>
+                <label class="boldLabel">&nbsp;Checked in? </label>
+                <input type="checkbox" name="checkIn" id="checkIn" value="checkIn" <?php getCheckIn(); ?>>
+                <label class="boldLabel">&nbsp;Finalized? </label>
+                <input type="checkbox" name="finalize" id="finalize" value="finalize" <?php getFinalize(); ?>>
+                <br/><br/>
                 <input type="hidden" id="client1Hid" name="hidClient1" >
                 <input type="hidden" id="client2Hid" name="hidClient2" >
                 <input type="hidden" id="client3Hid" name="hidClient3" >
@@ -149,7 +156,7 @@
             var totNumOfClients2 = document.getElementById('totalNumOfClientsInThisLesson2');
 
             var addOrSaveBtn = document.getElementById('addPersonBtn');
-            
+
             var lRadioSki = document.getElementById('lessonTypeSki');
             var lRadioSB = document.getElementById('lessonTypeSB');
             var lDate = document.getElementById('dateOfLesson');
@@ -205,7 +212,7 @@
                     default:
                         //do nothing
                 }
-                
+
                 var dateR = "<?php  if (isset($_SESSION['dateOfLesson'])) {echo $_SESSION['dateOfLesson'];}?>";
                 lDate.value = dateR;
 
