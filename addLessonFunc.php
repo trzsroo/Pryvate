@@ -149,14 +149,14 @@ function addLessonToDB() {
         setLessonFields();
         setClientIDs();
         setTotNumInLesson();
-        if (isset($_POST['Lessontype'])) {
+        if (isset($_POST['lessonType'])) {
             $lessonType = $_POST['lessonType'];
         } else  {
             $lessonType = '';
         }
         
         $lessonTypeInput = 0;
-        if ($lessonType = 'SB') {
+        if ($lessonType == 'SB') {
             $lessonTypeInput = 1;
         }
         $dateOfLesson = $_POST['dateOfLesson'];

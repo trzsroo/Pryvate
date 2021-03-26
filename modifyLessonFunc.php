@@ -296,7 +296,6 @@ function addOrSaveClick() {
                 $stuNotes = $_POST['notes'];
                 global $addedClientID;
                 resetClientID();
-
                 setTotNumInLesson();
 
                 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -325,6 +324,26 @@ function addOrSaveClick() {
                 mysqli_close($link);
                 break;
             case "Save":
+                $stuFName = $_POST['fname'];
+                $stuLName = $_POST['lname'];
+                $stuAge = $_POST['age'];
+                $stuParent = $_POST['parent'];
+                $stuPhoneNum = $_POST['phone'];
+                $stuNotes = $_POST['notes'];
+                $currID = $_POST['currClientEditing'];
+                resetClientID();
+                setTotNumInLesson();
+
+                $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+                $db_table = "mydb.Client";
+                // checks to make sure the first name, last name, and phone number are
+                // set to check if an instance already exists
+                if ($stuFName != "" && $stuLName != "" && $stuPhoneNum != "") {
+                    $sql = "UPDATE ".$db_table." SET first_name='$stuFName', last_name='$stuLName', age='$stuAge', parent='$stuParent', phone_number='$stuPhoneNum', notes='$stuNotes' WHERE id='$currID';";
+                    mysqli_query($link, $sql);
+                }
+                mysqli_close($link);
                 break;
             default:
             // do nothing

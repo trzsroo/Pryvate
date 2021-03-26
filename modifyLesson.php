@@ -115,10 +115,11 @@
 <!-- hidden client info -->
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
+            <input type="hidden" id="currClientEditing" name="currClientEditing" >
             <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
             <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
             <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
-            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson" >
+            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
           </form>
         </div>
 
@@ -153,6 +154,7 @@
             var saveLessonBtn = document.getElementById('saveLessonBtn');
             var totNumOfClients = document.getElementById('totalNumOfClientsInThisLesson');
             var totNumOfClients2 = document.getElementById('totalNumOfClientsInThisLesson2');
+            var currClientEdit = document.getElementById('currClientEditing');
 
             var addOrSaveBtn = document.getElementById('addPersonBtn');
 
@@ -191,6 +193,7 @@
                 clientParent.value = "";
                 clientPhone.value = "";
                 clientNotes.value = "";
+                currClientEdit.value = ""
                 addOrSaveBtn.value = "Add"
                 exists();
             }
@@ -254,16 +257,17 @@
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
+                totNumOfClients2.value = totNumOfClients.value;
                 var ifAdded = (parseInt(totNumOfClients.value) + 1).toString();
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
+                    totNumOfClients2.value - totNumOfClients.value;
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
                 if (id != ""){
                     saveLessonBtn.click();
-                    <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? saveLessonBtn.style.display = "none": saveLessonBtn.style.display = "";
             }
@@ -311,6 +315,7 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient1'])) { echo $_SESSION['hidClient1']; } ?>"
                         addOrSaveBtn.value = "Save"
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientFirstName($_SESSION['hidClient1']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientLastName($_SESSION['hidClient1']); }?>";
@@ -327,6 +332,7 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient2'])) { echo $_SESSION['hidClient2']; } ?>"
                         addOrSaveBtn.value = "Save"
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientFirstName($_SESSION['hidClient2']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientLastName($_SESSION['hidClient2']); }?>";
@@ -343,6 +349,7 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient3'])) { echo $_SESSION['hidClient3']; } ?>"
                         addOrSaveBtn.value = "Save"
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientFirstName($_SESSION['hidClient3']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientLastName($_SESSION['hidClient3']); }?>";

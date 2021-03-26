@@ -106,7 +106,7 @@
             <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
             <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
             <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
-            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson" >
+            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
           </form>
         </div>
 
