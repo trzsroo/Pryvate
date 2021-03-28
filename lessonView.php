@@ -15,6 +15,10 @@
             table tr td {
                 padding: 5px;
             }
+
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -36,13 +40,22 @@
                         <input id="supp" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
                         onclick="dateOmit(), this.blur(), changeColorIndicationDATE(this, 'initial');"/>
                     </td>  
-                    <td style="background-color: honeydew;">
-                        <input type="radio" name="type" id="all" checked/><label for="all">All</label>
-                        <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
-                        <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
+                    <td>
+                        <div style="padding: 8px; margin-right: 20px; background-color: honeydew;">
+                            <input type="radio" name="type" id="all" checked/><label for="all">All</label>
+                            <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
+                            <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
+                        </div>
                     </td>
                     <td>
-                        <table style="float: left; border-collapse: collapse; margin-left: 40px;">
+                        <div style="padding: 8px; margin-left: 20px; background-color: honeydew; text-align: left">
+                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">1-3 students</label><br>
+                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">1 student</label><br>
+                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">2-3 students</label>                        
+                        </div>
+                    </td>
+                    <td>
+                        <table style="float: left; border-collapse: collapse; margin-left: 20px;">
                             <tr>
                                 <td colspan="2" style="text-align: center">
                                     Include records that:
@@ -87,75 +100,146 @@
 
         <br>
 
-        <table id="tabl" class="stripe">
-            <thead>
-                <tr>
-                    <th>Res. Number</th>
-                    <th style="width: 100px;">Lesson Date</th>
-                    <th>Type</th>
-                    <th>Duration</th>
-                    <th>Student(s)' Name & Age</th>
-                    <th>Instructor</th>
-                    <th>Req.</th>
-                    <th>Paid</th>
-                    <th>Checked In</th>
-                    <th>Finalized</th>
-                </tr>
-            <thead>
-            <tbody>
-                <?php
-                    // Unless we can use the variable from config.php
-                    $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        <form id="form" action="modifyLesson.php" method="post">
+            <table id="tabl" class="stripe">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width: 100px;">Lesson Date</th>
+                        <th>Level</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Student(s)' Name & Age</th>
+                        <th>Instructor</th>
+                        <th>Req.</th>
+                        <th>Paid</th>
+                        <th>Checked In</th>
+                        <th>Finalized</th>
+                        <th></th> <!-- Edit button -->
+                        <th class="hidden"></th> <!-- Number of students -->
+                        <th class="hidden"></th> <!-- Lesson ID -->
+                        <th class="hidden"></th> <!-- Date created -->
+                        <th class="hidden"></th> <!-- Reservation number -->
+                        <th class="hidden"></th> <!-- Clerk name -->
+                        <th class="hidden"></th> <!-- Notes -->
+                    </tr>
+                <thead>
+                <tbody>
+                    <?php
+                        // Unless we can use the variable from config.php
+                        $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-                    $query = mysqli_query($conn, "SELECT * FROM Lesson")
-                    or die (mysqli_error($conn));
+                        $query = mysqli_query($conn, "SELECT * FROM Lesson")
+                        or die (mysqli_error($conn));
 
-                    while ($row = mysqli_fetch_array($query)) {
-                        
-                        $client_str = "";
-                        $title_str = "";
-                        
-                        for ($i = 1; $i <= 3; $i++) {
-                            $client_query = "SELECT first_name, last_name, age, phone_number FROM Client WHERE id = " . $row['client' . $i . '_id'] . " LIMIT 1";
-                            $client_rec = $conn->query($client_query);
+                        while ($row = mysqli_fetch_array($query)) {
+                            
+                            $client_str = "";
+                            $title_str = "";
+                            $num_of_students = 1;
+                            
+                            for ($i = 1; $i <= 3; $i++) {
+                                $client_query = "SELECT first_name, last_name, age, phone_number FROM Client WHERE id = " . $row['client' . $i . '_id'] . " LIMIT 1";
+                                $client_rec = $conn->query($client_query);
 
-                            if ($client_rec->num_rows > 0) {
-                                $fetch_assoc = $client_rec->fetch_assoc();
-                                $client_fname = $fetch_assoc['first_name'];
-                                $client_lname = $fetch_assoc['last_name'];
-                                $client_age = $fetch_assoc['age'];
-                                $client_phone = $fetch_assoc['phone_number'];
+                                if ($client_rec->num_rows > 0) {
+                                    $fetch_assoc = $client_rec->fetch_assoc();
+                                    $client_fname = $fetch_assoc['first_name'];
+                                    $client_lname = $fetch_assoc['last_name'];
+                                    $client_age = $fetch_assoc['age'];
+                                    $client_phone = $fetch_assoc['phone_number'];
 
-                                $client_str = $client_str . ($i == 1 ? "" : ", ") 
-                                . $client_fname . " " . substr($client_lname, 0, 1) . ". (" . $client_age . ")";
-                                // Explanatory, more detailed; displays on hover on the lesson students
-                                $title_str = $title_str . ($i == 1 ? "" : ", ")
-                                . $client_fname . " " . $client_lname . " (" . $client_phone . ")";
+                                    $client_str = $client_str . ($i == 1 ? "" : ", ") 
+                                    . $client_fname . " " . substr($client_lname, 0, 1) . ". (" . $client_age . ")";
+                                    // Explanatory, more detailed; displays on hover on the lesson students
+                                    $title_str = $title_str . ($i == 1 ? "" : ", ")
+                                    . $client_fname . " " . $client_lname . " (" . $client_phone . ")";
+
+                                    $num_of_students = $i; // If this additional student exists, update number of students
+                                }
                             }
-                        }
 
-                        echo
-                            "<tr class='centered-data'>
-                                <td>{$row['reservation_number']}</td>
-                                <td><span style='display: none'>" . date('U') . "</span>"
-                                . (date_format(date_create($row['date_of_lesson']), 'm-d-Y')) . " at " . (date_format(date_create($row['time_of_lesson']), 'h:ia')) . "</td>
-                                <td>" . ($row['ski_or_snowboard'] == 0 ? 'Ski' : 'SB') . "</td>
-                                <td>{$row['length']} hrs</td>
-                                <td><span title='" . $title_str . "'>" . $client_str . "</td>
-                                <td>{$row['instructor']}</td>
-                                <td>" . ($row['desk_or_request'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['paid'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['checked_in'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['finalized_in_sales'] == 0 ? '' : '&#10004;') . "</td>
-                            </tr>";
-                    }
-                ?>
-            <tbody>
-        </table>
+                            echo
+                                "<tr class='centered-data'>
+                                    <td><input type='button' style='font-size: 6pt;' 
+                                    onclick=\"this.value = this.value === '▼' ? '▲' : '▼';\" value='▼'/></td>
+                                    <td><span class='hidden'>" . date_format(date_create($row['date_of_lesson']), 'U') . "</span>"
+                                    . (date_format(date_create($row['date_of_lesson']), 'm-d-Y')) . " at " . (date_format(date_create($row['time_of_lesson']), 'h:ia')) . "</td>
+                                    <td>{$row['level']}</td>
+                                    <td>" . ($row['ski_or_snowboard'] == 0 ? 'Ski' : 'SB') . "</td>
+                                    <td>{$row['length']} hrs</td>
+                                    <td><span title='" . $title_str . "'>" . $client_str . "</td>
+                                    <td>{$row['instructor']}</td>
+                                    <td>" . ($row['desk_or_request'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['paid'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['checked_in'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['finalized_in_sales'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td><input type='button' value='✎'/></td>
+                                    <td class='hidden'>{$num_of_students}</td>
+                                    <td class='hidden' name='lessonids'>{$row['id']}</td>
+                                    <td class='hidden'>{$row['date_created']}</td>
+                                    <td class='hidden'>{$row['reservation_number']}</td>
+                                    <td class='hidden'>{$row['clerk_name']}</td>
+                                    <td class='hidden'>{$row['notes']}</td>
+                                </tr>";
+                        }
+                    ?>
+                <tbody>
+            </table>
+            <input type="hidden" id="lessonToModify" name="lessonToModify"/>
+        </form>
         
         <script type="text/javascript" defer>
+            function format(data) {
+                // `data` is the original data object for the row
+                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                    '<tr>' +
+                        '<td><b>Date created:</b></td>' +
+                        '<td>' + data.dateCreated + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Res. number:</b></td>' +
+                        '<td>' + data.reservationNumber + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Clerk:</b></td>' +
+                        '<td>' + data.clerk + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Notes:</b></td>' +
+                        '<td>' + data.notes + '</td>' +
+                    '</tr>' +
+                '</table>';
+            }
+
             $(document).ready(function() {
                 var table = $('#tabl').DataTable({
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false
+                        },
+                        {"data": "lessonDate"},
+                        {"data": "level"},
+                        {"data": "type"},
+                        {"data": "duration"},
+                        {"data": "studentsNameAndAge"},
+                        {"data": "instructor"},
+                        {"data": "required"},
+                        {"data": "paid"},
+                        {"data": "checkedIn"},
+                        {"data": "finalized"},
+                        {
+                            "data": "edit",
+                            "orderable": false
+                        },
+                        {"data": "numberOfStudents"}, // Hidden
+                        {"data": "lessonId"}, // Hidden
+                        {"data": "dateCreated"}, // Hidden
+                        {"data": "reservationNumber"}, // Hidden
+                        {"data": "clerk"}, // Hidden
+                        {"data": "notes"} // Hidden
+                    ],
                     language: {
                         paginate: {
                             first:      "«",
@@ -163,6 +247,24 @@
                             next:       "›",
                             last:       "»"
                         }
+                    },
+                    // "deferRender": true
+                });
+
+                // Add event listener for opening and closing details
+                $('#tabl tbody').on('click', 'td.details-control input', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+            
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    }
+                    else {
+                        // Open this row
+                        row.child(format(row.data()).replace(/(?:\r\n|\r|\n)/g, '<br>')).show();
+                        tr.addClass('shown');
                     }
                 });
             });
@@ -202,12 +304,12 @@
                 curr_regex = curr_regex.substr(0, curr_regex.length-1) + ").*$";
 
                 // Line below is what applies the date filter
-                $('#tabl').DataTable().column(1).search(curr_regex, true, false);
+                $('#tabl').DataTable().column(0).search(curr_regex, true, false);
             }
 
             function dateOmit() {
                 document.getElementById("date1").value = "";
-                $('#tabl').DataTable().column(1).search('').draw();
+                $('#tabl').DataTable().column(0).search('').draw();
             }
 
             const active_filter_color = 'honeydew';
@@ -229,6 +331,19 @@
                     $("#tabl").DataTable().column(2).search('SB');
                 }
 
+                const rad_13 = document.getElementById("anynum");
+                const rad_11 = document.getElementById("private");
+                const rad_23 = document.getElementById("semiprivate");
+
+                if (rad_13.checked) {
+                    $('#tabl').DataTable().column(11).search('');
+                }
+                if (rad_11.checked) {
+                    $("#tabl").DataTable().column(11).search('1');
+                }
+                if (rad_23.checked) {
+                    $("#tabl").DataTable().column(11).search('^[23]{1}$', regex=true);
+                }
 
                 const r = document.getElementById("r");
                 const p = document.getElementById("p");
@@ -251,9 +366,9 @@
                     }
                     if (excl && !strict) {
                         // ^.{0}$ looks for a field with exacty nothing;
-                        // ^.{0}% looks for a field with any number of characters (up to 3; could have
+                        // ^.{0,3}$ looks for a field with any number of characters (up to 3; could have
                         // been ^.{0,}$ but the 3 makes the difference more obvious, and works the same as long
-                        // as we are working with 1 character in the field at most, namely a checkmark or nothing)
+                        // as we are working with only 1 (<4) character in the field, namely a checkmark or nothing)
                         $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
                                             .column(7).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
                                             .column(8).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
@@ -302,6 +417,16 @@
                 $("#checks").css({'background-color': color});
                 $("#checks").parent().parent().css({'background-color': color});
             }
+
+            $(document).on("click", "input[value='✎']", function() {
+                var row = this.parentElement.parentElement;
+                // document.write(row.html());
+                var lesson_id = row.querySelector("td[name='lessonids']").innerHTML;
+
+                document.getElementById("lessonToModify").value = lesson_id;
+
+                $("#form").submit();
+            });
         </script>
     </body>
 </html>
