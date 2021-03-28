@@ -24,7 +24,7 @@
     <body>
         <?php
             require_once('config.php');
-            $urlLink =(string) htmlspecialchars($_SERVER["PHP_SELF"]);
+            $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
             $urlLink = str_replace("viewLesson.php", "", $urlLink);
             $addLessonURL = $urlLink."addLesson.php";
         ?>
@@ -96,7 +96,6 @@
                 </tr>
             </table>
         </div>
-
 
         <br>
 
@@ -186,7 +185,7 @@
                     ?>
                 <tbody>
             </table>
-            <input type="hidden" id="lessonToModify" name="lessonToModify"/>
+            <input type="hidden" id="lessonToModify" name="lessonId"/>
         </form>
         
         <script type="text/javascript" defer>
@@ -420,10 +419,10 @@
 
             $(document).on("click", "input[value='✎']", function() {
                 var row = this.parentElement.parentElement;
-                // document.write(row.html());
                 var lesson_id = row.querySelector("td[name='lessonids']").innerHTML;
+                var hidden_id_input = document.getElementById("lessonToModify");
 
-                document.getElementById("lessonToModify").value = lesson_id;
+                hidden_id_input.value = lesson_id;
 
                 $("#form").submit();
             });
