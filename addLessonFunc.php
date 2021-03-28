@@ -190,7 +190,7 @@ function addLessonToDB() {
 
             if(mysqli_num_rows($sql_result) == 0) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
+                $sql = "INSERT INTO ".$db_table." (date_created, date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
                     "level, clerk_name, length, instructor, desk_or_request, notes) ".
                     "VALUES ('$todaysDate', '$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
                 mysqli_query($link, $sql);
@@ -247,7 +247,7 @@ function addClientToDB() {
 
             if(mysqli_num_rows($sql_result) == 0) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (date_created, first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+                $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
                 mysqli_query($link, $sql);
             
                 //used to add new client in the front-end (addLesson.php)
