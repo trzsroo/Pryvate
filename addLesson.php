@@ -212,6 +212,7 @@
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
+                    totNumOfClients2.value - totNumOfClients.value;
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
