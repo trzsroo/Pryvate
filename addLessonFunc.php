@@ -178,6 +178,7 @@ function addLessonToDB() {
         }
         $lessonNotes = $_POST['lessonNotes'];
         $clerkName = $_POST['clerkName'];
+        $todaysDate = date("Y-m-d");
 
         
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -189,9 +190,9 @@ function addLessonToDB() {
 
             if(mysqli_num_rows($sql_result) == 0) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
+                $sql = "INSERT INTO ".$db_table." (date_created, date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
                     "level, clerk_name, length, instructor, desk_or_request, notes) ".
-                    "VALUES ('$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
+                    "VALUES ('$todaysDate', '$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
                 mysqli_query($link, $sql);
                 closeSession();
                 header('Location: viewLesson.php');
