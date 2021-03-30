@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
@@ -25,7 +24,7 @@
     <body>
         <?php
             require_once('config.php');
-            $urlLink =(string) htmlspecialchars($_SERVER["PHP_SELF"]);
+            $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
             $urlLink = str_replace("viewLesson.php", "", $urlLink);
             $addLessonURL = $urlLink."addLesson.php";
         ?>
@@ -50,9 +49,9 @@
                     </td>
                     <td>
                         <div style="padding: 8px; margin-left: 20px; background-color: honeydew; text-align: left">
-                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">1-3 students</label><br>
-                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">1 student</label><br>
-                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">2-3 students</label>                        
+                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">Private</label><br>
+                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">Semi-private</label><br>  
+                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">Both</label>                  
                         </div>
                     </td>
                     <td>
@@ -97,7 +96,6 @@
                 </tr>
             </table>
         </div>
-
 
         <br>
 
@@ -187,7 +185,7 @@
                     ?>
                 <tbody>
             </table>
-            <input type="hidden" id="lessonToModify" name="lessonToModify"/>
+            <input type="hidden" id="lessonToModify" name="lessonId"/>
         </form>
         
         <script type="text/javascript" defer>
@@ -310,7 +308,7 @@
 
             function dateOmit() {
                 document.getElementById("date1").value = "";
-                $('#tabl').DataTable().column(0).search('').draw();
+                $('#tabl').DataTable().column(1).search('').draw();
             }
 
             const active_filter_color = 'honeydew';
@@ -323,13 +321,13 @@
                 const rad_snb = document.getElementById("snb");
 
                 if (rad_all.checked) {
-                    $('#tabl').DataTable().column(2).search('');
+                    $('#tabl').DataTable().column(3).search('');
                 }
                 if (rad_ski.checked) {
-                    $("#tabl").DataTable().column(2).search('Ski');
+                    $("#tabl").DataTable().column(3).search('Ski');
                 }
                 if (rad_snb.checked) {
-                    $("#tabl").DataTable().column(2).search('SB');
+                    $("#tabl").DataTable().column(3).search('SB');
                 }
 
                 const rad_13 = document.getElementById("anynum");
@@ -337,13 +335,13 @@
                 const rad_23 = document.getElementById("semiprivate");
 
                 if (rad_13.checked) {
-                    $('#tabl').DataTable().column(11).search('');
+                    $('#tabl').DataTable().column(12).search('');
                 }
                 if (rad_11.checked) {
-                    $("#tabl").DataTable().column(11).search('1');
+                    $("#tabl").DataTable().column(12).search('1');
                 }
                 if (rad_23.checked) {
-                    $("#tabl").DataTable().column(11).search('^[23]{1}$', regex=true);
+                    $("#tabl").DataTable().column(12).search('^[23]{1}$', regex=true);
                 }
 
                 const r = document.getElementById("r");
@@ -360,32 +358,32 @@
                     const strict = document.getElementById("strict").checked;
 
                     if (incl && !strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '✔' : '')
-                                            .column(7).search(p.checked ? '✔' : '')
-                                            .column(8).search(ci.checked ? '✔' : '')
-                                            .column(9).search(f.checked ? '✔' : '');
+                        $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '')
+                                            .column(8).search(p.checked ? '✔' : '')
+                                            .column(9).search(ci.checked ? '✔' : '')
+                                            .column(10).search(f.checked ? '✔' : '');
                     }
                     if (excl && !strict) {
                         // ^.{0}$ looks for a field with exacty nothing;
                         // ^.{0,3}$ looks for a field with any number of characters (up to 3; could have
                         // been ^.{0,}$ but the 3 makes the difference more obvious, and works the same as long
                         // as we are working with only 1 (<4) character in the field, namely a checkmark or nothing)
-                        $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(7).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(8).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(9).search(f.checked ? '^.{0}$' : '^.{0,3}$', regex=true);
+                        $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(8).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(9).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(10).search(f.checked ? '^.{0}$' : '^.{0,3}$', regex=true);
                     }
                     if (incl && strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '✔' : '^.{0}$', regex=!r.checked)
-                                            .column(7).search(p.checked ? '✔' : '^.{0}$', regex=!p.checked)
-                                            .column(8).search(ci.checked ? '✔' : '^.{0}$', regex=!ci.checked)
-                                            .column(9).search(f.checked ? '✔' : '^.{0}$', regex=!f.checked);
+                        $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '^.{0}$', regex=!r.checked)
+                                            .column(8).search(p.checked ? '✔' : '^.{0}$', regex=!p.checked)
+                                            .column(9).search(ci.checked ? '✔' : '^.{0}$', regex=!ci.checked)
+                                            .column(10).search(f.checked ? '✔' : '^.{0}$', regex=!f.checked);
                     }
                     if (excl && strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '✔', regex=r.checked)
-                                            .column(7).search(p.checked ? '^.{0}$' : '✔', regex=p.checked)
-                                            .column(8).search(ci.checked ? '^.{0}$' : '✔', regex=ci.checked)
-                                            .column(9).search(f.checked ? '^.{0}$' : '✔', regex=f.checked);
+                        $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '✔', regex=r.checked)
+                                            .column(8).search(p.checked ? '^.{0}$' : '✔', regex=p.checked)
+                                            .column(9).search(ci.checked ? '^.{0}$' : '✔', regex=ci.checked)
+                                            .column(10).search(f.checked ? '^.{0}$' : '✔', regex=f.checked);
                     }
                 }
 
@@ -402,10 +400,10 @@
                 document.getElementById("ci").checked = false;
                 document.getElementById("f").checked = false;
 
-                $("#tabl").DataTable().column(6).search('', regex=false)
-                                    .column(7).search('', regex=false)
+                $("#tabl").DataTable().column(7).search('', regex=false)
                                     .column(8).search('', regex=false)
                                     .column(9).search('', regex=false)
+                                    .column(10).search('', regex=false)
                                     .draw();
             }
 
@@ -421,10 +419,10 @@
 
             $(document).on("click", "input[value='✎']", function() {
                 var row = this.parentElement.parentElement;
-                // document.write(row.html());
                 var lesson_id = row.querySelector("td[name='lessonids']").innerHTML;
+                var hidden_id_input = document.getElementById("lessonToModify");
 
-                document.getElementById("lessonToModify").value = lesson_id;
+                hidden_id_input.value = lesson_id;
 
                 $("#form").submit();
             });
