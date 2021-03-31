@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
-        <title>Pryvate System</title>
+        <title>View Lessons</title>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -41,22 +41,6 @@
                         onclick="dateOmit(), this.blur(), changeColorIndicationDATE(this, 'initial');"/>
                     </td>  
                     <td>
-<<<<<<< Updated upstream
-                        <div style="padding: 8px; margin-right: 20px; background-color: honeydew;">
-                            <input type="radio" name="type" id="all" checked/><label for="all">All</label>
-                            <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
-                            <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="padding: 8px; margin-left: 20px; background-color: honeydew; text-align: left">
-                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">Private</label><br>
-                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">Semi-private</label><br>  
-                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">Both</label>                  
-                        </div>
-                    </td>
-                    <td>
-=======
                         <div style="padding: 8px; margin-right: 20px; background-color: honeydew; text-align: left;">
                             <input type="radio" name="type" id="all" checked/><label for="all">All</label><br>
                             <input type="radio" name="type" id="ski"/><label for="ski">Ski</label><br>
@@ -71,7 +55,6 @@
                         </div>
                     </td>
                     <td>
->>>>>>> Stashed changes
                         <table style="float: left; border-collapse: collapse; margin-left: 20px;">
                             <tr>
                                 <td colspan="2" style="text-align: center">
@@ -145,14 +128,10 @@
                         // Unless we can use the variable from config.php
                         $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-<<<<<<< Updated upstream
-                        $query = mysqli_query($conn, "SELECT * FROM Lesson")
-=======
                         $query = mysqli_query($conn, 
                         "SELECT * FROM Lesson 
                         -- WHERE cast(date_of_lesson as DATE) >= cast(curdate() as DATE)
                         ")
->>>>>>> Stashed changes
                         or die (mysqli_error($conn));
 
                         while ($row = mysqli_fetch_array($query)) {
@@ -213,26 +192,6 @@
         </form>
         
         <script type="text/javascript" defer>
-<<<<<<< Updated upstream
-            function format(data) {
-                // `data` is the original data object for the row
-                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-                    '<tr>' +
-                        '<td><b>Date created:</b></td>' +
-                        '<td>' + data.dateCreated + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                        '<td><b>Res. number:</b></td>' +
-                        '<td>' + data.reservationNumber + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                        '<td><b>Clerk:</b></td>' +
-                        '<td>' + data.clerk + '</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                        '<td><b>Notes:</b></td>' +
-                        '<td>' + data.notes + '</td>' +
-=======
             // `data` is the original data object for the row
             function twoDigitZerofill(num) {
                 return ('0' + num).slice(-2);
@@ -268,7 +227,6 @@
                     '<tr>' +
                         '<td><b>Notes:</b></td>' +
                         '<td>' + (data.notes ? data.notes : '-') + '</td>' +
->>>>>>> Stashed changes
                     '</tr>' +
                 '</table>';
             }
@@ -309,22 +267,14 @@
                             last:       "»"
                         }
                     },
-<<<<<<< Updated upstream
-                    // "deferRender": true
-=======
                     "deferRender": true
->>>>>>> Stashed changes
                 });
 
                 // Add event listener for opening and closing details
                 $('#tabl tbody').on('click', 'td.details-control input', function () {
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
-<<<<<<< Updated upstream
-            
-=======
                     
->>>>>>> Stashed changes
                     if (row.child.isShown()) {
                         // This row is already open - close it
                         row.child.hide();
@@ -384,7 +334,7 @@
                 curr_regex = curr_regex.substr(0, curr_regex.length-1) + ").*$";
 
                 // Line below is what applies the date filter
-                $('#tabl').DataTable().column(0).search(curr_regex, true, false);
+                $('#tabl').DataTable().column(1).search(curr_regex, true, false);
             }
 
             function dateOmit() {
