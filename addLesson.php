@@ -267,7 +267,6 @@
                     fullNameLbl.style.display = "block";
                     firstNameLbl.style.display = "none";
                     firstNameBox.style.display = "none";
-                    focus(firstNameBox);
                     lastNameLbl.style.display = "none";
                     lastNameBox.style.display = "none";
                 }

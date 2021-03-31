@@ -293,17 +293,17 @@ function saveLessonToDB() {
 
             if(mysqli_num_rows($sql_result) == 1) {
                 // inserts into DB if an instance doesn't exist
-                // $sql = "UPDATE ".$db_table." SET (date_of_lesson='$dateOfLesson', time_of_lesson='$timeOfLesson', ski_or_snowboard='$lessonTypeInput',".
+                // $sql = "UPDATE ".$db_table." SET date_of_lesson='$dateOfLesson', time_of_lesson='$timeOfLesson', ski_or_snowboard='$lessonTypeInput',".
                 //     " client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID', ".
                 //     "level='$lessonLvl', clerk_name='$clerkName', length='$lenOfLesson', instructor='$instructor',".
-                //     " desk_or_request='$reqInput', notes='$lessonNotes') ".
+                //     " desk_or_request='$reqInput', notes='$lessonNotes' ".
                 //     "WHERE id='".$_POST['lessonId']."';";
                 $sql = "UPDATE ".$db_table." SET ".
                     "client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID' ".
                     "WHERE id='".$_POST['lessonId']."';";
                 mysqli_query($link, $sql);
-                // closeSession();
-                // header('Location: viewLesson.php');
+                closeSession();
+                header('Location: viewLesson.php');
             }
 
         }

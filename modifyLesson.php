@@ -290,9 +290,7 @@
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
-                
                 if (id != ""){
-                    saveLessonBtn.click();
                     <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? saveLessonBtn.style.display = "none": saveLessonBtn.style.display = "";
@@ -421,7 +419,6 @@
                                     totNumOfClients2.value = totNumOfClients.value;
                                     saveLessonBtn.style.display = "";
                                     addClientToStuView(selVal, fullNameDd.options[i].text, totNumOfClients.value);
-                                    // saveLessonBtn.click();
                                 }
                             }
                         }
