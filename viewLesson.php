@@ -41,6 +41,7 @@
                         onclick="dateOmit(), this.blur(), changeColorIndicationDATE(this, 'initial');"/>
                     </td>  
                     <td>
+<<<<<<< Updated upstream
                         <div style="padding: 8px; margin-right: 20px; background-color: honeydew;">
                             <input type="radio" name="type" id="all" checked/><label for="all">All</label>
                             <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
@@ -55,6 +56,22 @@
                         </div>
                     </td>
                     <td>
+=======
+                        <div style="padding: 8px; margin-right: 20px; background-color: honeydew; text-align: left;">
+                            <input type="radio" name="type" id="all" checked/><label for="all">All</label><br>
+                            <input type="radio" name="type" id="ski"/><label for="ski">Ski</label><br>
+                            <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="padding: 8px; margin-left: 20px; background-color: honeydew; text-align: left">
+                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">Private</label><br>
+                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">Semi-private</label><br>  
+                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">Both</label>                  
+                        </div>
+                    </td>
+                    <td>
+>>>>>>> Stashed changes
                         <table style="float: left; border-collapse: collapse; margin-left: 20px;">
                             <tr>
                                 <td colspan="2" style="text-align: center">
@@ -128,7 +145,14 @@
                         // Unless we can use the variable from config.php
                         $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
+<<<<<<< Updated upstream
                         $query = mysqli_query($conn, "SELECT * FROM Lesson")
+=======
+                        $query = mysqli_query($conn, 
+                        "SELECT * FROM Lesson 
+                        -- WHERE cast(date_of_lesson as DATE) >= cast(curdate() as DATE)
+                        ")
+>>>>>>> Stashed changes
                         or die (mysqli_error($conn));
 
                         while ($row = mysqli_fetch_array($query)) {
@@ -189,6 +213,7 @@
         </form>
         
         <script type="text/javascript" defer>
+<<<<<<< Updated upstream
             function format(data) {
                 // `data` is the original data object for the row
                 return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
@@ -207,6 +232,43 @@
                     '<tr>' +
                         '<td><b>Notes:</b></td>' +
                         '<td>' + data.notes + '</td>' +
+=======
+            // `data` is the original data object for the row
+            function twoDigitZerofill(num) {
+                return ('0' + num).slice(-2);
+            }
+
+            function formatDateMMDDYYYY(sqlDate) {
+                //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
+                const sqlDateArr = sqlDate.split(" ")[0].split("-");
+                const sMonth = sqlDateArr[1];
+                const sDay = sqlDateArr[2];
+                const sYear = sqlDateArr[0];
+
+                const usDateFormat = new Intl.DateTimeFormat('en-us');
+                    
+                return usDateFormat.format(new Date(sYear,sMonth,sDay));
+            }
+
+            function format(data) {
+
+                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                    '<tr>' +
+                        '<td><b>Date created:</b></td>' +
+                        '<td>' + (data.dateCreated ? formatDateMMDDYYYY(data.dateCreated) : '-') + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Res. number:</b></td>' +
+                        '<td>' + (data.reservationNumber ? data.reservationNumber : '-') + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Clerk:</b></td>' +
+                        '<td>' + (data.clerk ? data.clerk : '-') + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Notes:</b></td>' +
+                        '<td>' + (data.notes ? data.notes : '-') + '</td>' +
+>>>>>>> Stashed changes
                     '</tr>' +
                 '</table>';
             }
@@ -247,14 +309,22 @@
                             last:       "»"
                         }
                     },
+<<<<<<< Updated upstream
                     // "deferRender": true
+=======
+                    "deferRender": true
+>>>>>>> Stashed changes
                 });
 
                 // Add event listener for opening and closing details
                 $('#tabl tbody').on('click', 'td.details-control input', function () {
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
+<<<<<<< Updated upstream
             
+=======
+                    
+>>>>>>> Stashed changes
                     if (row.child.isShown()) {
                         // This row is already open - close it
                         row.child.hide();
@@ -266,6 +336,17 @@
                         tr.addClass('shown');
                     }
                 });
+
+                var date_input = document.getElementById("date1");
+
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const dd = twoDigitZerofill(today.getDate());
+                const mm = twoDigitZerofill(today.getMonth() + 1);
+
+                date_input.value = yyyy + '-' + mm + '-' + dd;
+                applyAllFilters(date_input);
+                date_input.parentElement.style.backgroundColor = 'honeydew';
             });
 
             function dateShift(input) {
