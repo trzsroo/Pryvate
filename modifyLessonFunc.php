@@ -3,6 +3,20 @@ session_start();
 $addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
+function getLessonID() {
+    if (isset($_SESSION['lessonId'])) {
+        echo $_SESSION['lessonId'];
+    }
+}
+
+function setLessonID() {
+    if(isset($_POST['lessonId'])) {
+        $_SESSION['lessonId'] = $_POST['lessonId'];
+    } if(isset($_POST['lessonId2'])) {
+        $_SESSION['lessonId'] = $_POST['lessonId2'];
+    }
+}
+
 //function to see if at least one person is added to either show or hid add lesson btn
 function getTotNumInLesson() {
     if (isset($_SESSION['totalNumOfClientsInThisLesson'])) {
@@ -205,10 +219,37 @@ function setLessonFields() {
     setFinalize();
 }
 
+function getClientID($stuNum) {
+    if ($stuNum != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+        $clientNum = "client".$stuNum."_id";
+        // selects all clients in DB
+        if (isset($_SESSION['lessonId'])) {
+            $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_SESSION['lessonId'].";";
+        } 
+        else {
+            $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_POST['lessonId'].";";
+            setLessonID();
+        }
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            if ($row[$clientNum] > 0) {
+                echo $row[$clientNum];
+                $_SESSION['hidClient'.$stuNum] = $row[$clientNum];
+            }
+        }
+
+        mysqli_close($link);
+    }
+}
+
 function saveLessonToDB() {
     if (isset($_POST['saveLessonBtn'])) {
-        setLessonFields();
         setClientIDs();
+        setLessonFields();
         setTotNumInLesson();
         if (isset($_POST['Lessontype'])) {
             $lessonType = $_POST['lessonType'];
@@ -239,23 +280,30 @@ function saveLessonToDB() {
         }
         $lessonNotes = $_POST['lessonNotes'];
         $clerkName = $_POST['clerkName'];
-
+        $paid = 0;
+        // if (iss)
+        $chIn = 0;
+        $fin = 0;
 
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
         $db_table = "mydb.Lesson";
-        if ( $client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "") {
-            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE date_of_lesson='".$dateOfLesson."' AND time_of_lesson='".$timeOfLesson."' AND".
-                " client1_id='".$client1ID."' AND client2_id='".$client2ID."' AND client3_id='".$client3ID."';");
+        if ( $client1ID != "" ) {
+            $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE id='".$_POST['lessonId']."';");
 
-            if(mysqli_num_rows($sql_result) == 0) {
+            if(mysqli_num_rows($sql_result) == 1) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (date_of_lesson, time_of_lesson, ski_or_snowboard, client1_id, client2_id, client3_id, ".
-                    "level, clerk_name, length, instructor, desk_or_request, notes) ".
-                    "VALUES ('$dateOfLesson', '$timeOfLesson', '$lessonTypeInput', '$client1ID', '$client2ID', '$client3ID','$lessonLvl', '$clerkName', '$lenOfLesson', '$instructor', '$reqInput', '$lessonNotes');";
+                // $sql = "UPDATE ".$db_table." SET (date_of_lesson='$dateOfLesson', time_of_lesson='$timeOfLesson', ski_or_snowboard='$lessonTypeInput',".
+                //     " client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID', ".
+                //     "level='$lessonLvl', clerk_name='$clerkName', length='$lenOfLesson', instructor='$instructor',".
+                //     " desk_or_request='$reqInput', notes='$lessonNotes') ".
+                //     "WHERE id='".$_POST['lessonId']."';";
+                $sql = "UPDATE ".$db_table." SET ".
+                    "client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID' ".
+                    "WHERE id='".$_POST['lessonId']."';";
                 mysqli_query($link, $sql);
-                closeSession();
-                header('Location: viewLesson.php');
+                // closeSession();
+                // header('Location: viewLesson.php');
             }
 
         }
@@ -281,10 +329,9 @@ function getClientNames() {
 }
 
 function addOrSaveClick() {
-    setClientIDs();
-
     // to save client info in case page reload
     if (isset($_POST['addPersonBtn'])) {
+        setClientIDs();
         switch($_POST['addPersonBtn']) {
             case "Add":
                 $fullNameDd = $_POST['fullName'];
