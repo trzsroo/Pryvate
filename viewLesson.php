@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
-        <title>View Private Lessons</title>
+        <title>Pryvate System</title>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -15,12 +15,16 @@
             table tr td {
                 padding: 5px;
             }
+
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
         <?php
             require_once('config.php');
-            $urlLink =(string) htmlspecialchars($_SERVER["PHP_SELF"]);
+            $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
             $urlLink = str_replace("viewLesson.php", "", $urlLink);
             $addLessonURL = $urlLink."addLesson.php";
         ?>
@@ -36,20 +40,29 @@
                         <input id="supp" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
                         onclick="dateOmit(), this.blur(), changeColorIndicationDATE(this, 'initial');"/>
                     </td>  
-                    <td style="background-color: honeydew;">
-                        <input type="radio" name="type" id="all" checked/><label for="all">All</label>
-                        <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
-                        <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
+                    <td>
+                        <div style="padding: 8px; margin-right: 20px; background-color: honeydew;">
+                            <input type="radio" name="type" id="all" checked/><label for="all">All</label>
+                            <input type="radio" name="type" id="ski"/><label for="ski">Ski</label>
+                            <input type="radio" name="type" id="snb"/><label for="snb">Snowboard</label>
+                        </div>
                     </td>
                     <td>
-                        <table style="float: left; border-collapse: collapse; margin-left: 40px;">
+                        <div style="padding: 8px; margin-left: 20px; background-color: honeydew; text-align: left">
+                            <input type="radio" name="students" id="private" onchange="applyAllFilters(this);"/><label for="private">Private</label><br>
+                            <input type="radio" name="students" id="semiprivate" onchange="applyAllFilters(this);"/><label for="semiprivate">Semi-private</label><br>  
+                            <input type="radio" name="students" id="anynum" onchange="applyAllFilters(this);" checked/><label for="anynum">Both</label>                  
+                        </div>
+                    </td>
+                    <td>
+                        <table style="float: left; border-collapse: collapse; margin-left: 20px;">
                             <tr>
                                 <td colspan="2" style="text-align: center">
                                     Include records that:
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="text-align: center">
                                     <label for="includes" title="Shows records that have these particular fields checked.">Are</label><input 
                                     type="radio" id="includes" name="method" onchange="changeColorIndicationCHECKS(this, 'honeydew')" title="Shows records that have these particular fields checked." checked/>
                                     <label for="excludes" title="Shows records that do not have these particular fields checked.">Are not</label><input 
@@ -69,12 +82,12 @@
                                 </td> -->
                                 <td id="checks">
                                     <div style="float: left; vertical-align: middle;">
-                                        <input type="checkbox" name="ticked_fields" id="r" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="r">R</label>
-                                        <input type="checkbox" name="ticked_fields" id="p" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="p">P</label>
-                                        <input type="checkbox" name="ticked_fields" id="ci" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="ci">CI</label>
-                                        <input type="checkbox" name="ticked_fields" id="f" onchange="changeColorIndicationCHECKS(this, 'honeydew');"/><label for="f">F</label>
+                                        <input type="checkbox" name="ticked_fields" id="r" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="r">Req.</label>
+                                        <input type="checkbox" name="ticked_fields" id="p" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="p">Paid</label>
+                                        <input type="checkbox" name="ticked_fields" id="ci" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="ci">Ch. In</label>
+                                        <input type="checkbox" name="ticked_fields" id="f" onchange="changeColorIndicationCHECKS(this, 'honeydew')"/><label for="f">Fin.</label>
                                         <input id="tfdel" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
-                                        onclick="uncheckAll(), this.blur(), changeColorIndicationCHECKS(this, 'initial');"/>
+                                        onclick="changeColorIndicationCHECKS(this, 'initial'), uncheckAll(), this.blur();"/>
                                     </div>
                                 </td>
                             </tr>
@@ -84,78 +97,148 @@
             </table>
         </div>
 
-
         <br>
 
-        <table id="tabl" class="stripe">
-            <thead>
-                <tr>
-                    <th>Res. Number</th>
-                    <th style="width: 100px;">Lesson Date</th>
-                    <th>Type</th>
-                    <th>Duration</th>
-                    <th>Student(s)' Name & Age</th>
-                    <th>Instructor</th>
-                    <th>Req.</th>
-                    <th>Paid</th>
-                    <th>Checked In</th>
-                    <th>Finalized</th>
-                </tr>
-            <thead>
-            <tbody>
-                <?php
-                    // Unless we can use the variable from config.php
-                    $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        <form id="form" action="modifyLesson.php" method="post">
+            <table id="tabl" class="stripe">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width: 100px;">Lesson Date</th>
+                        <th>Level</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Student(s)' Name & Age</th>
+                        <th>Instructor</th>
+                        <th>Req.</th>
+                        <th>Paid</th>
+                        <th>Checked In</th>
+                        <th>Finalized</th>
+                        <th></th> <!-- Edit button -->
+                        <th class="hidden"></th> <!-- Number of students -->
+                        <th class="hidden"></th> <!-- Lesson ID -->
+                        <th class="hidden"></th> <!-- Date created -->
+                        <th class="hidden"></th> <!-- Reservation number -->
+                        <th class="hidden"></th> <!-- Clerk name -->
+                        <th class="hidden"></th> <!-- Notes -->
+                    </tr>
+                <thead>
+                <tbody>
+                    <?php
+                        // Unless we can use the variable from config.php
+                        $conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-                    $query = mysqli_query($conn, "SELECT * FROM Lesson")
-                    or die (mysqli_error($conn));
+                        $query = mysqli_query($conn, "SELECT * FROM Lesson")
+                        or die (mysqli_error($conn));
 
-                    while ($row = mysqli_fetch_array($query)) {
-                        
-                        $client_str = "";
-                        $title_str = "";
-                        
-                        for ($i = 1; $i <= 3; $i++) {
-                            $client_query = "SELECT first_name, last_name, age, phone_number FROM Client WHERE id = " . $row['client' . $i . '_id'] . " LIMIT 1";
-                            $client_rec = $conn->query($client_query);
+                        while ($row = mysqli_fetch_array($query)) {
+                            
+                            $client_str = "";
+                            $title_str = "";
+                            $num_of_students = 1;
+                            
+                            for ($i = 1; $i <= 3; $i++) {
+                                $client_query = "SELECT first_name, last_name, age, phone_number FROM Client WHERE id = " . $row['client' . $i . '_id'] . " LIMIT 1";
+                                $client_rec = $conn->query($client_query);
 
-                            if ($client_rec->num_rows > 0) {
-                                $fetch_assoc = $client_rec->fetch_assoc();
-                                $client_fname = $fetch_assoc['first_name'];
-                                $client_lname = $fetch_assoc['last_name'];
-                                $client_age = $fetch_assoc['age'];
-                                $client_phone = $fetch_assoc['phone_number'];
+                                if ($client_rec->num_rows > 0) {
+                                    $fetch_assoc = $client_rec->fetch_assoc();
+                                    $client_fname = $fetch_assoc['first_name'];
+                                    $client_lname = $fetch_assoc['last_name'];
+                                    $client_age = $fetch_assoc['age'];
+                                    $client_phone = $fetch_assoc['phone_number'];
 
-                                $client_str = $client_str . ($i == 1 ? "" : ", ") 
-                                . $client_fname . " " . substr($client_lname, 0, 1) . ". (" . $client_age . ")";
-                                // Explanatory, more detailed; displays on hover on the lesson students
-                                $title_str = $title_str . ($i == 1 ? "" : ", ")
-                                . $client_fname . " " . $client_lname . " (" . $client_phone . ")";
+                                    $client_str = $client_str . ($i == 1 ? "" : ", ") 
+                                    . $client_fname . " " . substr($client_lname, 0, 1) . ". (" . $client_age . ")";
+                                    // Explanatory, more detailed; displays on hover on the lesson students
+                                    $title_str = $title_str . ($i == 1 ? "" : ", ")
+                                    . $client_fname . " " . $client_lname . " (" . $client_phone . ")";
+
+                                    $num_of_students = $i; // If this additional student exists, update number of students
+                                }
                             }
-                        }
 
-                        echo
-                            "<tr class='centered-data'>
-                                <td>{$row['reservation_number']}</td>
-                                <td><span style='display: none'>" . date('U') . "</span>"
-                                . (date_format(date_create($row['date_of_lesson']), 'm-d-Y')) . " at " . (date_format(date_create($row['time_of_lesson']), 'h:ia')) . "</td>
-                                <td>" . ($row['ski_or_snowboard'] == 0 ? 'Ski' : 'SB') . "</td>
-                                <td>{$row['length']} hrs</td>
-                                <td><span title='" . $title_str . "'>" . $client_str . "</td>
-                                <td>{$row['instructor']}</td>
-                                <td>" . ($row['desk_or_request'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['paid'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['checked_in'] == 0 ? '' : '&#10004;') . "</td>
-                                <td>" . ($row['finalized_in_sales'] == 0 ? '' : '&#10004;') . "</td>
-                            </tr>";
-                    }
-                ?>
-            <tbody>
-        </table>
+                            echo
+                                "<tr class='centered-data'>
+                                    <td><input type='button' style='font-size: 6pt;' 
+                                    onclick=\"this.value = this.value === '▼' ? '▲' : '▼';\" value='▼'/></td>
+                                    <td><span class='hidden'>" . date_format(date_create($row['date_of_lesson']), 'U') . "</span>"
+                                    . (date_format(date_create($row['date_of_lesson']), 'm-d-Y')) . " at " . (date_format(date_create($row['time_of_lesson']), 'h:ia')) . "</td>
+                                    <td>{$row['level']}</td>
+                                    <td>" . ($row['ski_or_snowboard'] == 0 ? 'Ski' : 'SB') . "</td>
+                                    <td>{$row['length']} hrs</td>
+                                    <td><span title='" . $title_str . "'>" . $client_str . "</td>
+                                    <td>{$row['instructor']}</td>
+                                    <td>" . ($row['desk_or_request'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['paid'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['checked_in'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['finalized_in_sales'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td><input type='button' value='✎'/></td>
+                                    <td class='hidden'>{$num_of_students}</td>
+                                    <td class='hidden' name='lessonids'>{$row['id']}</td>
+                                    <td class='hidden'>{$row['date_created']}</td>
+                                    <td class='hidden'>{$row['reservation_number']}</td>
+                                    <td class='hidden'>{$row['clerk_name']}</td>
+                                    <td class='hidden'>{$row['notes']}</td>
+                                </tr>";
+                        }
+                    ?>
+                <tbody>
+            </table>
+            <input type="hidden" id="lessonToModify" name="lessonId"/>
+        </form>
         
         <script type="text/javascript" defer>
+            function format(data) {
+                // `data` is the original data object for the row
+                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                    '<tr>' +
+                        '<td><b>Date created:</b></td>' +
+                        '<td>' + data.dateCreated + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Res. number:</b></td>' +
+                        '<td>' + data.reservationNumber + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Clerk:</b></td>' +
+                        '<td>' + data.clerk + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td><b>Notes:</b></td>' +
+                        '<td>' + data.notes + '</td>' +
+                    '</tr>' +
+                '</table>';
+            }
+
             $(document).ready(function() {
                 var table = $('#tabl').DataTable({
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false
+                        },
+                        {"data": "lessonDate"},
+                        {"data": "level"},
+                        {"data": "type"},
+                        {"data": "duration"},
+                        {"data": "studentsNameAndAge"},
+                        {"data": "instructor"},
+                        {"data": "required"},
+                        {"data": "paid"},
+                        {"data": "checkedIn"},
+                        {"data": "finalized"},
+                        {
+                            "data": "edit",
+                            "orderable": false
+                        },
+                        {"data": "numberOfStudents"}, // Hidden
+                        {"data": "lessonId"}, // Hidden
+                        {"data": "dateCreated"}, // Hidden
+                        {"data": "reservationNumber"}, // Hidden
+                        {"data": "clerk"}, // Hidden
+                        {"data": "notes"} // Hidden
+                    ],
                     language: {
                         paginate: {
                             first:      "«",
@@ -163,6 +246,24 @@
                             next:       "›",
                             last:       "»"
                         }
+                    },
+                    // "deferRender": true
+                });
+
+                // Add event listener for opening and closing details
+                $('#tabl tbody').on('click', 'td.details-control input', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+            
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    }
+                    else {
+                        // Open this row
+                        row.child(format(row.data()).replace(/(?:\r\n|\r|\n)/g, '<br>')).show();
+                        tr.addClass('shown');
                     }
                 });
             });
@@ -193,7 +294,7 @@
                 // var k = new Date(d2.value).getTime();
                 
                 // for (i; i <= k; i += one_day) {
-                const my_day = new Date(i + one_day);
+                const my_day = new Date(i);
                 const ye = new Intl.DateTimeFormat('default', { year: 'numeric' }).format(my_day);
                 const mo = new Intl.DateTimeFormat('default', { month: '2-digit' }).format(my_day);
                 const da = new Intl.DateTimeFormat('default', { day: '2-digit' }).format(my_day);
@@ -202,7 +303,7 @@
                 curr_regex = curr_regex.substr(0, curr_regex.length-1) + ").*$";
 
                 // Line below is what applies the date filter
-                $('#tabl').DataTable().column(1).search(curr_regex, true, false);
+                $('#tabl').DataTable().column(0).search(curr_regex, true, false);
             }
 
             function dateOmit() {
@@ -220,15 +321,28 @@
                 const rad_snb = document.getElementById("snb");
 
                 if (rad_all.checked) {
-                    $('#tabl').DataTable().column(2).search('');
+                    $('#tabl').DataTable().column(3).search('');
                 }
                 if (rad_ski.checked) {
-                    $("#tabl").DataTable().column(2).search('Ski');
+                    $("#tabl").DataTable().column(3).search('Ski');
                 }
                 if (rad_snb.checked) {
-                    $("#tabl").DataTable().column(2).search('SB');
+                    $("#tabl").DataTable().column(3).search('SB');
                 }
 
+                const rad_13 = document.getElementById("anynum");
+                const rad_11 = document.getElementById("private");
+                const rad_23 = document.getElementById("semiprivate");
+
+                if (rad_13.checked) {
+                    $('#tabl').DataTable().column(12).search('');
+                }
+                if (rad_11.checked) {
+                    $("#tabl").DataTable().column(12).search('1');
+                }
+                if (rad_23.checked) {
+                    $("#tabl").DataTable().column(12).search('^[23]{1}$', regex=true);
+                }
 
                 const r = document.getElementById("r");
                 const p = document.getElementById("p");
@@ -244,29 +358,32 @@
                     const strict = document.getElementById("strict").checked;
 
                     if (incl && !strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '✔' : '')
-                                            .column(7).search(p.checked ? '✔' : '')
-                                            .column(8).search(ci.checked ? '✔' : '')
-                                            .column(9).search(f.checked ? '✔' : '');
+                        $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '')
+                                            .column(8).search(p.checked ? '✔' : '')
+                                            .column(9).search(ci.checked ? '✔' : '')
+                                            .column(10).search(f.checked ? '✔' : '');
                     }
                     if (excl && !strict) {
-                        // ^.{0}$ looks for a field with exacty nothing
-                        $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(7).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(8).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(9).search(f.checked ? '^.{0}$' : '^.{0,3}$', regex=true);
+                        // ^.{0}$ looks for a field with exacty nothing;
+                        // ^.{0,3}$ looks for a field with any number of characters (up to 3; could have
+                        // been ^.{0,}$ but the 3 makes the difference more obvious, and works the same as long
+                        // as we are working with only 1 (<4) character in the field, namely a checkmark or nothing)
+                        $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(8).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(9).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(10).search(f.checked ? '^.{0}$' : '^.{0,3}$', regex=true);
                     }
                     if (incl && strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '✔' : '^.{0}$', regex=!r.checked)
-                                            .column(7).search(p.checked ? '✔' : '^.{0}$', regex=!p.checked)
-                                            .column(8).search(ci.checked ? '✔' : '^.{0}$', regex=!ci.checked)
-                                            .column(9).search(f.checked ? '✔' : '^.{0}$', regex=!f.checked);
+                        $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '^.{0}$', regex=!r.checked)
+                                            .column(8).search(p.checked ? '✔' : '^.{0}$', regex=!p.checked)
+                                            .column(9).search(ci.checked ? '✔' : '^.{0}$', regex=!ci.checked)
+                                            .column(10).search(f.checked ? '✔' : '^.{0}$', regex=!f.checked);
                     }
                     if (excl && strict) {
-                        $("#tabl").DataTable().column(6).search(r.checked ? '^.{0}$' : '✔', regex=r.checked)
-                                            .column(7).search(p.checked ? '^.{0}$' : '✔', regex=p.checked)
-                                            .column(8).search(ci.checked ? '^.{0}$' : '✔', regex=ci.checked)
-                                            .column(9).search(f.checked ? '^.{0}$' : '✔', regex=f.checked);
+                        $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '✔', regex=r.checked)
+                                            .column(8).search(p.checked ? '^.{0}$' : '✔', regex=p.checked)
+                                            .column(9).search(ci.checked ? '^.{0}$' : '✔', regex=ci.checked)
+                                            .column(10).search(f.checked ? '^.{0}$' : '✔', regex=f.checked);
                     }
                 }
 
@@ -275,7 +392,7 @@
 
             // When a radio button from the "lesson type" filter is changed/clicked
             // or when a checkmark filter is changed/clicked
-            $(document).on("click", "input[name='type'], input[name='ticked_fields'], input[name='method']", {date_input: null}, applyAllFilters);
+            $(document).on("change", "input[name='type'], input[name='ticked_fields'], input[name='method']", {date_input: null}, applyAllFilters);
 
             function uncheckAll() {
                 document.getElementById("r").checked = false;
@@ -283,10 +400,10 @@
                 document.getElementById("ci").checked = false;
                 document.getElementById("f").checked = false;
 
-                $("#tabl").DataTable().column(6).search('', regex=false)
-                                    .column(7).search('', regex=false)
+                $("#tabl").DataTable().column(7).search('', regex=false)
                                     .column(8).search('', regex=false)
                                     .column(9).search('', regex=false)
+                                    .column(10).search('', regex=false)
                                     .draw();
             }
 
@@ -299,6 +416,16 @@
                 $("#checks").css({'background-color': color});
                 $("#checks").parent().parent().css({'background-color': color});
             }
+
+            $(document).on("click", "input[value='✎']", function() {
+                var row = this.parentElement.parentElement;
+                var lesson_id = row.querySelector("td[name='lessonids']").innerHTML;
+                var hidden_id_input = document.getElementById("lessonToModify");
+
+                hidden_id_input.value = lesson_id;
+
+                $("#form").submit();
+            });
         </script>
     </body>
 </html>
