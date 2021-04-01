@@ -219,6 +219,226 @@ function setLessonFields() {
     setFinalize();
 }
 
+function queryLessonType($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT ski_or_snowboard FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['ski_or_snowboard'];
+        }
+
+        mysqli_close($link);
+    }
+
+}
+
+function queryLessonDate($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT date_of_lesson FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['date_of_lesson'];
+        }
+
+        mysqli_close($link);
+    }
+
+}
+
+function queryLessonTime($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT time_of_lesson FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['time_of_lesson'];
+        }
+
+        mysqli_close($link);
+    }
+
+}
+
+function queryLessonLen($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT length FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['length'];
+        }
+
+        mysqli_close($link);
+    }
+
+}
+
+function queryLessonLvl($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT level FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['level'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonInstr($lessId) {
+    if ($lessId != "") {
+    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT instructor FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['instructor'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonRequ($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT desk_or_request FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['desk_or_request'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonNotes($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT notes FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['notes'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonClerk($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT clerk_name FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['clerk_name'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonPaid($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT paid FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['paid'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonChIn($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT checked_in FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['checked_in'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function queryLessonFin($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT finalized_in_sales FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['finalized_in_sales'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
 function getClientID($stuNum) {
     if ($stuNum != "") {
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -227,7 +447,7 @@ function getClientID($stuNum) {
         // selects all clients in DB
         if (isset($_SESSION['lessonId'])) {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_SESSION['lessonId'].";";
-        } 
+        }
         else {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_POST['lessonId'].";";
             setLessonID();
