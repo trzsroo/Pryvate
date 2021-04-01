@@ -1,4 +1,4 @@
-  
+
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
@@ -110,7 +110,6 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes" id="notes">
 
-<!-- BUTTON THAT NEEDS FIXING -->
 <!-- hidden client info -->
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
@@ -203,11 +202,12 @@
 
             window.onload = function reloadExistingData() {
                 reloadFormInfo();
+                getLessonInfo();
                 genLessonHidLessonId.value = "<?php setLessonID(); getLessonID(); ?>";
                 addStudHidLessonId.value = "<?php getLessonID(); ?>";
                 totNumOfClients.value = parseInt(0);
                 totNumOfClients2.value = totNumOfClients.value;
-                //add exisiting 
+                //add exisiting
                 var clientID1 = "<?php getClientID("1"); ?>";
                 var clientID2 = "<?php getClientID("2"); ?>";
                 var clientID3 = "<?php getClientID("3"); ?>";
@@ -227,6 +227,92 @@
                     totNumOfClients2.value = totNumOfClients.value;
                 }
                 addToStudentView();
+            }
+
+            //query lesson id and add Information
+            function getLessonInfo() {
+
+              var modType = "<?php queryLessonType($_SESSION['lessonId'])?>";
+              switch (modType) {
+                  case "0":
+                      lRadioSki.checked = true;
+                      break;
+                  case "1":
+                      lRadioSB.checked = true;
+                      break;
+                  default:
+                      //do nothing
+              }
+
+              var modDate = "<?php queryLessonDate($_SESSION['lessonId']); ?>";
+              lDate.value = modDate;
+
+              var modTime = "<?php queryLessonTime($_SESSION['lessonId']); ?>";
+              lTime.value = modTime;
+
+              var modLen = "<?php queryLessonLen($_SESSION['lessonId']); ?>";
+              lLen.value = modLen;
+
+              var modLevel = "<?php queryLessonLvl($_SESSION['lessonId']); ?>";
+              lLevel.value = modLevel;
+
+              var modInstr = "<?php queryLessonInstr($_SESSION['lessonId']); ?>";
+              lInstr.value = modInstr
+
+              var modRequ = "<?php queryLessonRequ($_SESSION['lessonId']); ?>";
+              switch (modRequ) {
+                  case "0":
+                      lRequ.checked = false;
+                      break;
+                  case "1":
+                      lRequ.checked = true;
+                      break;
+                  default:
+                      //do nothing
+              }
+
+              var modNotes = "<?php queryLessonNotes($_SESSION['lessonId']); ?>";
+              lNotes.value = modNotes;
+
+              var modClerk = "<?php queryLessonClerk($_SESSION['lessonId']); ?>";
+              lClerk.value = modClerk;
+
+              var modPaid = "<?php queryLessonPaid($_SESSION['lessonId']); ?>";
+              switch (modPaid) {
+                  case "0":
+                      lPaid.checked = false;
+                      break;
+                  case "1":
+                      lPaid.checked = true;
+                      break;
+                  default:
+                      //do nothing
+              }
+
+              var modChIn = "<?php queryLessonChIn($_SESSION['lessonId']); ?>";
+              switch (modChIn) {
+                  case "0":
+                      lChIn.checked = false;
+                      break;
+                  case "1":
+                      lChIn.checked = true;
+                      break;
+                  default:
+                      //do nothing
+              }
+
+              var modFin = "<?php queryLessonFin($_SESSION['lessonId']); ?>";
+              switch (modFin) {
+                  case "0":
+                      lFin.checked = false;
+                      break;
+                  case "1":
+                      lFin.checked = true;
+                      break;
+                  default:
+                      //do nothing
+              }
+
             }
 
             //reload form data
@@ -269,7 +355,7 @@
 
                 var paidR = "<?php  if (isset($_SESSION['paid'])) {echo true;} else { echo false;}?>";
                 lPaid.checked = paidR;
-                
+
                 var chInR = "<?php  if (isset($_SESSION['checkIn'])) {echo true;} else { echo false;}?>";
                 lChIn.checked = chInR;
 
