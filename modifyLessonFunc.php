@@ -447,7 +447,7 @@ function getClientID($stuNum) {
         // selects all clients in DB
         if (isset($_SESSION['lessonId'])) {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_SESSION['lessonId'].";";
-        }
+        } 
         else {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_POST['lessonId'].";";
             setLessonID();
@@ -501,26 +501,34 @@ function saveLessonToDB() {
         $lessonNotes = $_POST['lessonNotes'];
         $clerkName = $_POST['clerkName'];
         $paid = 0;
-        // if (iss)
+        if (isset($_POST['paid'])) {
+            $paid = 1;
+        }
         $chIn = 0;
+        if (isset($_POST['checkIn'])) {
+            $chIn = 1;
+        }
         $fin = 0;
+        if (isset($_POST['finalize'])) {
+            $fin = 1;
+        }
 
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
         $db_table = "mydb.Lesson";
-        if ( $client1ID != "" ) {
+        if ($client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "") {
             $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE id='".$_POST['lessonId']."';");
 
             if(mysqli_num_rows($sql_result) == 1) {
                 // inserts into DB if an instance doesn't exist
-                // $sql = "UPDATE ".$db_table." SET date_of_lesson='$dateOfLesson', time_of_lesson='$timeOfLesson', ski_or_snowboard='$lessonTypeInput',".
-                //     " client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID', ".
-                //     "level='$lessonLvl', clerk_name='$clerkName', length='$lenOfLesson', instructor='$instructor',".
-                //     " desk_or_request='$reqInput', notes='$lessonNotes' ".
-                //     "WHERE id='".$_POST['lessonId']."';";
-                $sql = "UPDATE ".$db_table." SET ".
-                    "client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID' ".
+                $sql = "UPDATE ".$db_table." SET date_of_lesson='$dateOfLesson', time_of_lesson='$timeOfLesson', ski_or_snowboard='$lessonTypeInput',".
+                    " client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID', ".
+                    "level='$lessonLvl', clerk_name='$clerkName', length='$lenOfLesson', instructor='$instructor',".
+                    " desk_or_request='$reqInput', notes='$lessonNotes', paid='$paid', checked_in='$chIn', finalized_in_sales='$fin' ".
                     "WHERE id='".$_POST['lessonId']."';";
+                // $sql = "UPDATE ".$db_table." SET ".
+                //     "client1_id='$client1ID', client2_id='$client2ID', client3_id='$client3ID' ".
+                //     "WHERE id='".$_POST['lessonId']."';";
                 mysqli_query($link, $sql);
                 closeSession();
                 header('Location: viewLesson.php');
