@@ -77,9 +77,9 @@
             <h3>Add New Student</h3>
             <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
             <select name="fullName" id="fullNamedd" onchange="exists();">
-                <option value="-1"> </option>
-                <?php getClientNames(); ?>
                 <option value="0">&lt;Add New Student&gt;</option>
+                <?php getClientNames(); ?>
+                <option value="-1"> </option>
             </select>
 
             <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
@@ -212,7 +212,7 @@
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
-                    totNumOfClients2.value - totNumOfClients.value;
+                    totNumOfClients2.value = totNumOfClients.value;
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
