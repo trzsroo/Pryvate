@@ -30,11 +30,11 @@ form, .clientLabel {
   margin-left: 75px;
 }
 
-.delBtn {
+.delBtn, .editBtn {
 font-size: large;
 }
 
-input[type=submit], #addPersonBtn, #cancelBtn {
+input[type=submit], #addPersonBtn, #cancelBtn, #deleteLessonBtn {
   font-size: x-large;
 }
 
