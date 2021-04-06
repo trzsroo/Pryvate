@@ -466,6 +466,17 @@ function getClientID($stuNum) {
     }
 }
 
+function delLessonFromDB(){
+  if (isset($_POST['deleteLessonBtn'])) {
+    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $db_table = "mydb.Lesson";
+
+    $sql = "DELETE FROM ".$db_table." WHERE ID=".$lessId.";";
+    $result = mysqli_query($link, $sql);
+    mysqli_close($link);
+}
+}
+
 function saveLessonToDB() {
     if (isset($_POST['saveLessonBtn'])) {
         setClientIDs();
