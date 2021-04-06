@@ -35,13 +35,13 @@
             <table style="margin: auto;">
                 <tr class="centered-data">
                     <td style="padding-right: 50px;">
-                        <div>
+                        <div style="padding: 8px;">
                             On the: <input type="date" id="date1" value="" onchange="applyAllFilters(this), changeColorIndicationDATE(this, 'honeydew');"/>
                             <!-- &ensp;and : <input type="date" id="date2" onchange="applyAllFilters(this);"/> -->
                             <input id="supp" class="btn btn-outline-danger btn-sm" type="button" value="&times;" 
                             onclick="dateOmit(), this.blur(), changeColorIndicationDATE(this, 'initial');"/>
                         </div>
-                    </td>
+                    </td>  
                     <td>
                         <div style="padding: 8px; margin-right: 20px; background-color: honeydew; text-align: left;">
                             <input type="radio" name="type" id="all" checked/><label for="all">All</label><br>
@@ -175,7 +175,7 @@
                                     <td><span title='" . $title_str . "'>" . $client_str . "</td>
                                     <td>{$row['instructor']}</td>
                                     <td>" . ($row['desk_or_request'] == 0 ? '' : '&#10004;') . "</td>
-                                    <td>" . ($row['paid'] == 0 ? '' : '&#10004;') . "</td>
+                                    <td>" . ($row['paid'] == 0 ? '<em>Pending</em>' : '&#10004;') . "</td>
                                     <td>" . ($row['checked_in'] == 0 ? '' : '&#10004;') . "</td>
                                     <td>" . ($row['finalized_in_sales'] == 0 ? '' : '&#10004;') . "</td>
                                     <td><input type='button' value='✎'/></td>
@@ -323,7 +323,7 @@
 
             function refreshTable(d1/*, d2*/) {
                 curr_regex = "^.*(";
-                var i = new Date(d1.value).getTime();
+                var i = new Date(d1.value).getTime() + one_day/2;
                 // var k = new Date(d2.value).getTime();
                 
                 // for (i; i <= k; i += one_day) {
