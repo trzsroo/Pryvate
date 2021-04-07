@@ -58,7 +58,7 @@
                 <input type="hidden" id="lessonId" name="lessonId" >
                 <!-- lesson buttons -->
                 <input type="submit" value="Save Lesson" name="saveLessonBtn" id="saveLessonBtn" onclick="<?php saveLessonToDB(); ?>">
-                <button id="deleteLessonBtn" style="float: right;" onclick="<?php delLessonFromDB(); ?>"Delete Lesson</button>
+                <button id="deleteLessonBtn" style="float: right;" onclick="<?php delLessonFromDB(); ?>">Delete Lesson</button>
             </form>
         </div>
 
