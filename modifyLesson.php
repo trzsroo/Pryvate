@@ -58,6 +58,7 @@
                 <input type="hidden" id="lessonId" name="lessonId" >
                 <!-- lesson buttons -->
                 <input type="submit" value="Save Lesson" name="saveLessonBtn" id="saveLessonBtn" onclick="<?php saveLessonToDB(); ?>">
+                <button id="deleteLessonBtn" style="float: right;" onclick="<?php delLessonFromDB(); ?>">Delete Lesson</button>
             </form>
         </div>
 
@@ -110,7 +111,7 @@
             <label for="notes"><b>Notes:</b></label>
             <input type="text" name="notes" id="notes">
 
-<!-- BUTTON THAT NEEDS FIXING -->
+
 <!-- hidden client info -->
             <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
             <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
@@ -201,6 +202,11 @@
                 exists();
             }
 
+          //hide delete button if lesson was paid for
+          function delLessonHide() {
+            var delLess = document.getElementById("deleteLessonBtn");
+            delLess.style.display = "none";}
+          
             window.onload = function reloadExistingData() {
                 // reloadFormInfo();
                 getLessonInfo();
@@ -229,6 +235,7 @@
                 }
                 addToStudentView();
             }
+          
             //query lesson id and add Information
             function getLessonInfo() {
                 var modType = "<?php queryLessonType($_SESSION['lessonId'])?>";
@@ -283,6 +290,7 @@
                         break;
                     case "1":
                         lPaid.checked = true;
+                        delLessonHide();
                         break;
                     default:
                         //do nothing
@@ -313,55 +321,6 @@
                 }
 
                 }
-
-            //reload form data
-            function reloadFormInfo() {
-                var lessonTypeR = "<?php  if (isset($_SESSION['lessonType'])) {echo $_SESSION['lessonType'];}?>";
-                switch (lessonTypeR) {
-                    case "ski":
-                        lRadioSki.checked = true;
-                        break;
-                    case "SB":
-                        lRadioSB.checked = true;
-                        break;
-                    default:
-                        //do nothing
-                }
-
-                var dateR = "<?php  if (isset($_SESSION['dateOfLesson'])) {echo $_SESSION['dateOfLesson'];}?>";
-                lDate.value = dateR;
-
-                var timeR = "<?php  if (isset($_SESSION['timeOfLesson'])) {echo $_SESSION['timeOfLesson'];}?>";
-                lTime.value = timeR;
-
-                var lenR = "<?php  if (isset($_SESSION['lenOfLesson'])) {echo $_SESSION['lenOfLesson'];}?>";
-                lLen.value = lenR;
-
-                var levelR = "<?php  if (isset($_SESSION['lessonLvl'])) {echo $_SESSION['lessonLvl'];}?>";
-                lLevel.value = levelR;
-
-                var instructorR = "<?php  if (isset($_SESSION['instructor'])) {echo $_SESSION['instructor'];}?>";
-                lInstr.value = instructorR;
-
-                var requR = "<?php  if (isset($_SESSION['requested'])) {echo true;} else { echo false;}?>";
-                lRequ.checked = requR;
-
-                var notesR = "<?php  if (isset($_SESSION['lessonNotes'])) {echo $_SESSION['lessonNotes'];}?>";
-                lNotes.value = notesR;
-
-                var clerkR = "<?php  if (isset($_SESSION['clerkName'])) {echo $_SESSION['clerkName'];}?>";
-                lClerk.value = clerkR;
-
-                var paidR = "<?php  if (isset($_SESSION['paid'])) {echo true;} else { echo false;}?>";
-                lPaid.checked = paidR;
-                
-                var chInR = "<?php  if (isset($_SESSION['checkIn'])) {echo true;} else { echo false;}?>";
-                lChIn.checked = chInR;
-
-                var finR = "<?php  if (isset($_SESSION['finalize'])) {echo true;} else { echo false;}?>";
-                lFin.checked = finR;
-
-            }
 
 //add client to student view
             function addToStudentView() {
