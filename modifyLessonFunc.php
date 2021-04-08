@@ -3,6 +3,7 @@ session_start();
 $addedClientID = '';
 $minDate = date("Y-m-d", strtotime("-1 days"));
 
+
 function getLessonID() {
     if (isset($_SESSION['lessonId'])) {
         echo $_SESSION['lessonId'];
@@ -447,7 +448,7 @@ function getClientID($stuNum) {
         // selects all clients in DB
         if (isset($_SESSION['lessonId'])) {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_SESSION['lessonId'].";";
-        } 
+        }
         else {
             $sql = "SELECT ".$clientNum." FROM ".$db_table." WHERE id=".$_POST['lessonId'].";";
             setLessonID();
@@ -464,6 +465,18 @@ function getClientID($stuNum) {
 
         mysqli_close($link);
     }
+}
+
+function deleteLessonFromDB() {
+  if (isset($_POST['deleteLessonBtn'])) {
+    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $db_table = "mydb.Lesson";
+    $sql = "DELETE FROM ".$db_table." WHERE ID=".$_POST['lessonId'].";";
+    $result = mysqli_query($link, $sql);
+mysqli_close($link);
+closeSession();
+header('Location: viewLesson.php');
+}
 }
 
 function saveLessonToDB() {
