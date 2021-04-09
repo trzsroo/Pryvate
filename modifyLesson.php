@@ -1,4 +1,4 @@
-
+  
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
@@ -8,8 +8,6 @@
         <?php
             require_once('config.php');
             include 'modifyLessonFunc.php';
-            
-//add new lesson info
         ?>
         <h1>Modify Private Lesson</h1>
         <div class="lessonInfo">
@@ -57,8 +55,10 @@
                 <input type="hidden" id="client2Hid" name="hidClient2" >
                 <input type="hidden" id="client3Hid" name="hidClient3" >
                 <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" >
+                <input type="hidden" id="lessonId" name="lessonId" >
                 <!-- lesson buttons -->
                 <input type="submit" value="Save Lesson" name="saveLessonBtn" id="saveLessonBtn" onclick="<?php saveLessonToDB(); ?>">
+                <button id="deleteLessonBtn" style="float: right;" onclick="<?php delLessonFromDB(); ?>">Delete Lesson</button>
             </form>
         </div>
 
@@ -83,44 +83,45 @@
 
 <!-- add new client info -->
         <div class="form-popup" id="clientInfo">
-            <!-- database integration -->
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
-                <h3>Add New Client</h3>
-                <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
-                <select name="fullName" id="fullNamedd" onchange="exists();">
-                    <option value="-1"> </option>
-                    <?php getClientNames(); ?>
-                    <option value="0">&lt;Add New Student&gt;</option>
-                </select>
+          <!-- database integration -->
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
+            <h3>Add New Client</h3>
+            <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
+            <select name="fullName" id="fullNamedd" onchange="exists();">
+                <option value="0">&lt;Add New Student&gt;</option>
+                <?php getClientNames(); ?>
+                <option value="-1"> </option>
+            </select>
 
-                <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
-                <input type="text" name="fname" id="fname">
+            <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
+            <input type="text" name="fname" id="fname">
 
-                <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
-                <input type="text" name="lname" id="lname">
+            <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
+            <input type="text" name="lname" id="lname">
 
-                <label for="age"><b>*Age:</b></label>
-                <input type="text" name="age" id="age" required>
+            <label for="age"><b>*Age:</b></label>
+            <input type="text" name="age" id="age" required>
 
-                <label for="parent"><b>Parent:</b></label>
-                <input type="text" name="parent" id="parent">
+            <label for="parent"><b>Parent:</b></label>
+            <input type="text" name="parent" id="parent">
 
-                <label for="phone"><b>*Phone:</b></label>
-                <input type="text" name="phone" id="phone" required>
+            <label for="phone"><b>*Phone:</b></label>
+            <input type="text" name="phone" id="phone" required>
 
-                <label for="notes"><b>Notes:</b></label>
-                <input type="text" name="notes" id="notes">
+            <label for="notes"><b>Notes:</b></label>
+            <input type="text" name="notes" id="notes">
 
-    <!-- BUTTON THAT NEEDS FIXING -->
-    <!-- hidden client info -->
-                <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
-                <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
-                <input type="hidden" id="currClientEditing" name="currClientEditing" >
-                <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
-                <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
-                <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
-                <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
-            </form>
+
+<!-- hidden client info -->
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
+            <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
+            <input type="hidden" id="currClientEditing" name="currClientEditing" >
+            <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
+            <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
+            <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
+            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
+                <input type="hidden" id="lessonId2" name="lessonId2" >
+          </form>
         </div>
 
         <script>
@@ -179,6 +180,9 @@
             var clientPhone = document.getElementById('phone');
             var clientNotes = document.getElementById('notes');
 
+            var genLessonHidLessonId = document.getElementById('lessonId');
+            var addStudHidLessonId = document.getElementById('lessonId2');
+
 //open and close form
             function openForm() {
                 document.getElementById("clientInfo").style.display = "block";
@@ -198,67 +202,131 @@
                 exists();
             }
 
+          //hide delete button if lesson was paid for
+          function delLessonHide() {
+            var delLess = document.getElementById("deleteLessonBtn");
+            delLess.style.display = "none";}
+          
             window.onload = function reloadExistingData() {
-                reloadFormInfo();
+                // reloadFormInfo();
+                getLessonInfo();
+                genLessonHidLessonId.value = "<?php setLessonID(); getLessonID(); ?>";
+                addStudHidLessonId.value = "<?php getLessonID(); ?>";
+                totNumOfClients.value = parseInt(0);
+                totNumOfClients2.value = totNumOfClients.value;
+                //add exisiting 
+                var clientID1 = "<?php getClientID("1"); ?>";
+                var clientID2 = "<?php getClientID("2"); ?>";
+                var clientID3 = "<?php getClientID("3"); ?>";
+                if (clientID1 != "") {
+                    addClientToStuView(clientID1, "<?php  if (isset($_SESSION['hidClient1'])) { getClientInfo($_SESSION['hidClient1']); } ?>", 1);
+                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
+                    totNumOfClients2.value = totNumOfClients.value;
+                }
+                if (clientID2 != "") {
+                    addClientToStuView(clientID2, "<?php  if (isset($_SESSION['hidClient2'])) { getClientInfo($_SESSION['hidClient2']); } ?>", 2);
+                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
+                    totNumOfClients2.value = totNumOfClients.value;
+                }
+                if (clientID3 != ""){
+                    addClientToStuView(clientID3, "<?php  if (isset($_SESSION['hidClient3'])) { getClientInfo($_SESSION['hidClient3']); } ?>", 3);
+                    totNumOfClients.value = parseInt(totNumOfClients.value) + 1;
+                    totNumOfClients2.value = totNumOfClients.value;
+                }
                 addToStudentView();
             }
-
-            //reload form data
-            function reloadFormInfo() {
-                var lessonTypeR = "<?php  if (isset($_SESSION['lessonType'])) {echo $_SESSION['lessonType'];}?>";
-                switch (lessonTypeR) {
-                    case "ski":
+          
+            //query lesson id and add Information
+            function getLessonInfo() {
+                var modType = "<?php queryLessonType($_SESSION['lessonId'])?>";
+                switch (modType) {
+                    case "0":
                         lRadioSki.checked = true;
                         break;
-                    case "SB":
+                    case "1":
                         lRadioSB.checked = true;
                         break;
                     default:
                         //do nothing
                 }
 
-                var dateR = "<?php  if (isset($_SESSION['dateOfLesson'])) {echo $_SESSION['dateOfLesson'];}?>";
-                lDate.value = dateR;
+                var modDate = "<?php queryLessonDate($_SESSION['lessonId']); ?>";
+                lDate.value = modDate;
 
-                var timeR = "<?php  if (isset($_SESSION['timeOfLesson'])) {echo $_SESSION['timeOfLesson'];}?>";
-                lTime.value = timeR;
+                var modTime = "<?php queryLessonTime($_SESSION['lessonId']); ?>";
+                lTime.value = modTime;
 
-                var lenR = "<?php  if (isset($_SESSION['lenOfLesson'])) {echo $_SESSION['lenOfLesson'];}?>";
-                lLen.value = lenR;
+                var modLen = "<?php queryLessonLen($_SESSION['lessonId']); ?>";
+                lLen.value = modLen;
 
-                var levelR = "<?php  if (isset($_SESSION['lessonLvl'])) {echo $_SESSION['lessonLvl'];}?>";
-                lLevel.value = levelR;
+                var modLevel = "<?php queryLessonLvl($_SESSION['lessonId']); ?>";
+                lLevel.value = modLevel;
 
-                var instructorR = "<?php  if (isset($_SESSION['instructor'])) {echo $_SESSION['instructor'];}?>";
-                lInstr.value = instructorR;
+                var modInstr = "<?php queryLessonInstr($_SESSION['lessonId']); ?>";
+                lInstr.value = modInstr
 
-                var requR = "<?php  if (isset($_SESSION['requested'])) {echo true;} else { echo false;}?>";
-                lRequ.checked = requR;
+                var modRequ = "<?php queryLessonRequ($_SESSION['lessonId']); ?>";
+                switch (modRequ) {
+                    case "0":
+                        lRequ.checked = false;
+                        break;
+                    case "1":
+                        lRequ.checked = true;
+                        break;
+                    default:
+                        //do nothing
+                }
 
-                var notesR = "<?php  if (isset($_SESSION['lessonNotes'])) {echo $_SESSION['lessonNotes'];}?>";
-                lNotes.value = notesR;
+                var modNotes = "<?php queryLessonNotes($_SESSION['lessonId']); ?>";
+                lNotes.value = modNotes;
 
-                var clerkR = "<?php  if (isset($_SESSION['clerkName'])) {echo $_SESSION['clerkName'];}?>";
-                lClerk.value = clerkR;
+                var modClerk = "<?php queryLessonClerk($_SESSION['lessonId']); ?>";
+                lClerk.value = modClerk;
 
-                var paidR = "<?php  if (isset($_SESSION['paid'])) {echo true;} else { echo false;}?>";
-                lPaid.checked = paidR;
-                
-                var chInR = "<?php  if (isset($_SESSION['checkIn'])) {echo true;} else { echo false;}?>";
-                lChIn.checked = chInR;
+                var modPaid = "<?php queryLessonPaid($_SESSION['lessonId']); ?>";
+                switch (modPaid) {
+                    case "0":
+                        lPaid.checked = false;
+                        break;
+                    case "1":
+                        lPaid.checked = true;
+                        delLessonHide();
+                        break;
+                    default:
+                        //do nothing
+                }
 
-                var finR = "<?php  if (isset($_SESSION['finalize'])) {echo true;} else { echo false;}?>";
-                lFin.checked = finR;
+                var modChIn = "<?php queryLessonChIn($_SESSION['lessonId']); ?>";
+                switch (modChIn) {
+                    case "0":
+                        lChIn.checked = false;
+                        break;
+                    case "1":
+                        lChIn.checked = true;
+                        break;
+                    default:
+                        //do nothing
+                }
 
-            }
+                var modFin = "<?php queryLessonFin($_SESSION['lessonId']); ?>";
+                switch (modFin) {
+                    case "0":
+                        lFin.checked = false;
+                        break;
+                    case "1":
+                        lFin.checked = true;
+                        break;
+                    default:
+                        //do nothing
+                }
+
+                }
 
 //add client to student view
             function addToStudentView() {
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
-                totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
-                totNumOfClients2.value = totNumOfClients.value;
-                var ifAdded = (parseInt(totNumOfClients.value) + 1).toString();
+                var ifAdded = (parseInt(<?php getTotNumInLesson(); ?>) + 1).toString();
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
@@ -267,7 +335,7 @@
                     showExistingClients(totNumOfClients.value);
                 }
                 if (id != ""){
-                    saveLessonBtn.click();
+                    <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? saveLessonBtn.style.display = "none": saveLessonBtn.style.display = "";
             }
@@ -395,7 +463,6 @@
                                     totNumOfClients2.value = totNumOfClients.value;
                                     saveLessonBtn.style.display = "";
                                     addClientToStuView(selVal, fullNameDd.options[i].text, totNumOfClients.value);
-                                    saveLessonBtn.click();
                                 }
                             }
                         }
@@ -426,6 +493,7 @@
                     client3HidGenLess.value = id;
                     client3HidClientForm.value = id;
                 }
+                saveLessonBtn.style.display = "";
             }
 
 //clear client
@@ -456,9 +524,9 @@
 //clear all clients
             document.getElementById('cancelAddingLesson').onclick = function clearSession() {
                 <?php session_unset();
-                    $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
-                    $urlLink = str_replace("modifyLesson.php", "", $urlLink);
-                    $viewLessonURL = $urlLink."viewLesson.php";
+                 $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
+                 $urlLink = str_replace("modifyLesson.php", "", $urlLink);
+                 $viewLessonURL = $urlLink."viewLesson.php";
                  //cancelAddingLesson
                 ?>
                 location.href = "<?php echo $viewLessonURL?>"

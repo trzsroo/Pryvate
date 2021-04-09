@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
-        <title>Pryvate System</title>
+        <title>View Lesson</title>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
