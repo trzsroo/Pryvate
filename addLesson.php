@@ -14,6 +14,7 @@
         <div class="lessonInfo">
             <button id="cancelAddingLesson" style="float: right;" title="Cancel adding lesson">x</button>
             <h2>General Lesson Information</h2>
+            <p><b><i>Please click save button before adding new students to save selected general lesson information</i></b></p>
             <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="boldLabel">*Type of Lesson: </label>
                 <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
@@ -51,6 +52,7 @@
                 <input type="hidden" id="totalNumOfClientsInThisLesson" name="totalNumOfClientsInThisLesson" >
                 <!-- lesson buttons -->
                 <input type="submit" value="Add Lesson" name="addLessonBtn" id="addLessonBtn" onclick="<?php addLessonToDB(); ?>">
+                <input type="submit" id="saveLessonBtn" name="saveLessonBtn" value="Save" style="float: right;" onclick="<?php addLessonToDB(); ?>">
             </form>
         </div>
 

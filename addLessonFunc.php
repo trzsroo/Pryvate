@@ -145,7 +145,7 @@ function setLessonFields() {
 }
 
 function addLessonToDB() {
-    if (isset($_POST['addLessonBtn'])) {
+    if (isset($_POST['addLessonBtn']) || isset($_POST['saveLessonBtn'])) {
         setLessonFields();
         setClientIDs();
         setTotNumInLesson();
@@ -184,7 +184,7 @@ function addLessonToDB() {
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
         $db_table = "mydb.Lesson";
-        if ( $client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "") {
+        if ( $client1ID != "" && $dateOfLesson != "" && $timeOfLesson != "" && $lessonType != "" && $clerkName != "" && isset($_POST['addLessonBtn'])) {
             $sql_result = mysqli_query($link, "SELECT * FROM ".$db_table." WHERE date_of_lesson='".$dateOfLesson."' AND time_of_lesson='".$timeOfLesson."' AND".
                 " client1_id='".$client1ID."' AND client2_id='".$client2ID."' AND client3_id='".$client3ID."';");
 
@@ -275,7 +275,7 @@ function setClientIDs() {
         $_SESSION['hidClient2'] = $_POST['hidClient2AddClientForm'];
         $_SESSION['hidClient3'] = $_POST['hidClient3AddClientForm'];
     } 
-    if (isset($_POST['addLessonBtn'])) {
+    if (isset($_POST['addLessonBtn']) || isset($_POST['saveLessonBtn'])) {
         $_SESSION['hidClient1'] = $_POST['hidClient1'];
         $_SESSION['hidClient2'] = $_POST['hidClient2'];
         $_SESSION['hidClient3'] = $_POST['hidClient3'];
