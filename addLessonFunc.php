@@ -6,7 +6,11 @@ $minDate = date("Y-m-d", strtotime("-1 days"));
 //function to see if at least one person is added to either show or hid add lesson btn
 function getTotNumInLesson() {
     if (isset($_SESSION['totalNumOfClientsInThisLesson'])) {
-        echo $_SESSION['totalNumOfClientsInThisLesson'];
+        if ($_SESSION['totalNumOfClientsInThisLesson'] != "") {
+            echo $_SESSION['totalNumOfClientsInThisLesson'];
+        } else {
+            echo 0;
+        }
     } else {
         echo 0;
     }

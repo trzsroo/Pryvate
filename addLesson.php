@@ -210,11 +210,12 @@
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
+                totNumOfClients2.value = parseInt(<?php getTotNumInLesson(); ?>);
                 var ifAdded = (parseInt(totNumOfClients.value) + 1).toString();
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
-                    totNumOfClients2.value = totNumOfClients.value;
+                    totNumOfClients2.value = ifAdded;
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
