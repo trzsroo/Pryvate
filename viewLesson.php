@@ -202,7 +202,7 @@
             function formatDateMMDDYYYY(sqlDate) {
                 //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
                 const sqlDateArr = sqlDate.split(" ")[0].split("-");
-                const sMonth = sqlDateArr[1];
+                const sMonth = sqlDateArr[1] - 1;
                 const sDay = sqlDateArr[2];
                 const sYear = sqlDateArr[0];
 
