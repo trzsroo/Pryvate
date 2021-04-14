@@ -18,9 +18,9 @@
             <form id="lessonInfo" class="bigger" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="boldLabel">*Type of Lesson: </label>
                 <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
-                <label for="ski">Ski </label>
+                <label for="lessonTypeSki">Ski </label>
                 <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" >
-                <label for="SB">Snowboard </label>
+                <label for="lessonTypeSB">Snowboard </label>
                 <br/><br/>
                 <label class="boldLabel">*Date of Lesson: </label>
                 <input type="date" name="dateOfLesson" id="dateOfLesson" min=<?php echo $minDate;?>>
@@ -37,7 +37,7 @@
                 <br/><br/>
                 <label class="boldLabel">Instructor: </label>
                 <input type="text" name="instructor" id="instructor" >
-                <label class="boldLabel">&nbsp;Requested? </label>
+                <label class="boldLabel" for="requested">&nbsp;Requested? </label>
                 <input type="checkbox" name="requested" id="requested" value="requested" >
                 <br/><br/>
                 <label class="boldLabel">Notes: </label>
