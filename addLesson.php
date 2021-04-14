@@ -14,6 +14,7 @@
         <div class="lessonInfo">
             <button id="cancelAddingLesson" style="float: right;" title="Cancel adding lesson">x</button>
             <h2>General Lesson Information</h2>
+            <p><b><i>Please add new students before filling out the general lesson information</i></b></p>
             <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="boldLabel">*Type of Lesson: </label>
                 <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
@@ -208,16 +209,17 @@
                 closeForm();
                 var id = "<?php if(isset($addedClientID)) {echo $addedClientID;}?>";
                 totNumOfClients.value = parseInt(<?php getTotNumInLesson(); ?>);
+                totNumOfClients2.value = parseInt(<?php getTotNumInLesson(); ?>);
                 var ifAdded = (parseInt(totNumOfClients.value) + 1).toString();
                 if(ifAdded <= 3 && id != ""){
                     showExistingClients(ifAdded);
                     totNumOfClients.value = ifAdded;
-                    totNumOfClients2.value = totNumOfClients.value;
+                    totNumOfClients2.value = ifAdded;
                 } else {
                     showExistingClients(totNumOfClients.value);
                 }
                 if (id != ""){
-                    addLessonBtn.click();
+                    saveLessonBtn.click();
                     <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";

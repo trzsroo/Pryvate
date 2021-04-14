@@ -30,7 +30,7 @@ form, .clientLabel {
   margin-left: 75px;
 }
 
-.delBtn {
+.delBtn, .editBtn {
 font-size: large;
 }
 
