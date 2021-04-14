@@ -391,30 +391,32 @@
                     const strict = document.getElementById("strict").checked;
 
                     if (incl && !strict) {
+                        // .search('') does not search exactly nothing when performed as a smart search,
+                        // but rather does not make the field a search criterion (it "does not search"
+                        // rather than "searches for exactly nothing")
                         $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '')
                                             .column(8).search(p.checked ? '✔' : '')
                                             .column(9).search(ci.checked ? '✔' : '')
                                             .column(10).search(f.checked ? '✔' : '');
                     }
                     if (excl && !strict) {
-                        // ^.{0}$ looks for a field with exacty nothing;
-                        // ^.{0,3}$ looks for a field with any number of characters (up to 3; could have
-                        // been ^.{0,}$ but the 3 makes the difference more obvious, and works the same as long
-                        // as we are working with only 1 (<4) character in the field, namely a checkmark or nothing)
+                        // ^.{0}$ looks for a field with exactly nothing;
+                        // ^.{0,3}$ looks for a field with any number of characters (up to 3; in our
+                        // case, a checkmark)
                         $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
-                                            .column(8).search(p.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
+                                            .column(8).search(p.checked ? 'Pending' : '^.{0,3}$', regex=true)
                                             .column(9).search(ci.checked ? '^.{0}$' : '^.{0,3}$', regex=true)
                                             .column(10).search(f.checked ? '^.{0}$' : '^.{0,3}$', regex=true);
                     }
                     if (incl && strict) {
                         $("#tabl").DataTable().column(7).search(r.checked ? '✔' : '^.{0}$', regex=!r.checked)
-                                            .column(8).search(p.checked ? '✔' : '^.{0}$', regex=!p.checked)
+                                            .column(8).search(p.checked ? '✔' : 'Pending', regex=!p.checked)
                                             .column(9).search(ci.checked ? '✔' : '^.{0}$', regex=!ci.checked)
                                             .column(10).search(f.checked ? '✔' : '^.{0}$', regex=!f.checked);
                     }
                     if (excl && strict) {
                         $("#tabl").DataTable().column(7).search(r.checked ? '^.{0}$' : '✔', regex=r.checked)
-                                            .column(8).search(p.checked ? '^.{0}$' : '✔', regex=p.checked)
+                                            .column(8).search(p.checked ? 'Pending' : '✔', regex=p.checked)
                                             .column(9).search(ci.checked ? '^.{0}$' : '✔', regex=ci.checked)
                                             .column(10).search(f.checked ? '^.{0}$' : '✔', regex=f.checked);
                     }
@@ -441,7 +443,7 @@
             }
 
             function changeColorIndicationDATE(el, color) {
-                $(el).closest('td').css({'background-color': color});
+                $(el).closest('div').css({'background-color': color});
             }
 
             // Special: for the checkmark filtering method only
