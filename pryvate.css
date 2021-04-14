@@ -13,11 +13,13 @@ h2 {
 
 
 body {
-  margin: 20px 75px 20px 75px;
-  overflow: scroll;
+    margin: 20px 75px 20px 75px;
+    overflow: scroll;
+    /* Trebuchet-based sans serif stack */
+    font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 }
 
-form, .clientLabel {
+form.bigger, .clientLabel {
   margin: 5px 75px 5px 75px;
   font-size: 23px;
 }

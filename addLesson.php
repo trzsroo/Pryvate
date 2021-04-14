@@ -15,7 +15,7 @@
             <button id="cancelAddingLesson" style="float: right;" title="Cancel adding lesson">x</button>
             <h2>General Lesson Information</h2>
             <p><b><i>Please add new students before filling out the general lesson information</i></b></p>
-            <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <form id="lessonInfo" class="bigger" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="boldLabel">*Type of Lesson: </label>
                 <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
                 <label for="ski">Ski </label>
@@ -73,42 +73,42 @@
 
 <!-- add new client info -->
         <div class="form-popup" id="clientInfo">
-          <!-- database integration -->
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
-            <h3>Add New Student</h3>
-            <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
-            <select name="fullName" id="fullNamedd" onchange="exists();">
-                <option value="0">&lt;Add New Student&gt;</option>
-                <?php getClientNames(); ?>
-                <option value="-1"> </option>
-            </select>
+            <!-- database integration -->
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
+                <h3>Add New Student</h3>
+                <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
+                <select name="fullName" id="fullNamedd" onchange="exists();">
+                    <option value="0">&lt;Add New Student&gt;</option>
+                    <?php getClientNames(); ?>
+                    <option value="-1"> </option>
+                </select>
 
-            <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
-            <input type="text" name="fname" id="fname">
+                <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
+                <input type="text" name="fname" id="fname">
 
-            <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
-            <input type="text" name="lname" id="lname">
+                <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
+                <input type="text" name="lname" id="lname">
 
-            <label for="age"><b>*Age:</b></label>
-            <input type="text" name="age" required>
+                <label for="age"><b>*Age:</b></label>
+                <input type="text" name="age" required>
 
-            <label for="parent"><b>Parent:</b></label>
-            <input type="text" name="parent">
+                <label for="parent"><b>Parent:</b></label>
+                <input type="text" name="parent">
 
-            <label for="phone"><b>*Phone:</b></label>
-            <input type="text" name="phone" required>
+                <label for="phone"><b>*Phone:</b></label>
+                <input type="text" name="phone" required>
 
-            <label for="notes"><b>Notes:</b></label>
-            <input type="text" name="notes">
+                <label for="notes"><b>Notes:</b></label>
+                <input type="text" name="notes">
 
-<!-- hidden client info -->
-            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Student" onclick="<?php addClientToDB(); ?>">
-            <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
-            <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
-            <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
-            <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
-            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
-          </form>
+    <!-- hidden client info -->
+                <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Student" onclick="<?php addClientToDB(); ?>">
+                <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
+                <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
+                <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
+                <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
+                <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
+            </form>
         </div>
 
         <script>
@@ -344,10 +344,10 @@
 //clear all clients
             document.getElementById('cancelAddingLesson').onclick = function clearSession() {
                 <?php session_unset();
-                 $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
-                 $urlLink = str_replace("addLesson.php", "", $urlLink);
-                 $viewLessonURL = $urlLink."viewLesson.php";
-                 //cancelAddingLesson
+                    $urlLink = (string) htmlspecialchars($_SERVER["PHP_SELF"]);
+                    $urlLink = str_replace("addLesson.php", "", $urlLink);
+                    $viewLessonURL = $urlLink."viewLesson.php";
+                    //cancelAddingLesson
                 ?>
                 location.href = "<?php echo $viewLessonURL?>"
             }
