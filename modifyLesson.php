@@ -1,5 +1,4 @@
-  
-<html>
+  <html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
         <title>Modify Private Lesson</title>
@@ -58,8 +57,8 @@
                 <input type="hidden" id="lessonId" name="lessonId" >
                 <!-- lesson buttons -->
                 <input type="submit" value="Save Lesson" name="saveLessonBtn" id="saveLessonBtn" onclick="<?php saveLessonToDB(); ?>">
-                <button id="deleteLessonBtn" style="float: right;" onclick="<?php delLessonFromDB(); ?>">Delete Lesson</button>
-            </form>
+                <input type="submit" id="deleteLessonBtn" name="deleteLessonBtn" value="Delete Lesson" style="float: right;" onclick="<?php deleteLessonFromDB(); ?>">
+          </form>
         </div>
 
 <!-- add and delete students from lesson buttons and label -->
@@ -83,45 +82,45 @@
 
 <!-- add new client info -->
         <div class="form-popup" id="clientInfo">
-            <!-- database integration -->
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container bigger" method="POST" id="clientForm">
-                <h3>Add New Client</h3>
-                <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
-                <select name="fullName" id="fullNamedd" onchange="exists();">
-                    <option value="0">&lt;Add New Student&gt;</option>
-                    <?php getClientNames(); ?>
-                    <option value="-1"> </option>
-                </select>
+          <!-- database integration -->
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="form-container" method="POST" id="clientForm">
+            <h3 id="clientLabel">Add New Client</h3>
+            <label for="fullName" id="fullNameLbl"><b>*Name:</b></label>
+            <select name="fullName" id="fullNamedd" onchange="exists();">
+                <option value="0">&lt;Add New Student&gt;</option>
+                <?php getClientNames(); ?>
+                <option value="-1"> </option>
+            </select>
 
-                <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
-                <input type="text" name="fname" id="fname">
+            <label for="fname" id="firstNameLbl"><b>*First Name:</b></label>
+            <input type="text" name="fname" id="fname">
 
-                <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
-                <input type="text" name="lname" id="lname">
+            <label for="lname" id="lastNameLbl"><b>*Last Name:</b></label>
+            <input type="text" name="lname" id="lname">
 
-                <label for="age"><b>*Age:</b></label>
-                <input type="text" name="age" id="age" required>
+            <label for="age"><b>*Age:</b></label>
+            <input type="text" name="age" id="age" required>
 
-                <label for="parent"><b>Parent:</b></label>
-                <input type="text" name="parent" id="parent">
+            <label for="parent"><b>Parent:</b></label>
+            <input type="text" name="parent" id="parent">
 
-                <label for="phone"><b>*Phone:</b></label>
-                <input type="text" name="phone" id="phone" required>
+            <label for="phone"><b>*Phone:</b></label>
+            <input type="text" name="phone" id="phone" required>
 
-                <label for="notes"><b>Notes:</b></label>
-                <input type="text" name="notes" id="notes">
+            <label for="notes"><b>Notes:</b></label>
+            <input type="text" name="notes" id="notes">
 
-
-    <!-- hidden client info -->
-                <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
-                <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
-                <input type="hidden" id="currClientEditing" name="currClientEditing" >
-                <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
-                <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
-                <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
-                <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
-                    <input type="hidden" id="lessonId2" name="lessonId2" >
-            </form>
+<!-- BUTTON THAT NEEDS FIXING -->
+<!-- hidden client info -->
+            <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add" onclick="<?php addOrSaveClick(); ?>">
+            <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
+            <input type="hidden" id="currClientEditing" name="currClientEditing" >
+            <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
+            <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
+            <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
+            <input type="hidden" id="totalNumOfClientsInThisLesson2" name="totalNumOfClientsInThisLesson2" >
+                <input type="hidden" id="lessonId2" name="lessonId2" >
+          </form>
         </div>
 
         <script>
@@ -173,6 +172,7 @@
             var lChIn = document.getElementById('checkIn');
             var lFin = document.getElementById('finalize');
 
+            var addOrSaveLbl = document.getElementById('clientLabel');
             var clientFirstName = document.getElementById('fname');
             var clientLastName = document.getElementById('lname');
             var clientAge = document.getElementById('age');
@@ -198,23 +198,24 @@
                 clientPhone.value = "";
                 clientNotes.value = "";
                 currClientEdit.value = ""
+                addOrSaveLbl.innerHTML = "Add New Client";
                 addOrSaveBtn.value = "Add"
                 exists();
             }
+            function delLessonHide() {
+                var delLess = document.getElementById("deleteLessonBtn");
+                delLess.style.display = "none";
+            }
 
-          //hide delete button if lesson was paid for
-          function delLessonHide() {
-            var delLess = document.getElementById("deleteLessonBtn");
-            delLess.style.display = "none";}
-          
             window.onload = function reloadExistingData() {
                 // reloadFormInfo();
+                <?php setLessonID(); ?>
                 getLessonInfo();
-                genLessonHidLessonId.value = "<?php setLessonID(); getLessonID(); ?>";
+                genLessonHidLessonId.value = "<?php getLessonID(); ?>";
                 addStudHidLessonId.value = "<?php getLessonID(); ?>";
                 totNumOfClients.value = parseInt(0);
                 totNumOfClients2.value = totNumOfClients.value;
-                //add exisiting 
+                //add exisiting
                 var clientID1 = "<?php getClientID("1"); ?>";
                 var clientID2 = "<?php getClientID("2"); ?>";
                 var clientID3 = "<?php getClientID("3"); ?>";
@@ -235,7 +236,7 @@
                 }
                 addToStudentView();
             }
-          
+            
             //query lesson id and add Information
             function getLessonInfo() {
                 var modType = "<?php queryLessonType($_SESSION['lessonId'])?>";
@@ -320,7 +321,10 @@
                         //do nothing
                 }
 
-                }
+            }
+
+                //hide delete button if lesson was paid for
+            
 
 //add client to student view
             function addToStudentView() {
@@ -383,8 +387,9 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
-                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient1'])) { echo $_SESSION['hidClient1']; } ?>"
-                        addOrSaveBtn.value = "Save"
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient1'])) { echo $_SESSION['hidClient1']; } ?>";
+                        addOrSaveLbl.innerHTML = "Save Client";
+                        addOrSaveBtn.value = "Save";
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientFirstName($_SESSION['hidClient1']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientLastName($_SESSION['hidClient1']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientAge($_SESSION['hidClient1']); } ?>";
@@ -400,8 +405,9 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
-                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient2'])) { echo $_SESSION['hidClient2']; } ?>"
-                        addOrSaveBtn.value = "Save"
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient2'])) { echo $_SESSION['hidClient2']; } ?>";
+                        addOrSaveLbl.innerHTML = "Save Client";
+                        addOrSaveBtn.value = "Save";
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientFirstName($_SESSION['hidClient2']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientLastName($_SESSION['hidClient2']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientAge($_SESSION['hidClient2']); } ?>";
@@ -417,8 +423,9 @@
                         firstNameBox.style.display = "block";
                         lastNameLbl.style.display = "block";
                         lastNameBox.style.display = "block";
-                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient3'])) { echo $_SESSION['hidClient3']; } ?>"
-                        addOrSaveBtn.value = "Save"
+                        currClientEdit.value = "<?php if(isset($_SESSION['hidClient3'])) { echo $_SESSION['hidClient3']; } ?>";
+                        addOrSaveLbl.innerHTML = "Save Client";
+                        addOrSaveBtn.value = "Save";
                         clientFirstName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientFirstName($_SESSION['hidClient3']); } ?>";
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientLastName($_SESSION['hidClient3']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientAge($_SESSION['hidClient3']); } ?>";
