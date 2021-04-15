@@ -75,7 +75,7 @@
                         <input type="text" name="clerkName" id="clerkName" maxlength="3" >
                     </td>
                 </tr>
-                </table>
+            </table>
                 <br /><br />
                 <input type="hidden" id="client1Hid" name="hidClient1" >
                 <input type="hidden" id="client2Hid" name="hidClient2" >
