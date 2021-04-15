@@ -1,4 +1,4 @@
-  <html>
+<html>
     <head>
         <link rel="stylesheet" href="pryvate.css">
         <title>Modify Private Lesson</title>
@@ -12,7 +12,7 @@
         <div class="lessonInfo">
             <button id="cancelAddingLesson" style="float: right;" title="Cancel editing lesson">&times;</button>
             <h2>General Lesson Information</h2>
-            <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <form id="lessonInfo" method="POST" class="bigger" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <table class="form" style="border-spacing: 10px; font-size: large;">
                     <tr>
                         <td><label class="boldLabel">*Type of Lesson: </label></td>
