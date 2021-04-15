@@ -10,39 +10,71 @@
         ?>
         <h1>Modify Private Lesson</h1>
         <div class="lessonInfo">
-            <button id="cancelAddingLesson" style="float: right;" title="Cancel editing lesson">x</button>
+            <button id="cancelAddingLesson" style="float: right;" title="Cancel editing lesson">&times;</button>
             <h2>General Lesson Information</h2>
             <form id="lessonInfo" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                <label class="boldLabel">*Type of Lesson: </label>
-                <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
-                <label for="ski">Ski </label>
-                <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" >
-                <label for="SB">Snowboard </label>
-                <br/><br/>
-                <label class="boldLabel">*Date of Lesson: </label>
-                <input type="date" name="dateOfLesson" id="dateOfLesson">
-                <br/><br/>
-                <label class="boldLabel">*Time of Lesson: </label>
-                <input type="time" name="timeOfLesson" id="timeOfLesson" min="07:00" max="21:00" >
-                <br/><br/>
-                <label class="boldLabel">Length of Lesson: </label>
-                <input type="number" name="lenOfLesson" id="lenOfLesson" step="0.5" >
-                <label> hour(s)</label>
-                <br/><br/>
-                <label class="boldLabel">Lesson Level: </label>
-                <input type="text" name="lessonLvl" id="lessonLvl" size="3" maxlength="3" >
-                <br/><br/>
-                <label class="boldLabel">Instructor: </label>
-                <input type="text" name="instructor" id="instructor" >
-                <label class="boldLabel">&nbsp;Requested? </label>
-                <input type="checkbox" name="requested" id="requested" value="requested" >
-                <br/><br/>
-                <label class="boldLabel">Notes: </label>
-                <input type="text" name="lessonNotes" id="lessonNotes" width="50" >
-                <br/><br>
-                <label class="boldLabel">*Clerk: </label>
-                <input type="text" name="clerkName" id="clerkName" maxlength="3" >
-                <br /><br />
+                <table class="form" style="border-spacing: 10px; font-size: large;">
+                    <tr>
+                        <td><label class="boldLabel">*Type of Lesson: </label></td>
+                        <td>
+                            <input type="radio" id="lessonTypeSki" name="lessonType" value="ski" >
+                            <label for="lessonTypeSki">Ski </label>
+                            <input type="radio" id="lessonTypeSB" name="lessonType" value="SB" >
+                            <label for="lessonTypeSB">Snowboard </label></td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">*Date of Lesson: </label></td>
+                        <td>
+                            <input type="date" name="dateOfLesson" id="dateOfLesson">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">*Time of Lesson: </label></td>
+                        <td>
+                            <input type="time" name="timeOfLesson" id="timeOfLesson" min="07:00" max="21:00" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">Length of Lesson: </label></td>
+                        <td>
+                            <input type="number" name="lenOfLesson" id="lenOfLesson" step="0.5" > hour(s)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">Lesson Level: </label></td>
+                        <td>
+                            <input type="text" name="lessonLvl" id="lessonLvl" size="3" maxlength="3" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">Instructor: </label></td>
+                        <td>
+                            <input type="text" name="instructor" id="instructor" >
+                            <label class="boldLabel" for="requested">&nbsp;Requested? </label>
+                            <input type="checkbox" name="requested" id="requested" value="requested" >
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                    <tr>
+                        <td><label class="boldLabel">Notes: </label></td>
+                        <td>
+                            <input type="text" name="lessonNotes" id="lessonNotes" width="50" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="boldLabel">*Clerk: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="clerkName" id="clerkName" maxlength="3" >
+                        </td>
+                    </tr>
+                </table>
+
+                <br />
                 <label class="boldLabel">&nbsp;Paid? </label>
                 <input type="checkbox" name="paid" id="paid" value="paid">
                 <label class="boldLabel">&nbsp;Checked in? </label>
