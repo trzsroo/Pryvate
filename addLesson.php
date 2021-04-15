@@ -16,7 +16,7 @@
             <h2>General Lesson Information</h2>
             <p><b><i>Please add new students before filling out the general lesson information</i></b></p>
             <form id="lessonInfo" class="bigger" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <table class="form">
+            <table class="form" style="border-spacing: 10px; font-size: large;">
                 <tr>
                     <td><label class="boldLabel">*Type of Lesson: </label></td>
                     <td>
