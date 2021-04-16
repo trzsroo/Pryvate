@@ -250,7 +250,6 @@
                     showExistingClients(totNumOfClients.value);
                 }
                 if (id != ""){
-                    addLessonBtn.click();
                     <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";
