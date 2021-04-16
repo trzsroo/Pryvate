@@ -355,7 +355,7 @@
                 if (parseInt(num) == 1) {
                     client1Lbl.innerHTML = '';
                     client1HidGenLess.value = '';
-                    client1HidClientForm.value = ""
+                    client1HidClientForm.value = "";
                     client1DelBtn.style.display = "none";
                 }
                 if (parseInt(num) == 2) {
@@ -380,7 +380,7 @@
                     $viewLessonURL = $urlLink."viewLesson.php";
                     //cancelAddingLesson
                 ?>
-                location.href = "<?php echo $viewLessonURL?>"
+                location.href = "<?php echo $viewLessonURL?>";
             }
 
 // delete single client from lesson
