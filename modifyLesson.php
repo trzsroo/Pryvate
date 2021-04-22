@@ -98,14 +98,20 @@
         <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Edit" class="editBtn" onclick="editClientInfo(1);">Edit</button>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
+        <label class="boldLabel" id="emailRecpt1Lbl">&nbsp;Email Receipt? </label>
+        <input type="checkbox" name="emailRecpt1" id="emailRecpt1">
         <br/>
         <label id="client2Lbl" class="clientLabel"></label>
         <button id="client2Edit" class="editBtn" onclick="editClientInfo(2);">Edit</button>
         <button id="client2Dlt" class="delBtn" onclick="delClientFromLesson(2);">Delete</button>
+        <label class="boldLabel" id="emailRecpt2Lbl">&nbsp;Email Receipt? </label>
+        <input type="checkbox" name="emailRecpt2" id="emailRecpt2">
         <br />
         <label id="client3Lbl" class="clientLabel"></label>
         <button id="client3Edit" class="editBtn" onclick="editClientInfo(3);">Edit</button>
         <button id="client3Dlt" class="delBtn" onclick="delClientFromLesson(3);">Delete</button>
+        <label class="boldLabel" id="emailRecpt3Lbl">&nbsp;Email Receipt? </label>
+        <input type="checkbox" name="emailRecpt3" id="emailRecpt3">
         <br />
 
 <!-- add client button -->
@@ -166,6 +172,10 @@
             var client1HidGenLess = document.getElementById("client1Hid");
             var client1EditBtn = document.getElementById('client1Edit');
             var client1DelBtn = document.getElementById('client1Dlt');
+            var client1EmailRecptLbl = document.getElementById('emailRecpt1Lbl');
+            var client1EmailRecpt = document.getElementById('emailRecpt1');
+            client1EmailRecptLbl.style.display = "none";
+            client1EmailRecpt.style.display = "none";
             client1EditBtn.style.display = "none";
             client1DelBtn.style.display = "none";
             var client1HidClientForm = document.getElementById("hidClient1");
@@ -173,6 +183,10 @@
             var client2HidGenLess = document.getElementById("client2Hid");
             var client2EditBtn = document.getElementById('client2Edit');
             var client2DelBtn = document.getElementById('client2Dlt');
+            var client2EmailRecptLbl = document.getElementById('emailRecpt2Lbl');
+            var client2EmailRecpt = document.getElementById('emailRecpt2');
+            client2EmailRecptLbl.style.display = "none";
+            client2EmailRecpt.style.display = "none";
             client2EditBtn.style.display = "none";
             client2DelBtn.style.display = "none";
             var client2HidClientForm = document.getElementById("hidClient2");
@@ -180,6 +194,10 @@
             var client3HidGenLess = document.getElementById("client3Hid");
             var client3EditBtn = document.getElementById('client3Edit');
             var client3DelBtn = document.getElementById('client3Dlt');
+            var client3EmailRecptLbl = document.getElementById('emailRecpt3Lbl');
+            var client3EmailRecpt = document.getElementById('emailRecpt3');
+            client3EmailRecptLbl.style.display = "none";
+            client3EmailRecpt.style.display = "none";
             client3EditBtn.style.display = "none";
             client3DelBtn.style.display = "none";
             var client3HidClientForm = document.getElementById("hidClient3");
@@ -515,6 +533,8 @@
                     client1Lbl.innerHTML = str;
                     client1EditBtn.style.display = "";
                     client1DelBtn.style.display = "";
+                    client1EmailRecpt.style.display = "";
+                    client1EmailRecptLbl.style.display = "";
                     client1HidGenLess.value = id;
                     client1HidClientForm.value = id;
                 }
@@ -522,6 +542,8 @@
                     client2Lbl.innerHTML = str;
                     client2EditBtn.style.display = "";
                     client2DelBtn.style.display = "";
+                    client2EmailRecptLbl.style.display = "";
+                    client2EmailRecpt.style.display = "";
                     client2HidGenLess.value = id;
                     client2HidClientForm.value = id;
                 }
@@ -529,6 +551,8 @@
                     client3Lbl.innerHTML = str;
                     client3EditBtn.style.display = "";
                     client3DelBtn.style.display = "";
+                    client3EmailRecpt.style.display = "";
+                    client3EmailRecptLbl.style.display = "";
                     client3HidGenLess.value = id;
                     client3HidClientForm.value = id;
                 }
@@ -543,6 +567,8 @@
                     client1HidClientForm.value = ""
                     client1EditBtn.style.display = "none";
                     client1DelBtn.style.display = "none";
+                    client1EmailRecptLbl.style.display = "none";
+                    client1EmailRecpt.style.display = "none";
                 }
                 if (parseInt(num) == 2) {
                     client2Lbl.innerHTML = '';
@@ -550,6 +576,8 @@
                     client2HidClientForm.value = '';
                     client2EditBtn.style.display = "none";
                     client2DelBtn.style.display = "none";
+                    client2EmailRecpt.style.display = "none";
+                    client2EmailRecptLbl.style.display = "none";
                 }
                 if (parseInt(num) == 3) {
                     client3Lbl.innerHTML = '';
@@ -557,6 +585,8 @@
                     client3HidClientForm.value = '';
                     client3EditBtn.style.display = "none";
                     client3DelBtn.style.display = "none";
+                    client3EmailRecpt.style.display = "none";
+                    client3EmailRecptLbl.style.display = "none";
                 }
             }
 
