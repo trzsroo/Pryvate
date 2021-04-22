@@ -98,19 +98,19 @@
         <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Edit" class="editBtn" onclick="editClientInfo(1);">Edit</button>
         <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
-        <label class="boldLabel" id="emailRecpt1Lbl">&nbsp;Email Receipt? </label>
+        <label style="font-size: large;" id="emailRecpt1Lbl">&nbsp;Email Receipt? </label>
         <input type="checkbox" name="emailRecpt1" id="emailRecpt1">
         <br/>
         <label id="client2Lbl" class="clientLabel"></label>
         <button id="client2Edit" class="editBtn" onclick="editClientInfo(2);">Edit</button>
         <button id="client2Dlt" class="delBtn" onclick="delClientFromLesson(2);">Delete</button>
-        <label class="boldLabel" id="emailRecpt2Lbl">&nbsp;Email Receipt? </label>
+        <label style="font-size: large;" id="emailRecpt2Lbl">&nbsp;Email Receipt? </label>
         <input type="checkbox" name="emailRecpt2" id="emailRecpt2">
         <br />
         <label id="client3Lbl" class="clientLabel"></label>
         <button id="client3Edit" class="editBtn" onclick="editClientInfo(3);">Edit</button>
         <button id="client3Dlt" class="delBtn" onclick="delClientFromLesson(3);">Delete</button>
-        <label class="boldLabel" id="emailRecpt3Lbl">&nbsp;Email Receipt? </label>
+        <label style="font-size: large;" id="emailRecpt3Lbl">&nbsp;Email Receipt? </label>
         <input type="checkbox" name="emailRecpt3" id="emailRecpt3">
         <br />
 
