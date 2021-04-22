@@ -118,6 +118,10 @@
         <label class="boldLabel" id="addPersonLabel">Add Student</label>
         <button id="addClientBtn" onclick="openForm();">+</button>
 
+        <footer>
+        This page was created by <a href="https://wit.edu" target="_blank">Wentworth Institute of Technology</a> students in the <a href="https://wit.edu/computer-science" target="_blank">Computer Science program</a>.
+        </footer>
+
 <!-- add new client info -->
         <div class="form-popup" id="clientInfo">
           <!-- database integration -->

@@ -102,6 +102,10 @@
         <label class="boldLabel" id="addPersonLabel">Add Student</label>
         <button id="addClientBtn" onclick="openForm();">+</button>
 
+        <footer>
+        This page was created by <a href="https://wit.edu" target="_blank">Wentworth Institute of Technology</a> students in the <a href="https://wit.edu/computer-science" target="_blank">Computer Science program</a>.
+        </footer>
+
 <!-- add new client info -->
         <div class="form-popup" id="clientInfo">
             <!-- database integration -->
@@ -134,7 +138,7 @@
 
     <!-- hidden client info -->
                 <input type="submit" id="addPersonBtn" name="addPersonBtn" class="btn" value="Add Student" onclick="<?php addClientToDB(); ?>">
-                <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close">
+                <input type="button" id="cancelBtn" name="cancelBtn" class="btnCancel" onclick="closeForm();" value="Close" >
                 <input type="hidden" id="hidClient1" name="hidClient1AddClientForm" >
                 <input type="hidden" id="hidClient2" name="hidClient2AddClientForm" >
                 <input type="hidden" id="hidClient3" name="hidClient3AddClientForm" >
@@ -250,6 +254,7 @@
                     showExistingClients(totNumOfClients.value);
                 }
                 if (id != ""){
+                    // addLessonBtn.click();
                     <?php resetClientID(); ?>
                 }
                 (parseInt(totNumOfClients.value) == 0) ? addLessonBtn.style.display = "none": addLessonBtn.style.display = "";

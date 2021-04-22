@@ -15,6 +15,7 @@ h2 {
 body {
     margin: 20px 75px 20px 75px;
     overflow: scroll;
+    overflow-x: hidden;
     /* Trebuchet-based sans serif stack */
     font-family: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
 }
@@ -33,6 +34,14 @@ form.bigger, .clientLabel {
   margin-left: 75px;
 }
 
+footer {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  text-align: center;
+  padding: 20px;
+}
+
 .editBtn {
   font-size: large;
   margin: 5px;
@@ -40,6 +49,10 @@ form.bigger, .clientLabel {
 
 input[type=submit], #addPersonBtn, #cancelBtn {
   font-size: x-large;
+}
+
+#cancelBtn {
+  float: right;
 }
 
 

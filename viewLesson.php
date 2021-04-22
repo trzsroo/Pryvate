@@ -192,6 +192,10 @@
             </table>
             <input type="hidden" id="lessonToModify" name="lessonId"/>
         </form>
+
+        <footer>
+        This page was created by <a href="https://wit.edu" target="_blank">Wentworth Institute of Technology</a> students in the <a href="https://wit.edu/computer-science" target="_blank">Computer Science program</a>.
+        </footer>
         
         <script type="text/javascript" defer>
             // `data` is the original data object for the row
