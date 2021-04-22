@@ -24,7 +24,6 @@ form.bigger, .clientLabel {
   font-size: 23px;
 }
 
-
 .boldLabel, #addClientBtn, #addLessonPlusBtn, #cancelAddingLesson {
   font-weight: bold;
   font-size: 23px;
@@ -34,8 +33,9 @@ form.bigger, .clientLabel {
   margin-left: 75px;
 }
 
-.delBtn, .editBtn {
-    font-size: large;
+.editBtn {
+  font-size: large;
+  margin: 5px;
 }
 
 input[type=submit], #addPersonBtn, #cancelBtn {

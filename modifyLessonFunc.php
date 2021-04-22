@@ -440,6 +440,25 @@ function queryLessonFin($lessId) {
     }
 }
 
+function queryEmailRecptBool($lessId) {
+    if ($lessId != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Lesson";
+
+
+        $sql = "SELECT receipt_emailed FROM ".$db_table." WHERE id=".$lessId.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['receipt_emailed'];
+        }
+
+        mysqli_close($link);
+    }
+
+}
+
 function getClientID($stuNum) {
     if ($stuNum != "") {
         $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -473,9 +492,9 @@ function deleteLessonFromDB() {
     $db_table = "mydb.Lesson";
     $sql = "DELETE FROM ".$db_table." WHERE ID=".$_POST['lessonId'].";";
     $result = mysqli_query($link, $sql);
-mysqli_close($link);
-closeSession();
-header('Location: viewLesson.php');
+    mysqli_close($link);
+    closeSession();
+    header('Location: viewLesson.php');
 }
 }
 

@@ -97,19 +97,19 @@
         <h2 title="At least one student required to enter lesson">*Student(s)</h2>
         <label id="client1Lbl" class="clientLabel"></label>
         <button id="client1Edit" class="editBtn" onclick="editClientInfo(1);">Edit</button>
-        <button id="client1Dlt" class="delBtn" onclick="delClientFromLesson(1);">Delete</button>
+        <button id="client1Dlt" class="editBtn" onclick="delClientFromLesson(1);">Delete</button>
         <button name="emailRecpt1" id="emailRecpt1" class="editBtn">Email Receipt?</button>
         <label style="font-size: large;" id="emailRecpt1Lbl">&nbsp;Sent</label>
         <br/>
         <label id="client2Lbl" class="clientLabel"></label>
         <button id="client2Edit" class="editBtn" onclick="editClientInfo(2);">Edit</button>
-        <button id="client2Dlt" class="delBtn" onclick="delClientFromLesson(2);">Delete</button>
+        <button id="client2Dlt" class="editBtn" onclick="delClientFromLesson(2);">Delete</button>
         <button name="emailRecpt2" id="emailRecpt2" class="editBtn">Email Receipt?</button>
         <label style="font-size: large;" id="emailRecpt2Lbl">&nbsp;Sent</label>
         <br />
         <label id="client3Lbl" class="clientLabel"></label>
         <button id="client3Edit" class="editBtn" onclick="editClientInfo(3);">Edit</button>
-        <button id="client3Dlt" class="delBtn" onclick="delClientFromLesson(3);">Delete</button>
+        <button id="client3Dlt" class="editBtn" onclick="delClientFromLesson(3);">Delete</button>
         <button name="emailRecpt3" id="emailRecpt3" class="editBtn">Email Receipt?</button>
         <label style="font-size: large;" id="emailRecpt3Lbl">&nbsp;Sent</label>
         <br />
@@ -529,12 +529,21 @@
 
 //add client to lesson list
             function addClientToStuView(id, str, num) {
+                var sent = "<?php queryEmailRecptBool($_SESSION['lessonId']); ?>";
                 if (parseInt(num) == 1) {
                     client1Lbl.innerHTML = str;
                     client1EditBtn.style.display = "";
                     client1DelBtn.style.display = "";
                     client1EmailRecpt.style.display = "";
-                    client1EmailRecptLbl.style.display = "";
+                    switch (sent) {
+                        case "0":
+                            break;
+                        case "1":
+                            client1EmailRecptLbl.style.display = "";
+                            break;
+                        default:
+                            //do nothing
+                    }
                     client1HidGenLess.value = id;
                     client1HidClientForm.value = id;
                 }
@@ -542,7 +551,15 @@
                     client2Lbl.innerHTML = str;
                     client2EditBtn.style.display = "";
                     client2DelBtn.style.display = "";
-                    client2EmailRecptLbl.style.display = "";
+                    switch (sent) {
+                        case "0":
+                            break;
+                        case "1":
+                            client2EmailRecptLbl.style.display = "";
+                            break;
+                        default:
+                            //do nothing
+                    }
                     client2EmailRecpt.style.display = "";
                     client2HidGenLess.value = id;
                     client2HidClientForm.value = id;
@@ -552,7 +569,15 @@
                     client3EditBtn.style.display = "";
                     client3DelBtn.style.display = "";
                     client3EmailRecpt.style.display = "";
-                    client3EmailRecptLbl.style.display = "";
+                    switch (sent) {
+                        case "0":
+                            break;
+                        case "1":
+                            client3EmailRecptLbl.style.display = "";
+                            break;
+                        default:
+                            //do nothing
+                    }
                     client3HidGenLess.value = id;
                     client3HidClientForm.value = id;
                 }
