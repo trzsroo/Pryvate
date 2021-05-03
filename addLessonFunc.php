@@ -234,6 +234,7 @@ function addClientToDB() {
         $stuLName = $_POST['lname'];
         $stuAge = $_POST['age'];
         $stuParent = $_POST['parent'];
+        $stuEmail = $_POST['email'];
         $stuPhoneNum = $_POST['phone'];
         $stuNotes = $_POST['notes'];
         global $addedClientID;
@@ -251,7 +252,7 @@ function addClientToDB() {
 
             if(mysqli_num_rows($sql_result) == 0) {
                 // inserts into DB if an instance doesn't exist
-                $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuPhoneNum', '$stuNotes');";
+                $sql = "INSERT INTO ".$db_table." (first_name, last_name, age, parent, email, phone_number, notes) VALUES ('$stuFName', '$stuLName', '$stuAge', '$stuParent', '$stuEmail', '$stuPhoneNum', '$stuNotes');";
                 mysqli_query($link, $sql);
             
                 //used to add new client in the front-end (addLesson.php)

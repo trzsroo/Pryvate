@@ -636,6 +636,7 @@ function addOrSaveClick() {
                 $stuAge = $_POST['age'];
                 $stuParent = $_POST['parent'];
                 $stuPhoneNum = $_POST['phone'];
+                $stuEmail = $_POST['email'];
                 $stuNotes = $_POST['notes'];
                 $currID = $_POST['currClientEditing'];
                 resetClientID();
@@ -647,7 +648,7 @@ function addOrSaveClick() {
                 // checks to make sure the first name, last name, and phone number are
                 // set to check if an instance already exists
                 if ($stuFName != "" && $stuLName != "" && $stuPhoneNum != "") {
-                    $sql = "UPDATE ".$db_table." SET first_name='$stuFName', last_name='$stuLName', age='$stuAge', parent='$stuParent', phone_number='$stuPhoneNum', notes='$stuNotes' WHERE id='$currID';";
+                    $sql = "UPDATE ".$db_table." SET first_name='$stuFName', last_name='$stuLName', age='$stuAge', parent='$stuParent', email='$stuEmail', phone_number='$stuPhoneNum', notes='$stuNotes' WHERE id='$currID';";
                     mysqli_query($link, $sql);
                 }
                 mysqli_close($link);
@@ -725,6 +726,24 @@ function getClientParent($stuID) {
 
         while($row = mysqli_fetch_array($result) ) {
             echo $row['parent'];
+        }
+
+        mysqli_close($link);
+    }
+}
+
+function getClientEmail($stuID) {
+    if ($stuID != "") {
+        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $db_table = "mydb.Client";
+
+        // selects all clients in DB
+        $sql = "SELECT email FROM ".$db_table." WHERE id=".$stuID.";";
+
+        $result = mysqli_query($link, $sql);
+
+        while($row = mysqli_fetch_array($result) ) {
+            echo $row['email'];
         }
 
         mysqli_close($link);

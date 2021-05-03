@@ -146,6 +146,9 @@
             <label for="parent"><b>Parent:</b></label>
             <input type="text" name="parent" id="parent">
 
+            <label for="email"><b>*Email:</b></label>
+            <input type="email" name="email" id="email" required>
+
             <label for="phone"><b>*Phone:</b></label>
             <input type="text" name="phone" id="phone" required>
 
@@ -231,6 +234,7 @@
             var clientLastName = document.getElementById('lname');
             var clientAge = document.getElementById('age');
             var clientParent = document.getElementById('parent');
+            var clientEmail = document.getElementById('email');
             var clientPhone = document.getElementById('phone');
             var clientNotes = document.getElementById('notes');
 
@@ -249,6 +253,7 @@
                 clientLastName.value = "";
                 clientAge.value = "";
                 clientParent.value = "";
+                clientEmail.value = "";
                 clientPhone.value = "";
                 clientNotes.value = "";
                 currClientEdit.value = ""
@@ -448,6 +453,7 @@
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientLastName($_SESSION['hidClient1']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientAge($_SESSION['hidClient1']); } ?>";
                         clientParent.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientParent($_SESSION['hidClient1']); } ?>";
+                        clientEmail.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientEmail($_SESSION['hidClient1']); } ?>";
                         clientPhone.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientPhoneNum($_SESSION['hidClient1']); } ?>";
                         clientNotes.value = "<?php if(isset($_SESSION['hidClient1'])) { getClientNotes($_SESSION['hidClient1']); } ?>";
                         break;
@@ -466,6 +472,7 @@
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientLastName($_SESSION['hidClient2']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientAge($_SESSION['hidClient2']); } ?>";
                         clientParent.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientParent($_SESSION['hidClient2']); } ?>";
+                        clientEmail.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientEmail($_SESSION['hidClient2']); } ?>";
                         clientPhone.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientPhoneNum($_SESSION['hidClient2']); } ?>";
                         clientNotes.value = "<?php if(isset($_SESSION['hidClient2'])) { getClientNotes($_SESSION['hidClient2']); } ?>";
                         break;
@@ -484,6 +491,7 @@
                         clientLastName.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientLastName($_SESSION['hidClient3']); }?>";
                         clientAge.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientAge($_SESSION['hidClient3']); } ?>";
                         clientParent.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientParent($_SESSION['hidClient3']); } ?>";
+                        clientEmail.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientEmail($_SESSION['hidClient3']); } ?>";
                         clientPhone.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientPhoneNum($_SESSION['hidClient3']); } ?>";
                         clientNotes.value = "<?php if(isset($_SESSION['hidClient3'])) { getClientNotes($_SESSION['hidClient3']); } ?>";
                         break;

@@ -130,6 +130,9 @@
                 <label for="parent"><b>Parent:</b></label>
                 <input type="text" name="parent">
 
+                <label for="email"><b>*Email:</b></label>
+                <input type="email" name="email" required>
+
                 <label for="phone"><b>*Phone:</b></label>
                 <input type="text" name="phone" required>
 

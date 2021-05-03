@@ -96,7 +96,7 @@ background-color: #f1f1f1;
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password], .form-container select {
+.form-container input[type=text], .form-container input[type=email], .form-container input[type=password], .form-container select {
 width: 100%;
 padding: 5px;
 margin: 5px 0 22px 0;
